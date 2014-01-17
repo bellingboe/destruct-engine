@@ -1,0 +1,110 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	background: rgb(238, 238, 238);
+	height: 100%;
+}
+
+.submit {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+	background-color:#fe1a00;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid #d83526;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #b23e35;
+	display: block;
+	margin-top: 20px;
+	width: 100%;
+	border-radius: 3px;
+}
+.submit:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+	background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+	background-color:#ce0100;
+}
+.submit:active {
+	position:relative;
+	top:1px;
+}
+#wrapper {
+	max-width:725px;
+	width:100%;
+	margin: 0 auto;
+	padding:10px;
+	border-top: 4px solid rgb(254, 26, 0);
+	border-bottom: 4px solid rgb(102, 102, 102);
+	background: #ffffff;
+}
+
+h1 {
+	font-family: helvetica, arial;
+	border-bottom: 1px dashed #ccc;
+	color: #333;
+}
+.authorline {
+	font-size: 12px;
+	color: #666;
+	border-top: 1px dashed #ccc;
+	padding-top: 20px;
+}
+#msgResp {
+	font-size: 10px;
+}
+a,
+a:link,
+a:visited {
+	text-decoration: none;
+	color: #5a74a7;
+	font-weight: bold;
+}
+.clearInput {
+	background: none;
+	border: 0;
+	width:100%;
+	outline: none;
+}
+.intro-msg {
+	display: none;
+	color: rgb(102, 109, 114);
+	font-size: small;
+}
+
+.info-toggle {
+	display: inline-block;
+	float: right;
+	margin-top: 35px;
+}
+
+.site-head {
+	display: inline-block;
+}
