@@ -13,14 +13,18 @@ I owe the existence of this project to the hard work of dozens of individuals. C
 
 1. Clone the git repo — `git clone
    https://github.com/bellingboe/destruct-engine.git`
-2. Rename `DatabaseCore-EXAMPLE.inc.php` to `DatabaseCore.inc.php`
+2. Create the single database table. The schema is in `schema.sql`.
+3. Rename `DatabaseCore-EXAMPLE.inc.php` to `DatabaseCore.inc.php`.
 
 
-## Features
+## How It Works
 
-* Client-side string encryption ([GibberishAES](https://github.com/mdp/gibberish-aes))
-* Cross-browser compatible (Chrome, Opera, Safari, Firefox 3.6+, IE6+).
-* Server never sees user-entered text, only text that's already encrypted.
+1. A user types out a message in the text editor on [http://destruct.co](http://destruct.co).
+2. [GibberishAES](https://github.com/mdp/gibberish-aes) encrypts the text with a randomly generated password (all client-side).
+3. The server recieves a POST request of the encrypted text, but not the password as thatr's generated client-side.
+4. Upon successful entry into the database, the server returns the unique URL.
+5. The front-end appends the password as the anchor hash (#) to the returned URL.
+6. The message is then decrypted using the password in the URL and removed from the database permanently.
 
 ## Documentation
 
