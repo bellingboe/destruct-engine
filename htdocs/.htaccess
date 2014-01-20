@@ -251,6 +251,7 @@ RewriteRule (.*) https://destruct.co/$1 [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^(.*)\.destruct\.co$  [NC]
 RewriteCond %1 !^dev$ [NC]
+RewriteCond %1 !^dev-engine$ [NC]
 RewriteRule (.*) https://destruct.co/$1 [R=301,L]
 
     RewriteRule ^n_([A-Za-z0-9]+)$ index.php?key=$1

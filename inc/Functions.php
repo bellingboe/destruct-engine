@@ -1,4 +1,4 @@
 <?php
-require_once 'DatabaseCore.inc.php';
-require_once 'Database.php';
-require_once 'DestructEngine.php';
+require_once 'Constants.php';       // Database connection parameters.
+require_once 'ActiveRecordCfg.php'; // ActiveRecord config and setup.
+require_once 'DestructEngine.php';  // The Engine class.
