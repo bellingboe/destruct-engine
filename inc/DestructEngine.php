@@ -53,7 +53,9 @@ class DestructEngine {
     }
     
     private function _deleteMessage($nonce) {
-        $this->message->delete();
+        if (is_object($this->message)) {
+            $this->message->delete();
+        }
     }
     
     private function _createMessage($body, $nonce) {
