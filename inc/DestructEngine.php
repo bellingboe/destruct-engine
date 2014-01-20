@@ -13,11 +13,10 @@ class DestructEngine {
     private static $url_domain          = 'destruct.co';
     
     private static $unauth_agents       = array('facebookexternalhit');
-    private static $unauth_header       = 'HTTP/1.0 500 Server Error';
+    private static $unauth_header       = 'HTTP/1.0 302 Found';
     
     private static $err_msg_gone        = 'That message no longer exists.';
     
-    private $db                         = null;
     private $agent                      = null;
     private $message                    = null;
     private $share_url                  = null;
@@ -27,7 +26,6 @@ class DestructEngine {
      **/
     
     private function __construct() {
-        $this->db       = Database::factory();
         $this->agent    = $_SERVER['HTTP_USER_AGENT'];
     }
     
@@ -51,20 +49,15 @@ class DestructEngine {
     }
     
     private function _getMessage($nonce) {
-        $get_sql = sprintf("SELECT b FROM crypt_data WHERE n LIKE BINARY '%s' LIMIT 1", $nonce);
-        $this->db->query($get_sql);
-        $this->db->singleRecord();
-        $this->message = $this->db->Record['b'];
+        $this->message = DestructMessage::find_by_n($nonce, array('limit' => 1));
     }
     
     private function _deleteMessage($nonce) {
-        $del_sql = sprintf("DELETE FROM crypt_data WHERE n LIKE BINARY '%s' LIMIT 1", $nonce);
-        $this->db->query($del_sql);
+        $this->message->delete();
     }
     
     private function _createMessage($body, $nonce) {
-        $insert_sql = sprintf("INSERT INTO crypt_data (b, n) VALUES ('%s', '%s')", $body, $nonce);
-        $this->db->query($insert_sql);
+        $msg = DestructMessage::create(array('b' => $body, 'n' => $nonce));
     }
     
     private function _proccessMessageView($nonce) {
@@ -75,8 +68,7 @@ class DestructEngine {
     private function _ranStr($length = 16) {
         $chars ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         $final_rand='';
-        for($i=0;$i<$length; $i++)
-        {
+        for($i=0;$i<$length; $i++) {
             $final_rand .= $chars[ rand(0,strlen($chars)-1)];
      
         }
@@ -96,7 +88,7 @@ class DestructEngine {
     }
     
     public function message() {
-        return $this->message;
+        return $this->message->b;
     }
     
     public function url() {
