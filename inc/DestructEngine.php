@@ -79,6 +79,13 @@ class DestructEngine {
      * ========== PUBLIC METHODS ==========
      **/
     
+    public static function ltc() {
+        return self::$LTC_ADDR;
+    }
+    public static function btc() {
+        return self::$BTC_ADDR;
+    }
+    
     public static function factory() {
         return new self();
     }
@@ -88,7 +95,10 @@ class DestructEngine {
     }
     
     public function message() {
-        return $this->message->b;
+        if (is_object($this->message)) {
+            return $this->message->b;
+        }
+        return null;
     }
     
     public function url() {

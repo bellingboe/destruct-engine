@@ -43,15 +43,9 @@ if ($url !== null) {
 
 	    <h1 class="site-head">Destruct.co</h1>
             
-            <a href="#" id="show_intro_msg" class="info-toggle">What is this?</a>
+            <a href="#" id="show_intro_msg" class="info-toggle">What is this?</a> <a class="gh-link" href="https://github.com/bellingboe/destruct-engine" title=""><span>View Source</span><img src="/img/gh.png" alt="View on GitHub"></a>
             <div class="intro-msg">
-                Destruct.co
-                ============
-                 * Simple, secure messages.
-                 * The server never sees your plaintext message.
-                 * Encryption is done client-side.
-                 * Messages are forever deleted upon view.
-                ------------
+		Destruct.co is an <a href="https://github.com/bellingboe/destruct-engine">open-source web project</a> for sending/receiving encrypted, secure messages.
             </div>
 		
             <?php
@@ -78,19 +72,19 @@ if ($url !== null) {
             </p>
     
             <p class="authorline">
-                    Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>. Messages are never sent via plain-text. Ever. If someone wants to audit for verification, hit me up on Twitter.
-            </p>
+                    Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
+	    </p>
             <p class="authorline">
-                    Made pretty by <a href='//twitter.com/oscargodson'>@oscargodson</a> and <a href='http://epiceditor.com'>EpicEditor</a>
+                    Made pretty by <a href='//twitter.com/oscargodson'>@oscargodson</a> and <a href='http://epiceditor.com'>EpicEditor</a>.
             </p>
             <p class="authorline">
                     Huge thanks to the creators of <a href='//github.com/mdp/gibberish-aes'>Gibberish AES</a> - the core Destruct.co relies on.
             </p>
             <p class="authorline">
-                    Donate BTC: <strong>1N6BYCRbrL7mLLvpgP9asgnxpzs7oticmc</strong>
+                    Donate BTC: <strong><?php echo DestructEngine::btc();?></strong>
             </p>
             <p class="authorline">
-                    Donate LTC: <strong>LaXR9JPXeMJFoznpqsHPWJsTULPdeijyVx</strong>
+                    Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>
             </p>
 	</div>
         
