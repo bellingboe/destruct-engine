@@ -75,6 +75,10 @@ class DestructEngine {
         return $final_rand;
     }
     
+    private function _safeString($str) {
+        return preg_match('/^[a-zA-Z0-9]+$/', $str);
+    }
+    
     /**
      * ========== PUBLIC METHODS ==========
      **/
@@ -82,6 +86,7 @@ class DestructEngine {
     public static function ltc() {
         return self::$LTC_ADDR;
     }
+    
     public static function btc() {
         return self::$BTC_ADDR;
     }
@@ -107,8 +112,10 @@ class DestructEngine {
     
     public function runDisplayEngine() {
         if(!$_POST && isset($_GET['key'])) {
-            $n = $_GET['key'];
-            $this->_proccessMessageView($n);
+            $n = htmlentities(trim($_GET['key']));
+            if ($this->_safeString($n) && strlen($n) == 16) {
+                $this->_proccessMessageView($n);
+            }
         }
     }
     
