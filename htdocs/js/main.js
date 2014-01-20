@@ -1124,5 +1124,4 @@ $(function(){
             return false;
         });
         
-        $(".intro-msg").html(markdown.toHTML($(".intro-msg").html()));
 });
