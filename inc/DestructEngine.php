@@ -120,7 +120,7 @@ class DestructEngine {
 
     private function _sqlifyStr($str) {
         $str = htmlentities(trim($str));
-        $clean = preg_replace('/[^a-zA-Z0-9=]/i', '', $str);
+        $clean = preg_replace('/[^a-zA-Z0-9=\\\+]/i', '', $str);
         $this->_sendHeader('x-clean: ' . $clean);
         $this->_sendHeader('x-dirty: ' . $str);
         return $clean;
