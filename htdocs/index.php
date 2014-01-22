@@ -1,11 +1,13 @@
 <?php
 require_once '../inc/Functions.php';
 
+$engine = DestructEngine::factory();
+
 // stop those stupid URL grabbers (ex: facebook) that tries to grab the title,
 // and thus delete the message before the user sees it
-DestructEngine::stopLinkGrabbing();
+$engine->stopLinkGrabbing();
 
-$engine = DestructEngine::factory();
+// MAGIC!
 $engine->run();
 
 $message = $engine->message();

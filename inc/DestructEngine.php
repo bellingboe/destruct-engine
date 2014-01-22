@@ -133,10 +133,6 @@ class DestructEngine {
         return new self();
     }
     
-    public static function stopLinkGrabbing() {
-        $this->_detectUserAgent();
-    }
-    
     public static function ltc() {
         return self::$LTC_ADDR;
     }
@@ -146,6 +142,10 @@ class DestructEngine {
     }
     
     // ===== INSTANCE Methods ===== //
+    
+    public function stopLinkGrabbing() {
+        $this->_detectUserAgent();
+    }
     
     public function err() {
         return $this->err;
