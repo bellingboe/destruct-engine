@@ -16,7 +16,7 @@ class DestructEngine {
     private static $unauth_header       = 'HTTP/1.0 302 Found';
     private static $unauth_text         = 'This message is encrypted.';
     
-    private static $err_header          = ':msg: did-err';
+    private static $err_header          = 'x-msg: did-err';
     
     private static $err_msg_gone        = 'That message no longer exists.';
     
@@ -74,7 +74,7 @@ class DestructEngine {
         if (is_object($this->message)) {
             $this->_deleteMessage();
         } else {
-            $this->_sendHeader(':nonce: ' . $nonce);
+            $this->_sendHeader('x-nonce: ' . $nonce);
         }
     }
     
@@ -120,7 +120,10 @@ class DestructEngine {
 
     private function _sqlifyStr($str) {
         $str = htmlentities(trim($str));
-        return preg_replace('/[^a-zA-Z0-9=]/i', '', $str);
+        $clean = preg_replace('/[^a-zA-Z0-9=]/i', '', $str);
+        $this->_sendHeader('x-clean: ' . $clean);
+        $this->_sendHeader('x-dirty: ' . $str);
+        return $clean;
     }
     
     /**
