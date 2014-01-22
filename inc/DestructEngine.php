@@ -14,19 +14,21 @@ class DestructEngine {
     
     private static $unauth_agents       = array('facebookexternalhit');
     private static $unauth_header       = 'HTTP/1.0 302 Found';
+    private static $unauth_text         = 'This message is encrypted.';
     
     private static $err_msg_gone        = 'That message no longer exists.';
     
     private $agent                      = null;
     private $message                    = null;
     private $share_url                  = null;
+    private $err                        = false;
     
     /**
      * ========== PRIVATE METHODS ==========
      **/
     
     private function __construct() {
-        $this->agent    = $_SERVER['HTTP_USER_AGENT'];
+        $this->agent = $_SERVER['HTTP_USER_AGENT'];
     }
     
     private function _mergeUnauthUserAgents() {
@@ -43,47 +45,97 @@ class DestructEngine {
     
     private function _detectUserAgent() {
         if ($this->_agentMatchUnauth()) {
-            header(self::$unauth_header); 
+            header(self::$unauth_header);
+            echo $this->_unauthText();
             die();
         }
     }
     
-    private function _getMessage($nonce) {
+    private function _unauthText() {
+        return self::$unauth_text;
+    }
+    
+    private function _findMessage($nonce) {
         $this->message = DestructMessage::find_by_n($nonce, array('limit' => 1));
     }
     
-    private function _deleteMessage($nonce) {
-        if (is_object($this->message)) {
-            $this->message->delete();
-        }
+    private function _deleteMessage() {
+        $this->message->delete();
     }
     
     private function _createMessage($body, $nonce) {
-        $msg = DestructMessage::create(array('b' => $body, 'n' => $nonce));
+        return DestructMessage::create(array('b' => $body, 'n' => $nonce));
     }
     
     private function _proccessMessageView($nonce) {
-        $this->_getMessage($nonce);
-        $this->_deleteMessage($nonce);
-    }
-    
-    private function _ranStr($length = 16) {
-        $chars ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-        $final_rand='';
-        for($i=0;$i<$length; $i++) {
-            $final_rand .= $chars[ rand(0,strlen($chars)-1)];
-     
+        $this->_findMessage($nonce);
+        if (is_object($this->message)) {
+            $this->_deleteMessage();
         }
-        return $final_rand;
     }
     
-    private function _safeString($str) {
-        return preg_match('/^[a-zA-Z0-9]+$/', $str);
+    private function _runDisplayEngine() {
+        $n = $this->_sqlifyStr($_GET['key']);
+        if (strlen($n) == 16) {
+            $this->_proccessMessageView($n);
+        } else {
+            $this->err = true;
+        }
+    }
+    
+    private function _runPostEngine() {
+        $body   = $this->_sqlifyStr($_POST['m']);
+        $nonce  = $this->_randomNonce();
+        $msg    = $this->_createMessage($body, $nonce);
+        
+        if (is_object($msg)) {
+             $this->share_url = sprintf('%s://%s/n_%s', self::$url_protocol, self::$url_domain, $nonce);
+        } else {
+            $this->err = true;
+        }
+    }
+    
+    private function _isMessagePost() {
+        if (isset($_POST) && isset($_POST['m'])) {
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isMessageRead() {
+        if(!isset($_POST) && isset($_GET['key'])) {
+            return true;
+        }
+        return false;
+    }
+    
+    private function _randomNonce($len = 16) {
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $nonce = NULL;
+        for ($i=0; $i<$len; $i++) {
+            $nonce .= $chars[rand(0,strlen($chars)-1)];
+        }
+        return $nonce;
+    }
+
+    private function _sqlifyStr($str) {
+        $str = htmlentities(trim($str));
+        return preg_replace('/[^a-zA-Z0-9=]/i', '', $str);
     }
     
     /**
      * ========== PUBLIC METHODS ==========
      **/
+    
+    // ===== STATIC Methods ===== //
+    
+    public static function factory() {
+        return new self();
+    }
+    
+    public static function stopLinkGrabbing() {
+        $this->_detectUserAgent();
+    }
     
     public static function ltc() {
         return self::$LTC_ADDR;
@@ -93,8 +145,10 @@ class DestructEngine {
         return self::$BTC_ADDR;
     }
     
-    public static function factory() {
-        return new self();
+    // ===== INSTANCE Methods ===== //
+    
+    public function err() {
+        return $this->err;
     }
     
     public function errorGone() {
@@ -112,21 +166,13 @@ class DestructEngine {
         return $this->share_url;
     }
     
-    public function runDisplayEngine() {
-        if(!$_POST && isset($_GET['key'])) {
-            $n = htmlentities(trim($_GET['key']));
-            if ($this->_safeString($n) && strlen($n) == 16) {
-                $this->_proccessMessageView($n);
-            }
+    public function run() {
+        if ($this->_isMessageRead()) {
+            $this->_runDisplayEngine();
         }
-    }
-    
-    public function runPostEngine() {
-        if (isset($_POST['m'])) {
-            $b = $_POST['m'];
-            $n = $this->_ranStr();
-            $this->_createMessage($b, $n);
-            $this->share_url = sprintf('%s://%s/n_%s', self::$url_protocol, self::$url_domain, $n);
+        
+        if ($this->_isMessagePost()) {
+            $this->_runPostEngine();
         }
     }
     

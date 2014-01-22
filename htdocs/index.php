@@ -1,12 +1,15 @@
 <?php
 require_once '../inc/Functions.php';
 
+// stop those stupid URL grabbers (ex: facebook) that tries to grab the title,
+// and thus delete the message before the user sees it
+DestructEngine::stopLinkGrabbing();
+
 $engine = DestructEngine::factory();
-$engine->runDisplayEngine();
-$engine->runPostEngine();
+$engine->run();
 
 $message = $engine->message();
-$url = $engine->url();
+$url	 = $engine->url();
 
 $url_return_html = "\"<div style='word-wrap: break-word; padding:5px; font-size: 16pt;background: #ECF2FF;' id='newMurl'><input id='shareAnchor' type='text' class='clearInput' value='%s'></div>\"";
 
