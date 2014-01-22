@@ -16,6 +16,8 @@ class DestructEngine {
     private static $unauth_header       = 'HTTP/1.0 302 Found';
     private static $unauth_text         = 'This message is encrypted.';
     
+    private static $err_header          = ':msg: did-err';
+    
     private static $err_msg_gone        = 'That message no longer exists.';
     
     private $agent                      = null;
@@ -71,16 +73,14 @@ class DestructEngine {
         $this->_findMessage($nonce);
         if (is_object($this->message)) {
             $this->_deleteMessage();
+        } else {
+            $this->_sendHeader(':nonce: ' . $nonce);
         }
     }
     
     private function _runDisplayEngine() {
         $n = $this->_sqlifyStr($_GET['key']);
-        if (strlen($n) == 16) {
-            $this->_proccessMessageView($n);
-        } else {
-            $this->err = true;
-        }
+        $this->_proccessMessageView($n);
     }
     
     private function _runPostEngine() {
@@ -141,10 +141,18 @@ class DestructEngine {
         return self::$BTC_ADDR;
     }
     
+    private static function _sendHeader($header) {
+        header($header);
+    }
+    
     // ===== INSTANCE Methods ===== //
     
     public function stopLinkGrabbing() {
         $this->_detectUserAgent();
+    }
+    
+    public function errHeader() {
+        $this->_sendHeader(self::$err_header);
     }
     
     public function err() {
@@ -167,6 +175,11 @@ class DestructEngine {
     }
     
     public function run() {
+        
+        if ($this->err) {
+            $this->errHeader();
+        }
+        
         if ($this->_isMessageRead()) {
             $this->_runDisplayEngine();
         }
