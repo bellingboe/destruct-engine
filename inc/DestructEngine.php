@@ -80,6 +80,7 @@ class DestructEngine {
     
     private function _runDisplayEngine() {
         $n = $this->_sqlifyStr($_GET['key']);
+        //$n = $_GET['key'];
         $this->_proccessMessageView($n);
     }
     
@@ -96,14 +97,14 @@ class DestructEngine {
     }
     
     private function _isMessagePost() {
-        if (isset($_POST) && isset($_POST['m'])) {
+        if ($_POST && isset($_POST['m'])) {
             return true;
         }
         return false;
     }
     
     private function _isMessageRead() {
-        if(!isset($_POST) && isset($_GET['key'])) {
+        if(!$_POST && isset($_GET['key'])) {
             return true;
         }
         return false;
@@ -119,8 +120,8 @@ class DestructEngine {
     }
 
     private function _sqlifyStr($str) {
-        $str = htmlentities(trim($str));
-        $clean = preg_replace('/[^a-zA-Z0-9=\\\+]/i', '', $str);
+        $str = trim($str);
+        $clean = preg_replace('/[^a-zA-Z0-9=\/\\\+]/i', '', $str);
         $this->_sendHeader('x-clean: ' . $clean);
         $this->_sendHeader('x-dirty: ' . $str);
         return $clean;
@@ -178,7 +179,6 @@ class DestructEngine {
     }
     
     public function run() {
-        
         if ($this->err) {
             $this->errHeader();
         }
