@@ -1,6 +1,6 @@
 function random_string(C) {
     if (C === null) {
-        C = 16
+        C = 20
     }
     var B = "abcdefghijklmnopqrstuvwxyz1234567890";
     var D = "";
@@ -1066,7 +1066,9 @@ $(function(){
 	});
 	
 	if ($("#errmsg").html()) {
-		//$("#msgForm").hide();
+            try {
+                window.history.pushState('decrypted', 'Destruct.co', '/');
+            } catch(err) { }
 	}
 	
 	if (location.hash && $("#mdisplay").html()) {

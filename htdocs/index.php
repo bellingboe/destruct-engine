@@ -1,6 +1,9 @@
 <?php
 require_once '../inc/Functions.php';
 
+// ================== MAIN ================== //
+// Yes, this page is gross. It'll be prettier. In time.
+
 $engine = DestructEngine::factory();
 
 // stop those stupid URL grabbers (ex: facebook) that tries to grab the title,
@@ -30,8 +33,8 @@ if ($url !== null) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Destruct.co | Private, secure, destructable messages.</title>
-    <meta name="description" content="">
+    <title>Private, secure, destructable messages with Destruct.co</title>
+    <meta name="description" content="Share a confidential note via a web link that will self-destruct after it is read by your intended recipient.">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -58,7 +61,7 @@ if ($url !== null) {
                     echo sprintf($message_return_html, $message, $message);
                     echo "<hr><p><b>Message has been destroyed.</b> <a href='/'>Create New Message</a></p>";
             } else if($message==null && isset($_GET['key'])) {
-                    echo $engine->errorGone();
+                    echo "<div id='errmsg'>" . $engine->errorGone() . "</div>";
             }
             ?>
 
@@ -80,16 +83,13 @@ if ($url !== null) {
                     Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
 	    </p>
             <p class="authorline">
-                    Made pretty by <a href='//twitter.com/oscargodson'>@oscargodson</a> and <a href='http://epiceditor.com'>EpicEditor</a>.
-            </p>
-            <p class="authorline">
-                    Huge thanks to the creators of <a href='//github.com/mdp/gibberish-aes'>Gibberish AES</a> - the core Destruct.co relies on.
-            </p>
-            <p class="authorline">
                     Donate BTC: <strong><?php echo DestructEngine::btc();?></strong>
             </p>
             <p class="authorline">
                     Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>
+            </p>
+            <p class="authorline">
+                    Huge thanks to the creators of <a href='//github.com/mdp/gibberish-aes'>Gibberish AES</a>, <a href='//twitter.com/oscargodson'>@oscargodson</a> and <a href='http://epiceditor.com'>EpicEditor</a>.
             </p>
 	</div>
         
