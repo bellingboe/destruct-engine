@@ -1038,8 +1038,6 @@ function unciph(A, B) {
 }));
 
 $(function(){
-	
-	window._clearEEBox = true;
 
 	function nl2br (str, is_xhtml) {
 		var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
@@ -1057,13 +1055,7 @@ $(function(){
 		},
 	};
 	var editor = new EpicEditor(opts).load();
-	
-	$(editor.getElement('editor')).on('click', function () {
-		if (window._clearEEBox) {
-			editor.getElement('editor').body.innerHTML = "";
-			window._clearEEBox = false;
-		}
-	});
+
 	
 	if ($("#errmsg").html()) {
             try {
