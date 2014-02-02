@@ -1050,7 +1050,7 @@ $(function(){
 		focusOnLoad: true,
 		autogrow: true,
 		button: {
-			preview: false,
+			preview: true,
 			fullscreen: false,
 		},
 	};
