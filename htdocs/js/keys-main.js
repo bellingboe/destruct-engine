@@ -15,6 +15,15 @@ $(function(){
     var user_page = $("#userAccountPage");
     
     var _priv = {
+        createHiddenModalEl: function() {
+            $("<img>").addClass("modal-hack").css({width: 0, height: 0}).appendTo($("body"));
+        },
+        removeHiddenModalEl: function() {
+            $(".modal-hack").remove();
+        },
+        getHiddenModalEl: function() {
+            return $(".modal-hack");
+        },
         dcKey: function(kd, ep) {
             try {
                 var k_str = unciph(ep, kd);
@@ -281,7 +290,11 @@ $(function(){
         
         var pub_arr = [];
         
-        $(".site-head").avgrund({
+        _priv.removeHiddenModalEl();
+        _priv.createHiddenModalEl();
+        var new_hook = _priv.getHiddenModalEl();
+        
+        new_hook.avgrund({
                 height: 500,
                 holderClass: 'custom',
                 showClose: true,
@@ -296,7 +309,7 @@ $(function(){
                 '</div>'
         });
         
-        $(".site-head").trigger("click");
+        new_hook.trigger("click");
         
         $("body").on("click", ".keys-pub-dc", function(){
             var select_id = $(".pub-key-select option:selected").val();
@@ -333,7 +346,11 @@ $(function(){
         
         var pub_arr = [];
         
-        $(".site-head").avgrund({
+        _priv.removeHiddenModalEl();
+        _priv.createHiddenModalEl();
+        var new_hook = _priv.getHiddenModalEl();
+        
+        new_hook.avgrund({
                 height: 500,
                 holderClass: 'custom',
                 showClose: true,
@@ -348,7 +365,7 @@ $(function(){
                 '</div>'
         });
         
-        $(".site-head").trigger("click");
+        new_hook.trigger("click");
         
         $("body").on("click", ".keys-pub-enc", function(){
             var select_id = $(".pub-key-select option:selected").val();
