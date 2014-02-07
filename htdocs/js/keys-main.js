@@ -339,11 +339,11 @@ $(function(){
                 showClose: true,
                 enableStackAnimation: true,
                 onBlurContainer: '#wrapper',
-                template: '<p>Choose the public key from your keys list. This is the only person who will be able to read your message. Then type your message and the text area will populate with a PGP armored message.</p>' +
+                template: '<p class="authorline" style="padding-top:0;">Choose the public key from your keys list. This is the only person who will be able to read your message. Then type your message and the text area will populate with a PGP armored message.</p>' +
                 '<div>' +
                 'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
-                'Message: <textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
+                '<textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Encrypt and Sign" class="submit keys-pub-enc">' +
                 '</div>'
         });
