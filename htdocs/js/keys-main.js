@@ -291,7 +291,7 @@ $(function(){
                 '<div>' +
                 'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
-                'Message: <textarea style="height:85px;" class="keys-pub-txt"></textarea>'+
+                'Message: <textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Decrypt" class="submit keys-pub-dc">' +
                 '</div>'
         });
@@ -343,7 +343,7 @@ $(function(){
                 '<div>' +
                 'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
-                'Message: <textarea style="height:85px;" class="keys-pub-txt"></textarea>'+
+                'Message: <textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Encrypt and Sign" class="submit keys-pub-enc">' +
                 '</div>'
         });
