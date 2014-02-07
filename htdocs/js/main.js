@@ -39,10 +39,11 @@ $(function(){
 			$("#msgForm").show();
 		}
                 
-		//uc = nl2br(uc, false);
+		uc_clear = nl2br(uc, false);
                 uc = markdown.toHTML(uc);
 		
 		$("#mdisplay").show().html(uc);
+		$("#rawdisplay").show().html(uc_clear);
 		location.hash = "";
                 
                 try {

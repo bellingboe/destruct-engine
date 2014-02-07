@@ -18,7 +18,7 @@ $url	 = $engine->url();
 
 $url_return_html = "\"<div style='word-wrap: break-word; padding:5px; font-size: 16pt;background: #ECF2FF;' id='newMurl'><input id='shareAnchor' type='text' class='clearInput' value='%s'></div>\"";
 
-$message_return_html = "<div id='mdisplay'>%s </div><input type='hidden' id='msgenc' value='%s'>";
+$message_return_html = "<h3>Markdown</h3><div id='mdisplay'>%s </div><input type='hidden' id='msgenc' value='%s'><br><br><h3>Raw Output</h3><div id='rawdisplay'></div>";
 
 if ($url !== null) {
     echo sprintf($url_return_html, $url);
