@@ -127,6 +127,12 @@ input[type="password"]:focus
     color: #666;
 }
 
+.hotline {
+    background: #EEE;
+    padding-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
 
 
 

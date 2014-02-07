@@ -79,6 +79,9 @@ if ($url !== null) {
                 <a href='/'>Create New Message</a>
             </p>
     
+            <p class="authorline hotline">
+                    Try the new <a href="/keys/">Keys experiment</a> - create & manage PGP keys in your browser.
+	    </p>
             <p class="authorline">
                     Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
 	    </p>

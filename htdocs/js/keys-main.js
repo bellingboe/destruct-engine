@@ -28,6 +28,13 @@ $(function(){
             }
             return false;
         },
+        accessCheck: function() {
+            $.getJSON("/keys/ajax/access.php", function(r) {
+                if (r.id !== 0) {
+                    loadUserPage(r.email);
+                }
+            });
+        },
         loadPubKeys: function() {
             pub_key_list.find("li:not(.keys-none-public)").remove();
             $.getJSON("/keys/ajax/keys.php?public", function(r) {
@@ -142,9 +149,7 @@ $(function(){
         new_key_btn.on("click", function(){
             _priv.createKeyPair();
         });
-        
-        //_priv.addPublicKey();
-        
+
         new_pub_key_btn.avgrund({
                 height: 500,
                 holderClass: 'custom',
@@ -168,6 +173,10 @@ $(function(){
         _priv.addPublicKey(pd, pl);
         $(".avgrund-close").trigger("click");
         return false;
+    });
+    
+    $(".help-icon").on("click", function() {
+        alert($(this).attr("title"));
     });
     
     user_page.on("click", ".unlock-btn", function() {
@@ -234,5 +243,7 @@ $(function(){
             
             return false;
     });
+    
+    _priv.accessCheck();
 
 });

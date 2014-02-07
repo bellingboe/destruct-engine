@@ -179,7 +179,11 @@ a.gh-link:hover {
 	display: none;
 }
 
-.box-clickable {
+.box-clickable,
+a.box-clickable,
+a.box-clickable:link,
+a.box-clickable:active,
+a.box-clickable:visited {
 	cursor: pointer;
 	background-color: #ce0100;
 	color: #fff;
@@ -218,4 +222,13 @@ a.gh-link:hover {
 
 .avgrund-close {
 	display: none;
+}
+
+.user-keys-page .nav-bar {
+	padding: 10px;
+}
+
+.user-keys-page .nav-bar a {
+	text-decoration: none;
+	float: right;
 }

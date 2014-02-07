@@ -28,14 +28,17 @@ require_once '../../inc/Functions.php';
             
             <a href="#" id="show_intro_msg" class="info-toggle">What is this?</a>
             <div class="intro-msg">
-		Keys is an experiment using OpenPGP.js for further browser-based encryption using PGP keypairs.
+		Keys is an experiment using OpenPGP.js for further browser-based encryption using PGP keypairs. You create an account or login, then create a keypair. The keypair is encrypted with your password before it's sent to the server, and your password is never sent to the server. All encryption/decryption happns in the browser.
             </div>
 	    
 	    <div id="userAccountPage" class="user-keys-page">
-		
+		<div class="nav-bar">
+		    <a href="/keys/logout.php" class="box-clickable">Logout</a>
+		    <br style="clear:both">
+		</div>
 		<div id="keyItemEntry" class="entryTemplate is-locked">
 		    <div class="key-data"></div>
-		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable raw-btn">Raw Key</span>
+		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable raw-btn">Raw Key</span>
 		    
 		    <div class="key-pub key-block"></div>
 		    <div class="key-priv key-block"></div>
@@ -47,12 +50,20 @@ require_once '../../inc/Functions.php';
 		    <div class="key-pub key-block"></div>
 		</div>
 		
-		<h2>Your Keypairs <span class="box-clickable" id="createNewKeyBtn">Create</span></h2>
+		<h2>Your Keypairs <span class="box-clickable help-icon" id="keyPairHelp" title="These are the keypairs you have created. You can generate a new keypair with the 'Create' button which will allow you to send and receive secure messages.
+
+		The new public/private keypair will be packed together and then encrypted with your password before ever being stored on the server.
+
+		We never capture your key passwords.">?</span> <span class="box-clickable" id="createNewKeyBtn">Create</span></h2>
 		<ul id="userKeysList">
 		    <li class="keys-none">No keys.</li>
 		</ul>
 
-		<h2>Your Public Keys <span class="box-clickable" id="createNewPubKeyBtn">Add</span></h2>
+		<h2>Public Keys <span class="box-clickable help-icon" id="publicKeyHelp" title="These are the public keys you've added.
+
+		In order to send someone a secure message or link, they must give you their public key.
+
+		Public keys are not secret information, and are not encrypted.">?</span> <span class="box-clickable" id="createNewPubKeyBtn">Add</span></h2>
 		<ul id="userPubKeysList">
 		    <li class="keys-none-public">No keys.</li>
 		</ul>
@@ -65,8 +76,10 @@ require_once '../../inc/Functions.php';
                     <input type="submit" name="loginEncrypted" value="Manage Keys" class="submit">
                     <br style="clear:both">
             </form>
+	    
+	    <p class="authorline hotline">Keys is a <a href='/'>Destruct.co</a> experiment.</p>
 	</div>
-        
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="/js/plugins.js"></script>
