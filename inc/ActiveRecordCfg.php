@@ -9,4 +9,5 @@ ActiveRecord\Config::initialize(function($cfg) use ($connections)
 {
     $cfg->set_model_directory(dirname(__FILE__) . '/php-activerecord/models');
     $cfg->set_connections($connections);
+    $cfg->set_default_connection($connections['production']);
 });

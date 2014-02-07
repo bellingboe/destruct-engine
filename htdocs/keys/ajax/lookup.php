@@ -1,45 +1,30 @@
 <?php
-error_reporting(E_ALL);
-ini_set("display_errors", "On");
-
-//session_start();
-
 require_once '../../../inc/Functions.php';
 
 $em = $_POST['em'];
+$raw_pw = $_POST['pw'];
+$pw = User::_genUserHash($em, $raw_pw, PW_SALT);
 $json = array();
 $json['new'] = false;
-
-$user = KeysUser::find_by_email_address($em, array('limit' => 1));
+$user = User::find_by_email_address($em, array('limit' => '1'));
 
 if ($user == null) {
     $json['new'] = true;
-    $user = KeysUser::create(array("email_address" => $em));
+    $u = new User();
+    $u->email_address = $em;
+    $u->acct_pw = $pw;
+    $u->save();
+    $json['id'] = (int)$u->id;
+    $user = $u;
+} else if ($user->acct_pw !== $pw) {
+    $json['id'] = 0;
+    $json['pw'] = false;
+} else {
+    $json['id'] = (int)$user->id;
+    $json['s'] = true;
 }
 
-$json['id'] = $user->user_id;
-
-if ($json['id'] !== null) {
-    
-    //$json['keys'] = KeyPair::find_all_by_user_id($json['id'], array('order' => 'key_id desc'));
-    //$json['keys'] = KeyPair::find('all', array('conditions' => array('user_id=?',$json['id']), 'order' => 'key_id desc'));
-    
-    try {
-        //$k = KeyPair::find_all_by_user_id($json['id'], array('order' => 'key_id desc'));
-        $keys = KeyPair::find_all_by_user_id($json['id']);
-        $k = array();
-        foreach ($keys as $i=>$o) {
-            $kd = array("key_data" => $o->key_data, "key_id" => $o->key_id);
-            $k[] = $kd;
-        }
-        
-        $json['keys'] = $k;
-        $json['key_count'] = count($k);
-    } catch(\Exception $e) {
-        $json['key_err'] = true;
-        $json['err'] = $e;
-    }
-    
+if ($json['id'] > 0) {
     $_SESSION['id'] = $json['id'];
 }
 

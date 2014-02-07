@@ -1,5 +1,9 @@
 <?php
-ini_set("display_errors", "Off");
+
+error_reporting(E_ALL);
+ini_set("display_errors", "On");
+
+session_start();
 
 require_once 'Constants.php';       // Database connection parameters.
 require_once 'ActiveRecordCfg.php'; // ActiveRecord config and setup.

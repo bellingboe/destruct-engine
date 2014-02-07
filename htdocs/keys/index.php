@@ -15,6 +15,7 @@ require_once '../../inc/Functions.php';
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/vendor/avgrund/style/avgrund.css">
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
     <body>
@@ -30,25 +31,47 @@ require_once '../../inc/Functions.php';
 		Keys is an experiment using OpenPGP.js for further browser-based encryption using PGP keypairs.
             </div>
 	    
-            <form id="keysUserForm" action="" method="post">
-		    <p class="infoline">
-			Your password is <strong>not</strong> sent to the server in plaintext. We cannot decrypt your keys or messages.
-		    </p>
+	    <div id="userAccountPage" class="user-keys-page">
+		
+		<div id="keyItemEntry" class="entryTemplate is-locked">
+		    <div class="key-data"></div>
+		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable raw-btn">Raw Key</span>
+		    
+		    <div class="key-pub key-block"></div>
+		    <div class="key-priv key-block"></div>
+		    <div class="key-raw key-block"></div>
+		</div>
+		
+		<div id="pubkeyItemEntry" class="entryTemplate is-unlocked">
+		    <span class="keyLabel"></span> <span class="box-clickable pubk-btn">View Key</span>
+		    <div class="key-pub key-block"></div>
+		</div>
+		
+		<h2>Your Keypairs <span class="box-clickable" id="createNewKeyBtn">Create</span></h2>
+		<ul id="userKeysList">
+		    <li class="keys-none">No keys.</li>
+		</ul>
 
+		<h2>Your Public Keys <span class="box-clickable" id="createNewPubKeyBtn">Add</span></h2>
+		<ul id="userPubKeysList">
+		    <li class="keys-none-public">No keys.</li>
+		</ul>
+	    </div>
+	    
+            <form id="keysUserForm" action="" method="post">
 		    <input type="text" class="keys-email" placeholder="Email Address">
 		    <br style="clear:both">
 		    <input type="password" class="keys-password" placeholder="Password">
-    
                     <input type="submit" name="loginEncrypted" value="Manage Keys" class="submit">
                     <br style="clear:both">
             </form>
-		
 	</div>
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="/js/plugins.js"></script>
 	<script src="/js/vendor/openpgp/openpgp.min.js"></script>
+	<script src="/js/vendor/avgrund/jquery.avgrund.min.js"></script>
 	<script src="/js/aes.js"></script>
         <script src="/js/keys-main.js"></script>
     </body>

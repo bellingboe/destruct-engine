@@ -8,6 +8,10 @@ html, body {
 	height: 100%;
 }
 
+html {
+	background: #222;
+}
+
 .submit {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
@@ -68,6 +72,8 @@ html, body {
 	border-top: 4px solid rgb(254, 26, 0);
 	border-bottom: 4px solid rgb(102, 102, 102);
 	background: #ffffff;
+	height:100%;
+	overflow-y: auto;
 }
 
 h1 {
@@ -167,4 +173,49 @@ a.gh-link:hover {
 	margin-top: -7px;
 	margin-right: -104px;
 	opacity: 1.0;
+}
+
+.user-keys-page {
+	display: none;
+}
+
+.box-clickable {
+	cursor: pointer;
+	background-color: #ce0100;
+	color: #fff;
+	text-align: center;
+	font-size: 11pt;
+	padding: 5px;
+}
+
+#keyItemEntry,
+#pubkeyItemEntry {
+	display: none;
+}
+
+.is-locked .unlock-btn, .is-unlocked .privk-btn, .is-unlocked .pubk-btn, .is-unlocked .lock-btn, .is-unlocked .raw-btn {
+	display: inline;
+}
+
+.is-unlocked .unlock-btn, .is-locked .privk-btn, .is-locked .pubk-btn, .is-locked .lock-btn, .is-locked .raw-btn {
+	display: none;
+}
+
+.key-data, .key-priv, .key-pub, .key-raw {
+	display: none;
+}
+
+.key-block {
+	padding: 20px;
+	font-size: 8pt;
+	color: #666D72;
+}
+
+.custom textarea {
+	width: 100%;
+	height: 150px;
+}
+
+.avgrund-close {
+	display: none;
 }
