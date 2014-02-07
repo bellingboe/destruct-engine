@@ -225,6 +225,14 @@ a.box-clickable:visited {
 	display: none;
 }
 
+.key-list-ul {
+	list-style-type: none;
+}
+
+.key-list-ul li {
+	min-height: 40px;
+}
+
 .user-keys-page .nav-bar {
 	padding: 10px;
 }

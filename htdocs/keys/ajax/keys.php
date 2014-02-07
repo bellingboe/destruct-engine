@@ -24,7 +24,7 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
         if ($key_count > 0) {
             $k = array();
             foreach ($keys as $i=>$o) {
-                $data = $public==true ? nl2br($o->key_data) : $o->key_data;
+                $data = $o->key_data;
                 $kd = array("key_data" => $data, "id" => $o->id, "label" => $o->key_label);
                 $k[] = $kd;
             }

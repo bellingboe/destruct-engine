@@ -38,7 +38,7 @@ require_once '../../inc/Functions.php';
 		</div>
 		<div id="keyItemEntry" class="entryTemplate is-locked">
 		    <div class="key-data"></div>
-		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable raw-btn">Raw Key</span> <span class="box-clickable enc-msg-btn">Encrypt</span> <span class="box-clickable dc-msg-btn">Decrypt</span>
+		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable raw-btn" style="display:none;">Raw Key</span> <span class="box-clickable enc-msg-btn">Encrypt</span> <span class="box-clickable dc-msg-btn">Decrypt</span>
 		    
 		    <div class="key-pub-raw key-block" style="display:none;"></div>
 		    <div class="key-priv-raw key-block" style="display:none;"></div>
@@ -52,6 +52,7 @@ require_once '../../inc/Functions.php';
 		<div id="pubkeyItemEntry" class="entryTemplate is-unlocked">
 		    <span class="keyLabel"></span> <span class="box-clickable pubk-btn">View Key</span>
 		    <div class="key-pub key-block"></div>
+		    <div class="key-pub-raw" style="display:none;"></div>
 		</div>
 		
 		<h2>Your Keypairs <span class="box-clickable help-icon" id="keyPairHelp" title="These are the keypairs you have created. You can generate a new keypair with the 'Create' button which will allow you to send and receive secure messages.
@@ -59,7 +60,7 @@ require_once '../../inc/Functions.php';
 		The new public/private keypair will be packed together and then encrypted with your password before ever being stored on the server.
 
 		We never capture your key passwords.">?</span> <span class="box-clickable" id="createNewKeyBtn">Create</span></h2>
-		<ul id="userKeysList">
+		<ul id="userKeysList" class="key-list-ul">
 		    <li class="keys-none">No keys.</li>
 		</ul>
 
@@ -68,7 +69,7 @@ require_once '../../inc/Functions.php';
 		In order to send someone a secure message or link, they must give you their public key.
 
 		Public keys are not secret information, and are not encrypted.">?</span> <span class="box-clickable" id="createNewPubKeyBtn">Add</span></h2>
-		<ul id="userPubKeysList">
+		<ul id="userPubKeysList" class="key-list-ul">
 		    <li class="keys-none-public">No keys.</li>
 		</ul>
 	    </div>

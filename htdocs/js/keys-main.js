@@ -28,6 +28,30 @@ $(function(){
             }
             return false;
         },
+        keyPairDropdown: function() {
+            var dropdown = $("<select>");
+            $("#userKeysList .is-unlocked").each(function (index, value) {
+                var key_id = $(this).attr("data-key-id");
+                var key_label = $(this).find(".keyLabel").html();
+                var option_item = $("<option>").val(key_id).html(key_label).appendTo(dropdown);
+            });
+            return dropdown;
+        },
+        publicKeyDropdown: function() {
+            var dropdown = $("<select>").addClass("pub-key-select");
+            $("#userPubKeysList .is-unlocked").each(function (index, value) {
+                var key_id = $(this).attr("data-pub-key-id");
+                var key_label = $(this).find(".keyLabel").html();
+                var option_item = $("<option>").val(key_id).html(key_label).appendTo(dropdown);
+            });
+            return dropdown.wrap('<p>').parent();
+        },
+        getRawPrivateById: function(id) {
+            return $(".kp-"+id).find(".key-priv-raw").html();
+        },
+        getPubKeyById: function(id) {
+            return $(".pk-"+id).find(".key-pub-raw").html();
+        },
         accessCheck: function() {
             $.getJSON("/keys/ajax/access.php", function(r) {
                 if (r.id !== 0) {
@@ -48,9 +72,11 @@ $(function(){
                     var key = keys[i];
                     var tpl = pub_key_item_tpl.clone();
                     tpl.removeAttr("id");
-                    tpl.attr("data-key-id", key.id);
+                    tpl.addClass("pk-"+key.id)
+                    tpl.attr("data-pub-key-id", key.id);
                     tpl.find(".keyLabel").html(key.label);
-                    tpl.find(".key-pub").html(key.key_data);
+                    tpl.find(".key-pub").html(nl2br(key.key_data, false));
+                    tpl.find(".key-pub-raw").html(key.key_data);
                     
                     var new_li = $("<li>");
                     tpl.appendTo(new_li);
@@ -76,6 +102,7 @@ $(function(){
                     var tpl = key_item_tpl.clone();
                     tpl.removeAttr("id");
                     tpl.attr("data-key-id", key.id);
+                    tpl.addClass("kp-"+key.id)
                     tpl.find(".keyLabel").html(key.label);
                     tpl.find(".key-data").html(key.key_data);
                     
@@ -187,7 +214,7 @@ $(function(){
     user_page.on("click", ".unlock-btn", function() {
         var data = $(this).siblings(".key-data").html();
         var label = $(this).siblings(".keyLabel").html();
-        var unlocked_pass = prompt("Enter the password for the key '"+label+"'");
+        var unlocked_pass = prompt("To unlock this keypair, enter its password.\n\nIf you do not remember the password, this key cannot be used.\n\nUsing Key: '"+label+"'");
         if (!unlocked_pass || unlocked_pass.length == 0) {
             return;
         }
@@ -234,11 +261,63 @@ $(function(){
         $(this).siblings(".key-pub").toggle();
     });
     
+    user_page.on("click", ".dc-msg-btn", function() {
+        var priv_str = $(this).siblings(".key-priv-raw").html();
+        var priv_key_obj = window.openpgp.key.readArmored(priv_str);        
+        var label = $(this).siblings(".keyLabel").html();
+        var unlocked_pass = prompt("To use this private key you need to enter the password to decrypt it.\n\nIf you do not remember the password, this key cannot be used.\n\nUsing Key: '"+label+"'");
+        var priv_key = priv_key_obj.keys[0];
+        
+        if (!unlocked_pass || unlocked_pass.length == 0) {
+            return;
+        }
+        
+        var did_unlock = priv_key.decrypt(window.user_email+unlocked_pass);
+
+        if (!did_unlock) {
+            alert('Could not decrypt private key for message decryption.');
+            return;
+        }
+        
+        var pub_arr = [];
+        
+        $(".site-head").avgrund({
+                height: 500,
+                holderClass: 'custom',
+                showClose: true,
+                enableStackAnimation: true,
+                onBlurContainer: '#wrapper',
+                template: '<p>Choose the sender\'s public key, and paste the encrypted message.</p>' +
+                '<div>' +
+                'Public Key: ' + _priv.publicKeyDropdown().html() +
+                '<br style="clear:both">' +
+                'Message: <textarea style="height:85px;" class="keys-pub-txt"></textarea>'+
+                '<input type="button" value="Decrypt" class="submit keys-pub-dc">' +
+                '</div>'
+        });
+        
+        $(".site-head").trigger("click");
+        
+        $("body").on("click", ".keys-pub-dc", function(){
+            var select_id = $(".pub-key-select option:selected").val();
+            var pk_raw = _priv.getPubKeyById(select_id);
+            var pub_key_obj = window.openpgp.key.readArmored(pk_raw);
+            var pub_key = pub_key_obj.keys[0];
+            pub_arr.push(pub_key);
+            var msg_text = $(".keys-pub-txt").val();
+            var msg_obj = window.openpgp.message.fromText(msg_text);
+            var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
+            $(".keys-pub-txt").val(real_msg.text);
+        });
+        
+        
+    });
+    
     user_page.on("click", ".enc-msg-btn", function() {
         var priv_str = $(this).siblings(".key-priv-raw").html();
         var priv_key_obj = window.openpgp.key.readArmored(priv_str);        
         var label = $(this).siblings(".keyLabel").html();
-        var unlocked_pass = prompt("Enter the password for the key '"+label+"'");
+        var unlocked_pass = prompt("To use this private key you need to enter the password to decrypt it.\n\nIf you do not remember the password, this key cannot be used.\n\nUsing Key: '"+label+"'");
         var priv_key = priv_key_obj.keys[0];
         
         if (!unlocked_pass || unlocked_pass.length == 0) {
@@ -262,7 +341,7 @@ $(function(){
                 onBlurContainer: '#wrapper',
                 template: '<p>Paste someone\'s public key here to encrypt text.</p>' +
                 '<div>' +
-                'Public Key: <textarea style="height:85px;" class="keys-pub-key"></textarea>' +
+                'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
                 'Message: <textarea style="height:85px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Encrypt and Sign" class="submit keys-pub-enc">' +
@@ -272,7 +351,9 @@ $(function(){
         $(".site-head").trigger("click");
         
         $("body").on("click", ".keys-pub-enc", function(){
-            var pub_key_obj = window.openpgp.key.readArmored($(".keys-pub-key").val());
+            var select_id = $(".pub-key-select option:selected").val();
+            var pk_raw = _priv.getPubKeyById(select_id);
+            var pub_key_obj = window.openpgp.key.readArmored(pk_raw);
             var pub_key = pub_key_obj.keys[0];
             pub_arr.push(pub_key);
             var msg_text = $(".keys-pub-txt").val();
