@@ -198,11 +198,11 @@ a.box-clickable:visited {
 	display: none;
 }
 
-.is-locked .unlock-btn, .is-unlocked .privk-btn, .is-unlocked .pubk-btn, .is-unlocked .lock-btn, .is-unlocked .raw-btn {
+.is-locked .unlock-btn, .is-unlocked .privk-btn, .is-unlocked .pubk-btn, .is-unlocked .lock-btn, .is-unlocked .raw-btn, .is-unlocked .enc-msg-btn, .is-unlocked .dc-msg-btn {
 	display: inline;
 }
 
-.is-unlocked .unlock-btn, .is-locked .privk-btn, .is-locked .pubk-btn, .is-locked .lock-btn, .is-locked .raw-btn {
+.is-unlocked .unlock-btn, .is-locked .privk-btn, .is-locked .pubk-btn, .is-locked .lock-btn, .is-locked .raw-btn, .is-locked .enc-msg-btn, .is-locked .dc-msg-btn {
 	display: none;
 }
 

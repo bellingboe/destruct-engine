@@ -102,11 +102,16 @@ $(function(){
         },
         createKeyPair: function() {
             var key_label = prompt("Enter a label for this new keypair:");
+            
+            if (!key_label || key_label.length == 0) {
+                return;
+            }
+            
             var pass = prompt("Enter a STRONG PASSWORD for this new keypair:");
             var pass2 = prompt("Enter the password again:");
             if (pass !== pass2) {
                 alert("The passwords don't match!");
-                return false;
+                return;
             }
             var email = window.user_email;
             var
@@ -137,7 +142,7 @@ $(function(){
                     return ret_val;
                 }, "json");
             }
-            return true;
+            return;
         }
     };
     
@@ -183,27 +188,36 @@ $(function(){
         var data = $(this).siblings(".key-data").html();
         var label = $(this).siblings(".keyLabel").html();
         var unlocked_pass = prompt("Enter the password for the key '"+label+"'");
+        if (!unlocked_pass || unlocked_pass.length == 0) {
+            return;
+        }
+        
         var ep = window.user_email+unlocked_pass;
         var key_unlocked = _priv.dcKey(data, ep);
         
         if (key_unlocked == false) {
-            return false;
+            return;
         }
         
         $(this).siblings(".key-priv").html(nl2br(key_unlocked[0], false));
         $(this).siblings(".key-pub").html(nl2br(key_unlocked[1], false));
         $(this).siblings(".key-raw").html(nl2br(key_unlocked[2], false));
         
+        $(this).siblings(".key-priv-raw").html(key_unlocked[0]);
+        $(this).siblings(".key-pub-raw").html(key_unlocked[1]);
+        $(this).siblings(".key-raw-raw").html(key_unlocked[2]);
+        
         var locked = $(this).closest(".is-locked");
         locked.removeClass("is-locked").addClass("is-unlocked");
-        
-        return true;
     });
     
     user_page.on("click", ".lock-btn", function() {
         $(this).siblings(".key-priv").html("");
         $(this).siblings(".key-pub").html("");
         $(this).siblings(".key-raw").html("");
+        $(this).siblings(".key-priv-raw").html("");
+        $(this).siblings(".key-pub-raw").html("");
+        $(this).siblings(".key-raw-raw").html("");
         var unlocked = $(this).closest(".is-unlocked");
         unlocked.removeClass("is-unlocked").addClass("is-locked");
     });
@@ -218,6 +232,55 @@ $(function(){
     
     user_page.on("click", ".pubk-btn", function() {
         $(this).siblings(".key-pub").toggle();
+    });
+    
+    user_page.on("click", ".enc-msg-btn", function() {
+        var priv_str = $(this).siblings(".key-priv-raw").html();
+        var priv_key_obj = window.openpgp.key.readArmored(priv_str);        
+        var label = $(this).siblings(".keyLabel").html();
+        var unlocked_pass = prompt("Enter the password for the key '"+label+"'");
+        var priv_key = priv_key_obj.keys[0];
+        
+        if (!unlocked_pass || unlocked_pass.length == 0) {
+            return;
+        }
+        
+        var did_unlock = priv_key.decrypt(window.user_email+unlocked_pass);
+
+        if (!did_unlock) {
+            alert('Could not decrypt private key for signing.');
+            return;
+        }
+        
+        var pub_arr = [];
+        
+        $(".site-head").avgrund({
+                height: 500,
+                holderClass: 'custom',
+                showClose: true,
+                enableStackAnimation: true,
+                onBlurContainer: '#wrapper',
+                template: '<p>Paste someone\'s public key here to encrypt text.</p>' +
+                '<div>' +
+                'Public Key: <textarea style="height:85px;" class="keys-pub-key"></textarea>' +
+                '<br style="clear:both">' +
+                'Message: <textarea style="height:85px;" class="keys-pub-txt"></textarea>'+
+                '<input type="button" value="Encrypt and Sign" class="submit keys-pub-enc">' +
+                '</div>'
+        });
+        
+        $(".site-head").trigger("click");
+        
+        $("body").on("click", ".keys-pub-enc", function(){
+            var pub_key_obj = window.openpgp.key.readArmored($(".keys-pub-key").val());
+            var pub_key = pub_key_obj.keys[0];
+            pub_arr.push(pub_key);
+            var msg_text = $(".keys-pub-txt").val();
+            var arm_msg = window.openpgp.signAndEncryptMessage(pub_arr, priv_key, msg_text);
+            $(".keys-pub-txt").val(arm_msg);
+        });
+        
+        
     });
     
     $("#show_intro_msg").on("click", function(e){

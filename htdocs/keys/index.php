@@ -38,7 +38,11 @@ require_once '../../inc/Functions.php';
 		</div>
 		<div id="keyItemEntry" class="entryTemplate is-locked">
 		    <div class="key-data"></div>
-		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable raw-btn">Raw Key</span>
+		    <span class="keyLabel"></span> <span class="box-clickable unlock-btn">Unlock</span> <span class="box-clickable lock-btn">LOCK</span> <span class="box-clickable pubk-btn">Public Key</span> <span class="box-clickable privk-btn">Private Key</span> <span class="box-clickable raw-btn">Raw Key</span> <span class="box-clickable enc-msg-btn">Encrypt</span> <span class="box-clickable dc-msg-btn">Decrypt</span>
+		    
+		    <div class="key-pub-raw key-block" style="display:none;"></div>
+		    <div class="key-priv-raw key-block" style="display:none;"></div>
+		    <div class="key-raw-raw key-block" style="display:none;"></div>
 		    
 		    <div class="key-pub key-block"></div>
 		    <div class="key-priv key-block"></div>
