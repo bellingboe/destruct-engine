@@ -305,7 +305,7 @@ $(function(){
             var pub_key = pub_key_obj.keys[0];
             pub_arr.push(pub_key);
             var msg_text = $(".keys-pub-txt").val();
-            var msg_obj = window.openpgp.message.fromText(msg_text);
+            var msg_obj = window.openpgp.message.readArmored(msg_text);
             var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
             $(".keys-pub-txt").val(real_msg.text);
         });
