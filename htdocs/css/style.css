@@ -74,6 +74,7 @@ html {
 	background: #ffffff;
 	height:100%;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 h1 {
