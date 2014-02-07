@@ -287,7 +287,7 @@ $(function(){
                 showClose: true,
                 enableStackAnimation: true,
                 onBlurContainer: '#wrapper',
-                template: '<p>Choose the sender\'s public key, and paste the encrypted message.</p>' +
+                template: '<p>Choose the sender\'s public key, and paste the armored message.</p>' +
                 '<div>' +
                 'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
@@ -339,7 +339,7 @@ $(function(){
                 showClose: true,
                 enableStackAnimation: true,
                 onBlurContainer: '#wrapper',
-                template: '<p>Paste someone\'s public key here to encrypt text.</p>' +
+                template: '<p>Choose the public key from your keys list. This is the only person who will be able to read your message. Then type your message and the text area will populate with a PGP armored message.</p>' +
                 '<div>' +
                 'Public Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
