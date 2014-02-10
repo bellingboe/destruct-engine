@@ -43,6 +43,22 @@ if ($url !== null) {
     <script src="/epiceditor.min.js"></script>
     <script src="/js/vendor/markdown/markdown.min.js"></script>
     <meta property="twitter:account_id" content="4503599627845130" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@NerdWhoCodes">
+    <meta name="twitter:title" content="Secure PGP Encryption">
+    <meta name="twitter:description" content="Everything is encrypted in 256-bit AES">
+    <meta name="twitter:creator" content="@NerdWhoCodes">
+    <meta name="twitter:image:src" content="">
+    <meta name="twitter:domain" content="destruct.co">
+    <meta name="twitter:app:name:iphone" content="">
+    <meta name="twitter:app:name:ipad" content="">
+    <meta name="twitter:app:name:googleplay" content="">
+    <meta name="twitter:app:url:iphone" content="">
+    <meta name="twitter:app:url:ipad" content="">
+    <meta name="twitter:app:url:googleplay" content="">
+    <meta name="twitter:app:id:iphone" content="">
+    <meta name="twitter:app:id:ipad" content="">
+    <meta name="twitter:app:id:googleplay" content="">
 </head>
     <body>
 	<div id="wrapper">
