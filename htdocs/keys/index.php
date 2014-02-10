@@ -33,7 +33,7 @@ require_once '../../inc/Functions.php';
 	    
 	    <div id="userAccountPage" class="user-keys-page">
 		<div class="nav-bar">
-		    <a href="/keys/logout.php" class="box-clickable">Logout</a>
+		    <a href="/keys/help.php" class="box-clickable" style="margin-left: 10px;">Help</a> - <a href="/keys/logout.php" class="box-clickable">Logout</a>
 		    <br style="clear:both">
 		</div>
 		<div id="keyItemEntry" class="entryTemplate is-locked">
