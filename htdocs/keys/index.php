@@ -17,6 +17,7 @@ require_once '../../inc/Functions.php';
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/vendor/avgrund/style/avgrund.css">
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    <meta property="twitter:account_id" content="4503599627845130" />
 </head>
     <body>
 	<div id="wrapper">

@@ -42,6 +42,7 @@ if ($url !== null) {
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
     <script src="/epiceditor.min.js"></script>
     <script src="/js/vendor/markdown/markdown.min.js"></script>
+    <meta property="twitter:account_id" content="4503599627845130" />
 </head>
     <body>
 	<div id="wrapper">
