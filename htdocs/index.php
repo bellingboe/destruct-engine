@@ -86,7 +86,7 @@ if ($url !== null) {
                     Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
 	    </p>
             <p class="authorline">
-                    Donate BTC: <strong><?php echo DestructEngine::btc();?></strong>
+                    Donate DOGE: <strong><?php echo DestructEngine::doge();?></strong>
             </p>
             <p class="authorline">
                     Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>

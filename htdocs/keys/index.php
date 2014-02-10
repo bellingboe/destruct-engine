@@ -82,6 +82,12 @@ require_once '../../inc/Functions.php';
                     <br style="clear:both">
             </form>
 	    
+            <p class="authorline">
+                    Donate DOGE: <strong><?php echo DestructEngine::doge();?></strong>
+            </p>
+            <p class="authorline">
+                    Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>
+            </p>
 	    <p class="authorline hotline">Keys is a <a href='/'>Destruct.co</a> experiment.</p>
 	</div>
 
@@ -92,5 +98,15 @@ require_once '../../inc/Functions.php';
 	<script src="/js/vendor/avgrund/jquery.avgrund.min.js"></script>
 	<script src="/js/aes.js"></script>
         <script src="/js/keys-main.js"></script>
+	
+        <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                
+                ga('create', 'UA-27412705-2', 'destruct.co');
+                ga('send', 'pageview');
+        </script>
     </body>
 </html>

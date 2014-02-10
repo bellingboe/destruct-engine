@@ -7,7 +7,7 @@ class DestructEngine {
      **/
     
     private static $LTC_ADDR            = 'LaXR9JPXeMJFoznpqsHPWJsTULPdeijyVx';
-    private static $BTC_ADDR            = '1N6BYCRbrL7mLLvpgP9asgnxpzs7oticmc';
+    private static $DOGE_ADDR           = 'DHCDSSgzWV4bzMzNr4ywhurHwPwYNwQ1Vk';
     
     private static $url_protocol        = 'https';
     private static $url_domain          = 'destruct.co';
@@ -80,7 +80,6 @@ class DestructEngine {
     
     private function _runDisplayEngine() {
         $n = $this->_sqlifyStr($_GET['key']);
-        //$n = $_GET['key'];
         $this->_proccessMessageView($n);
     }
     
@@ -141,8 +140,8 @@ class DestructEngine {
         return self::$LTC_ADDR;
     }
     
-    public static function btc() {
-        return self::$BTC_ADDR;
+    public static function doge() {
+        return self::$DOGE_ADDR;
     }
     
     private static function _sendHeader($header) {
