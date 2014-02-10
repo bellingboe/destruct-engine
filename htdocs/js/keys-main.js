@@ -300,9 +300,12 @@ $(function(){
                 showClose: true,
                 enableStackAnimation: true,
                 onBlurContainer: '#wrapper',
+                onUnload: function(e) {
+                    $("body").off("click", ".keys-pub-dc");
+                },
                 template: '<p>Choose the sender\'s public key, and paste the armored message.</p>' +
                 '<div>' +
-                'Public Key: ' + _priv.publicKeyDropdown().html() +
+                'Sender Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
                 'Message: <textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Decrypt" class="submit keys-pub-dc">' +
@@ -319,8 +322,19 @@ $(function(){
             pub_arr.push(pub_key);
             var msg_text = $(".keys-pub-txt").val();
             var msg_obj = window.openpgp.message.readArmored(msg_text);
-            var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
-            $(".keys-pub-txt").val(real_msg.text);
+            
+            try {
+                var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
+            } catch(e) {
+                alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
+                return;
+            }
+            
+            if ("undefined" !== typeof real_msg.signatures && "undefined" !== typeof real_msg.signatures[0] && real_msg.signatures[0].valid == true) {
+                $(".keys-pub-txt").val(real_msg.text);
+            } else {
+                alert("The message signature does not match the public key you supplied. Pick the correct sender key.");
+            }
         });
         
         
@@ -356,9 +370,12 @@ $(function(){
                 showClose: true,
                 enableStackAnimation: true,
                 onBlurContainer: '#wrapper',
+                onUnload: function(e) {
+                    $("body").off("click", ".keys-pub-enc");
+                },
                 template: '<p class="authorline" style="padding-top:0;">Choose the public key from your keys list. This is the only person who will be able to read your message. Then type your message and the text area will populate with a PGP armored message.</p>' +
                 '<div>' +
-                'Public Key: ' + _priv.publicKeyDropdown().html() +
+                'Recipient Key: ' + _priv.publicKeyDropdown().html() +
                 '<br style="clear:both">' +
                 '<textarea style="height:150px;" class="keys-pub-txt"></textarea>'+
                 '<input type="button" value="Encrypt and Sign" class="submit keys-pub-enc">' +
