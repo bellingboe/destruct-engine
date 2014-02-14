@@ -328,9 +328,7 @@ $(function(){
             console.log(select_id);
             
             var pk_raw = _priv.getPubKeyById(select_id);
-            
-            console.log(pk_raw);
-            
+                        
             var pub_key_obj = window.openpgp.key.readArmored(pk_raw);
             
             console.log(pub_key_obj);
@@ -344,10 +342,14 @@ $(function(){
                 var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
+                console.log("==================");
                 console.log(pub_arr);
                 console.log(priv_key);
                 console.log(msg_obj);
-                console.log(e);
+                console.log(msg_obj.getEncryptionKeyIds());
+                console.log(msg_obj.getSigningKeyIds());
+                console.log(e.message);
+                console.log(e.stack);
                 pub_arr = [];
                 return;
             }
