@@ -344,11 +344,11 @@ $(function(){
                 var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
-                pub_arr = [];
                 console.log(pub_arr);
                 console.log(priv_key);
                 console.log(msg_obj);
                 console.log(e);
+                pub_arr = [];
                 return;
             }
             
