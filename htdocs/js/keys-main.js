@@ -338,16 +338,18 @@ $(function(){
             var msg_text = $(".keys-pub-txt").val();
             var msg_obj = window.openpgp.message.readArmored(msg_text);
             
+            console.log("==================");
+            console.log(pub_arr);
+            console.log(priv_key);
+            console.log(msg_obj);
+            console.log(msg_obj.getEncryptionKeyIds());
+            console.log(msg_obj.getSigningKeyIds());
+            
             try {
                 var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
                 console.log("==================");
-                console.log(pub_arr);
-                console.log(priv_key);
-                console.log(msg_obj);
-                console.log(msg_obj.getEncryptionKeyIds());
-                console.log(msg_obj.getSigningKeyIds());
                 console.log(e.message);
                 console.log(e.stack);
                 pub_arr = [];
