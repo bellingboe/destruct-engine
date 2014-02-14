@@ -336,6 +336,9 @@ $(function(){
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
                 pub_arr = [];
+                console.log(pub_arr);
+                console.log(priv_key);
+                console.log(msg_obj);
                 console.log(e);
                 return;
             }
