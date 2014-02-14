@@ -4,6 +4,8 @@ $(function(){
            var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
    };
+   
+   var key_size = 2048;
     
     var key_splitter = "|**|";
     var key_list = $("#userKeysList");
@@ -137,7 +139,7 @@ $(function(){
             }, "json");            
         },
         createKeyPair: function() {
-            var key_label = prompt("Enter a label for this new keypair:");
+            var key_label = prompt("Create a new keypair?\n\nKey Size: "+key_size+"\n\nPlease note that this can take a minute. Your browser may freeze for a short time.\n\nEnter a label for this new keypair:");
             
             if (!key_label || key_label.length == 0) {
                 return;
@@ -151,7 +153,7 @@ $(function(){
             }
             var email = window.user_email;
             var
-                new_key_pair = window.openpgp.generateKeyPair(1, 1280, email, email+pass)
+                new_key_pair = window.openpgp.generateKeyPair(1, key_size, key_label+" <"+email+">", email+pass)
                 , priv = new_key_pair.privateKeyArmored
                 , pub = new_key_pair.publicKeyArmored
                 , raw_key = JSON.stringify(new_key_pair.key)
