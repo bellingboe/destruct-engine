@@ -324,8 +324,17 @@ $(function(){
         
         $("body").on("click", ".keys-pub-dc", function(){
             var select_id = $(".pub-key-select option:selected").val();
+            
+            console.log(select_id);
+            
             var pk_raw = _priv.getPubKeyById(select_id);
+            
+            console.log(pk_raw);
+            
             var pub_key_obj = window.openpgp.key.readArmored(pk_raw);
+            
+            console.log(pub_key_obj);
+            
             var pub_key = pub_key_obj.keys[0];
             pub_arr.push(pub_key);
             var msg_text = $(".keys-pub-txt").val();
