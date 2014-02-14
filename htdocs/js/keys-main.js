@@ -283,7 +283,13 @@ $(function(){
             return;
         }
         
-        var did_unlock = priv_key.decrypt(window.user_email+unlocked_pass);
+        var did_unlock = false;
+        
+        try {
+            did_unlock = priv_key.decrypt(window.user_email+unlocked_pass);
+        } catch(e) {
+            console.log(e);
+        }
 
         if (!did_unlock) {
             alert('Could not decrypt private key for message decryption.');
@@ -330,6 +336,7 @@ $(function(){
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
                 pub_arr = [];
+                console.log(e);
                 return;
             }
             
