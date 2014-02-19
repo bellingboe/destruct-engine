@@ -323,33 +323,31 @@ $(function(){
         new_hook.trigger("click");
         
         $("body").on("click", ".keys-pub-dc", function(){
+            
+            pub_arr = [];
+            
             var select_id = $(".pub-key-select option:selected").val();
-            
-            console.log(select_id);
-            
             var pk_raw = _priv.getPubKeyById(select_id);
-                        
             var pub_key_obj = window.openpgp.key.readArmored(pk_raw);
-            
-            console.log(pub_key_obj);
-            
             var pub_key = pub_key_obj.keys[0];
             pub_arr.push(pub_key);
             var msg_text = $(".keys-pub-txt").val();
             var msg_obj = window.openpgp.message.readArmored(msg_text);
             
             console.log("==================");
-            console.log(pub_arr);
-            console.log(priv_key);
+            
             console.log(msg_obj);
-            console.log(msg_obj.getEncryptionKeyIds());
-            console.log(msg_obj.getSigningKeyIds());
+            console.log(msg_obj.decrypt(priv_key));
+            console.log(msg_obj.getLiteralData());
+            console.log(msg_obj.getText());
+            
+            console.log("==================");
             
             try {
                 var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
             } catch(e) {
                 alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
-                console.log("==================");
+                console.log("========== ERR ========");
                 console.log(e.message);
                 console.log(e.stack);
                 pub_arr = [];
