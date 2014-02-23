@@ -5,7 +5,7 @@ $em = $_POST['em'];
 $raw_pw = $_POST['pw'];
 $pw = User::_genUserHash($em, $raw_pw, PW_SALT);
 $json = array();
-$json['new'] = false;
+$json['is_new'] = false;
 $user = User::find_by_email_address($em, array('limit' => '1'));
 
 if ($user == null) {
@@ -15,6 +15,7 @@ if ($user == null) {
     $u->acct_pw = $pw;
     $u->save();
     $json['id'] = (int)$u->id;
+    $json['is_new'] = true;
     $user = $u;
 } else if ($user->acct_pw !== $pw) {
     $json['id'] = 0;

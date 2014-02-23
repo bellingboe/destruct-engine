@@ -4,5 +4,11 @@ require_once '../../inc/Functions.php';
 unset($_SESSION['id']);
 session_destroy();
 
-header("Location: https://destruct.co/keys/");
+if (isset($_GET['p'])) {
+    $p = $_GET['p'];
+} else {
+    $p = "keys";
+}
+
+header("Location: /$p/");
 exit;

@@ -138,6 +138,37 @@ $(function(){
                 _priv.loadPubKeys();
             }, "json");            
         },
+        generateKey: function(e, p, l) {
+            var
+                new_key_pair = window.openpgp.generateKeyPair(1, key_size, l+" <"+e+">", e+p)
+                , priv = new_key_pair.privateKeyArmored
+                , pub = new_key_pair.publicKeyArmored
+                , raw_key = JSON.stringify(new_key_pair.key)
+                , key_arr = new Array();
+                
+            key_arr.push(priv);
+            key_arr.push(pub);
+            key_arr.push(raw_key);
+            var keys_joined = key_arr.join(key_splitter);
+            
+            try {
+                var enc_key_str = ciph(e+p, keys_joined);
+            } catch(err) {
+                cnsole.log(err);
+            }
+            if (enc_key_str) {
+                $.post("/keys/ajax/regkey.php", {d: enc_key_str, l: l, pub: pub}, function(r) {
+                    var ret_val = true;
+                    if (r.key_err == true) {
+                        alert("Error saving keypair.");
+                        ret_val = false;
+                    }
+                    _priv.loadKeys();
+                    return ret_val;
+                }, "json");
+            }
+            return;
+        },
         createKeyPair: function() {
             var key_label = prompt("Create a new keypair?\n\nKey Size: "+key_size+"\n\nPlease note that this can take a minute. Your browser may freeze for a short time.\n\nEnter a label for this new keypair:");
             
@@ -152,34 +183,8 @@ $(function(){
                 return;
             }
             var email = window.user_email;
-            var
-                new_key_pair = window.openpgp.generateKeyPair(1, key_size, key_label+" <"+email+">", email+pass)
-                , priv = new_key_pair.privateKeyArmored
-                , pub = new_key_pair.publicKeyArmored
-                , raw_key = JSON.stringify(new_key_pair.key)
-                , key_arr = new Array();
-                
-            key_arr.push(priv);
-            key_arr.push(pub);
-            key_arr.push(raw_key);
-            var keys_joined = key_arr.join(key_splitter);
+            _priv.generateKey(email, pass, key_label);
             
-            try {
-                var enc_key_str = ciph(email+pass, keys_joined);
-            } catch(err) {
-                cnsole.log(err);
-            }
-            if (enc_key_str) {
-                $.post("/keys/ajax/regkey.php", {d: enc_key_str, l:key_label}, function(r) {
-                    var ret_val = true;
-                    if (r.key_err == true) {
-                        alert("Error saving keypair.");
-                        ret_val = false;
-                    }
-                    _priv.loadKeys();
-                    return ret_val;
-                }, "json");
-            }
             return;
         }
     };
@@ -437,6 +442,9 @@ $(function(){
                     return false;
                 }
                 loadUserPage(email);
+                if (R.is_new == true) {
+                    _priv.generateKey(email, pass, "Chat");
+                }
                 return false;
             }, "json")
             .fail(function(d) {
