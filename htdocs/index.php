@@ -34,6 +34,7 @@ if ($url !== null) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Private, secure, destructable messages with Destruct.co</title>
+    <meta name="blitz" content="mu-eadc3b3f-8c5dfdb5-a84bd1bb-03a24e26">
     <meta name="description" content="Share a confidential note via a web link that will self-destruct after it is read by your intended recipient.">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/css/normalize.css">
