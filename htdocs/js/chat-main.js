@@ -308,6 +308,8 @@ $(function(){
             }
             curr_active_cid = $this;
             curr_active_cid.addClass("box-dark-open");
+            var user = _r.conversation_data.user;
+            $("#conversation-header").html("Conversation with "+user.user_email);
         });
     });
     

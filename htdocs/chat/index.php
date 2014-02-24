@@ -51,6 +51,10 @@ require_once '../../inc/Functions.php';
 	    <div class="contact-header">Sent Requests</div>
 	    <div class="contact-sent">None</div>
 	</section>
+	
+	<section class="needs-logged-in conversation-output hide">
+	    <h1 id="conversation-header"></h1>
+	</section>
     
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>

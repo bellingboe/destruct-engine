@@ -248,3 +248,22 @@ input.contact-search-text {
 .req-action {
     padding: 15px;
 }
+
+.conversation-output {
+    top: 70px;
+    left: 310px;
+    position: fixed;
+    background: rgb(255, 255, 255);
+    right: 10px;
+    bottom: 10px;
+    overflow: auto;
+}
+.conversation-output h1 {
+    text-align: center;
+    color: rgb(35, 38, 41);
+    font-weight: 100;
+    font-size: 21pt;
+    margin-top: 20px;
+    cursor: default;
+    text-shadow: 0 1px 1px rgba(28, 31, 33, 0.4);
+}
