@@ -249,6 +249,10 @@ input.contact-search-text {
     padding: 15px;
 }
 
+.needs-active-chat {
+    display: none;
+}
+
 .conversation-output {
     top: 70px;
     left: 310px;
@@ -266,4 +270,32 @@ input.contact-search-text {
     margin-top: 20px;
     cursor: default;
     text-shadow: 0 1px 1px rgba(28, 31, 33, 0.4);
+}
+.conversation-output-stream {
+    width:100%;
+    height:70%;
+    display: block;
+}
+.conversation-text-input {
+    border:0;
+    width:100%;
+    height: 30%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-top: 2px solid rgb(35, 38, 41);
+    background: rgba(35, 38, 41, 0.2);
+    padding: 10px;
+    color: black;
+}
+
+.msg-text-entry {
+    padding:10px;
+    color: black;
+}
+
+.msg-me {
+    text-align:left;
+}
+
+.msg-them {
+    text-align: right;
 }

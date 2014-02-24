@@ -26,6 +26,30 @@ $(function(){
                 }
             });
         },
+        sendMessageToActiveChatSession: function(t, cb) {
+            var pub_arr = [];
+            
+            var pub_key_contact = $("#curr_chat_pub_key").val();
+            var cid = curr_active_cid.attr("data-cid");
+            var aesKey = random_string(32);
+
+            var pub_key_obj = window.openpgp.key.readArmored(pub_key_contact);
+            var pub_key = pub_key_obj.keys[0];
+            pub_arr.push(pub_key);
+            
+            var my_pub_key_obj = window.openpgp.key.readArmored(window.user_pubkey);
+            var my_pub_key = my_pub_key_obj.keys[0];
+            pub_arr.push(my_pub_key);
+            
+            var enc_key = window.openpgp.encryptMessage(pub_arr, aesKey);
+            var enc_text = ciph(aesKey, t);
+
+            
+            $.post("/chat/ajax/convo.php?cid=" + cid, {t: enc_text, k: enc_key}, function(r) {
+                cb(r);
+            }, "json");
+
+        },
         loadConversation: function(c, cb) {
             $.getJSON("/chat/ajax/convo.php?cid=" + c, function(r) {
                 cb(r);
@@ -177,7 +201,7 @@ $(function(){
             return;
         },
         loadUserKeypair: function() {
-            $.getJSON("/keys/ajax/keys.php", function(r) {
+            $.getJSON("/keys/ajax/keys.php?chat", function(r) {
                 var keys = r.keys;
                 
                 var kp = false
@@ -193,6 +217,15 @@ $(function(){
                     
                     window.user_pubkey = kp[1];
                     window.user_privkey = kp[0];
+                    
+                    var privKey_aromor = window.openpgp.key.readArmored(window.user_privkey);
+                    var priv_key = privKey_aromor.keys[0];
+                    
+                    window.user_privkey_unlock_pass = priv_key.decrypt(window.user_email+window.user_pass);
+                    
+                    if (window.user_privkey_unlock_pass) {
+                        window.user_privkey_unlocked = priv_key;
+                    }
                 }
                 
                 return true;
@@ -295,21 +328,72 @@ $(function(){
         });
     });
     
+    $(".conversation-text-input").on("keydown", function(e){
+        var msg = $(this).val();
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            _priv.sendMessageToActiveChatSession(msg, function(_r){
+                if (!_r.err) {
+                    $("#curr_chat_pub_key").val("");
+                } else {
+                    alert(_r.m);
+                }
+            });
+            return false;
+        }
+        return true;
+    });
+    
     $(".contacts-list").on("click", ".contact-approved", function() {
+        $(".conversation-output-stream").empty();
         var $this = $(this);
         var cid = $this.attr("data-cid");
+        $(".conversation-output").fadeOut();
         if ("object" == typeof curr_active_cid) {
             curr_active_cid.removeClass("box-dark-open");
         }
         _priv.loadConversation(cid, function(_r){
             if (_r.err) {
+                $(".needs-active-chat").hide();
                 alert(_r.m);
                 return;
             }
+            $(".conversation-output").fadeIn();
             curr_active_cid = $this;
             curr_active_cid.addClass("box-dark-open");
             var user = _r.conversation_data.user;
             $("#conversation-header").html("Conversation with "+user.user_email);
+            window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
+            $("#curr_chat_pub_key").val(user.user_chat_public_key);
+            $(".needs-active-chat").show();
+            
+            var m = _r.messages;
+
+            for(var i=0; i<m.length; i++) {
+                var msg = m[i];
+                var msg_obj = msg.data;
+                var msg_k_enc = msg_obj.k;
+                var msg_t_enc = msg_obj.t;
+                
+                var priv_key_obj = window.user_privkey_unlocked;
+                var msg_key_obj = window.openpgp.message.readArmored(msg_k_enc);
+                var dec_key = window.openpgp.decryptMessage(priv_key_obj, msg_key_obj);
+                var dec_msg_text = unciph(dec_key, msg_t_enc);
+                
+                var email_display = "You";
+                var msg_class = "msg-me";
+                
+                if (msg.user_email !== window.user_email) {
+                    email_display = msg.user_email;
+                    msg_class = "msg-them";
+                }
+                
+                email_display = email_display+" - "+msg.sent_ts.date;
+                
+                var new_msg = $("<div>").addClass("msg-text-entry").addClass(msg_class).html(email_display+"<br>"+dec_msg_text).appendTo( $(".conversation-output-stream") );
+                
+            }
+            
         });
     });
     

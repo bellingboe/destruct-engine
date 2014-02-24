@@ -22,32 +22,58 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                 $other_id = $contact_object->user_id;
             }
             
+            $my_id = $u->id;
+            
             $contact_with_user = User::find($other_id);
             
-            foreach ($contact_with_user->pairs as $p) {
-                if ($p->key_label == "Chat") {
-                    $other_public_key = $p->pub_string;
-                }
-            }
-            
-            $json['conversation_data'] = array(
-                                        "msg_count" => count($convo_messsages),
-                                        "user" => array(
-                                                  "user_id" => $other_id,
-                                                  "user_email" => $contact_with_user->email_address,
-                                                  "user_chat_public_key" => $other_public_key)
-                                        );
+            if ($_POST && isset($_POST['t']) && isset($_POST['k'])) {
+                $json['err'] = false;
+                $json['msg_sent'] = true;
+                
+                $m_data = array();
+                $m_data['t'] = $_POST['t'];
+                $m_data['k'] = $_POST['k'];
 
-            $json['messages'] = [];
-            
-            if ($convo_messsages) {
-                foreach ($convo_messsages as $m) {
-                    $m_ = [];
-                    $m_['id'] = $m->id;
-                    $m_['user_id'] = $m->user_id;
-                    $m_['read_ts'] = $m->read_ts;
-                    $m_['t'] = $m->enc_text;
-                    $json['messages'][] = $m_;
+                $msg = new Message();
+                $msg->user_id = $u->id;
+                $msg->contact_id = $contact_object->contact_id;
+                $msg->sent_ts = "NOW()";
+                $msg->enc_text = base64_encode(json_encode($m_data));
+                $msg->save();
+            } else {
+                foreach ($contact_with_user->pairs as $p) {
+                    if ($p->key_label == "Chat") {
+                        $other_public_key = $p->pub_string;
+                    }
+                }
+                
+                $json['conversation_data'] = array(
+                                            "msg_count" => count($convo_messsages),
+                                            "user" => array(
+                                                      "user_id" => $other_id,
+                                                      "user_email" => $contact_with_user->email_address,
+                                                      "user_chat_public_key" => $other_public_key)
+                                            );
+    
+                $json['messages'] = [];
+                
+                if ($convo_messsages) {
+                    foreach ($convo_messsages as $m) {
+                        $m_ = [];
+                        $m_['id'] = $m->id;
+                        $m_['user_id'] = $m->user_id;
+                        
+                        if ($m->user_id == $other_id) {
+                            $m_['user_email'] = $contact_with_user->email_address;
+                        } else {
+                            $m_['user_email'] = $u->email_address;
+                        }
+                        
+                        $m_['read_ts'] = $m->read_ts;
+                        $m_['sent_ts'] = $m->sent_ts;
+                        $m_['data'] = json_decode(base64_decode($m->enc_text));
+                        $json['messages'][] = $m_;
+                    }
                 }
             }
         } else {

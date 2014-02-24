@@ -53,7 +53,9 @@ require_once '../../inc/Functions.php';
 	</section>
 	
 	<section class="needs-logged-in conversation-output hide">
-	    <h1 id="conversation-header"></h1>
+	    <h1 id="conversation-header" class="needs-active-chat"></h1>
+	    <div class="conversation-output-stream needs-active-chat"></div>
+	    <textarea class="conversation-text-input needs-active-chat"></textarea>
 	</section>
     
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -63,5 +65,6 @@ require_once '../../inc/Functions.php';
 	<script src="/js/aes.js"></script>
         <script src="/js/chat-main.js"></script>
 	
+	<input type="hidden" id="curr_chat_pub_key">
     </body>
 </html>

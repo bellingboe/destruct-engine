@@ -9,7 +9,7 @@ class Contact extends ActiveRecord\Model {
                             ));
         
 	static $has_many = array(
-		array('messages')
+		array('messages', 'limit' => 20, 'order' => 'sent_ts DESC')
 	);
 
 }
