@@ -25,7 +25,7 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
             $k = array();
             foreach ($keys as $i=>$o) {
                 $data = $o->key_data;
-                $kd = array("key_data" => $data, "id" => $o->id, "label" => $o->key_label);
+                $kd = array("key_data" => $data, "id" => $o->id, "label" => $o->key_label, "pub_string" => $o->pub_string);
                 $k[] = $kd;
             }
             $json['keys'] = $k;

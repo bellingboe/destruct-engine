@@ -3,6 +3,7 @@ $(function(){
     var key_size = 2048
     var key_splitter = "|**|";
     var valid_storage_change = false;
+    var curr_active_cid;
 
     var _priv = {
         accessCheck: function() {
@@ -22,6 +23,109 @@ $(function(){
                     valid_storage_change = true;
                     window.localStorage.removeItem( window.localStorage.key(0) );
                     $("#login_signup").fadeIn();
+                }
+            });
+        },
+        loadConversation: function(c, cb) {
+            $.getJSON("/chat/ajax/convo.php?cid=" + c, function(r) {
+                cb(r);
+            });
+        },
+        rejectContactRequest: function(c, u, cb) {
+            $.post("/chat/ajax/contacts.php", {uid: u, cid: c, action: "reject"}, function(r) {
+                cb(r);
+            }, "json");
+        },
+        approveContactRequest: function(c, u, cb) {
+            $.post("/chat/ajax/contacts.php", {uid: u, cid: c, action: "approve"}, function(r) {
+                cb(r);
+            }, "json");
+        },
+        sendContactRequest:  function(id, cb) {
+            $.post("/chat/ajax/contacts.php", {uid: id}, function(r) {
+                cb(r);
+            }, "json");
+        },
+        searchForContacts: function(s, cb) {
+            $.getJSON("/chat/ajax/search.php?s=" + s, function(r) {
+                var res = [];
+                if ("undefined" !== typeof r.users) {
+                    var res = r.users;
+                }
+                cb(res);
+            });
+        },
+        loadUserContacts: function() {
+            $.getJSON("/chat/ajax/contacts.php", function(r) {
+                var list_html = $(".contact-list");
+                var req_html = $(".contact-requests");
+                var sent_html = $(".contact-sent");
+                
+                list_html.empty();
+                req_html.empty();
+                sent_html.empty();
+                
+                var contacts = r.contacts.list;
+                var sent = r.contacts.sent;
+                var req = r.contacts.requests;
+                
+                for (var i=0; i<contacts.length; i++) {
+                    var contact = contacts[i];
+                    $("<span>")
+                        .addClass("btn-clear")
+                        .addClass("contact-item")
+                        .addClass("contact-approved")
+                        .attr("data-uid", contact.contact_user.uid)
+                        .attr("data-cid", contact.contact_data.cid)
+                        .html(contact.contact_user.e)
+                        .appendTo(list_html);
+                }
+                
+                for (var i=0; i<req.length; i++) {
+                    var c_req = req[i];
+                    var contact_item = $("<span>")
+                        .addClass("btn-clear")
+                        .addClass("contact-item")
+                        .addClass("contact-request")
+                        .attr("data-uid", c_req.contact_user.uid)
+                        .attr("data-cid", c_req.contact_data.cid)
+                        .html(c_req.contact_user.e)
+                        .appendTo(req_html);
+                        
+                    var req_actions = $("<div>")
+                        .addClass("hide")
+                        .addClass("req-action")
+                        .addClass("box-dark-open")
+                        .attr("id", "request-"+c_req.contact_data.cid+"-action")
+                        .appendTo(req_html);
+                        
+                    var req_ok = $("<span>")
+                        .addClass("btn")
+                        .addClass("btn-green")
+                        .addClass("btn-small")
+                        .addClass("req-approve")
+                        .html("Approve")
+                        .appendTo(req_actions);
+                        
+                    var req_reject = $("<span>")
+                        .addClass("btn")
+                        .addClass("btn-red")
+                        .addClass("btn-small")
+                        .addClass("req-reject")
+                        .html("Reject")
+                        .appendTo(req_actions);
+                }
+                
+                for (var i=0; i<sent.length; i++) {
+                    var c_sent = sent[i];
+                    $("<span>")
+                        .addClass("btn-clear")
+                        .addClass("contact-item")
+                        .addClass("contact-sent")
+                        .attr("data-uid", c_sent.contact_user.uid)
+                        .attr("data-cid", c_sent.contact_data.cid)
+                        .html(c_sent.contact_user.e)
+                        .appendTo(sent_html);
                 }
             });
         },
@@ -108,6 +212,7 @@ $(function(){
         $("#login_signup").remove();
         $(".needs-logged-in").fadeIn();
         $(".user-info").html(window.user_email);
+        _priv.loadUserContacts();
     };
     
     $(window).bind('storage', function (e) {
@@ -117,6 +222,93 @@ $(function(){
             window.location.reload();
         }
       
+    });
+    
+    $(".contact-search-text").on("keyup", function() {
+        var search_res_display = $(".contact-search-results");
+        var search_text = $(this).val();
+        search_res_display.removeClass("box-shape").html(" . . . ");
+        
+        if (search_text.length == 0) {
+            search_res_display.removeClass("box-shape").html("");
+            return;
+        }
+        
+        var search_res = _priv.searchForContacts(search_text, function(_r){
+            if (_r.length == 0) {
+                search_res_display.addClass("box-shape").html("No results.");
+                return;
+            } else {
+                search_res_display.removeClass("box-shape").html("");
+                for (var i=0; i<_r.length; i++) {
+                    var u = _r[i];
+                    $("<span>").addClass("btn-clear").addClass("add-contact-action").attr("data-uid", u.id).html(u.e).appendTo(search_res_display);
+                }
+            }
+        });
+    });
+    
+    $(".contacts-list").on("click", ".add-contact-action", function() {
+        _priv.sendContactRequest($(this).attr("data-uid"), function(_r){
+            $(".contact-search-close").click();
+            if (_r.sent) {
+                _priv.loadUserContacts();
+            }
+            alert(_r.m);
+        });
+    });
+    
+    $(".contacts-list").on("click", ".contact-request", function() {
+        $(this).toggleClass("box-dark-open");
+        var cid = $(this).attr("data-cid");
+        var req_action = $("#request-"+cid+"-action");
+        req_action.toggle();
+    });
+    
+    $(".contacts-list").on("click", ".req-approve", function() {
+        var parentContainer = $(this).parent().siblings(".contact-item");
+        var cid = parentContainer.attr("data-cid");
+        var uid = parentContainer.attr("data-uid");
+        
+        _priv.approveContactRequest(cid, uid, function(_r){
+            parentContainer.click();
+            if (!_r.err) {
+                _priv.loadUserContacts();
+            } else {
+                alert(_r.m);
+            }
+        });
+    });
+    
+    $(".contacts-list").on("click", ".req-reject", function() {
+        var parentContainer = $(this).parent().siblings(".contact-item");
+        var cid = parentContainer.attr("data-cid");
+        var uid = parentContainer.attr("data-uid");
+        
+        _priv.rejectContactRequest(cid, uid, function(_r){
+            parentContainer.click();
+            if (!_r.err) {
+                _priv.loadUserContacts();
+            } else {
+                alert(_r.m);
+            }
+        });
+    });
+    
+    $(".contacts-list").on("click", ".contact-approved", function() {
+        var $this = $(this);
+        var cid = $this.attr("data-cid");
+        if ("object" == typeof curr_active_cid) {
+            curr_active_cid.removeClass("box-dark-open");
+        }
+        _priv.loadConversation(cid, function(_r){
+            if (_r.err) {
+                alert(_r.m);
+                return;
+            }
+            curr_active_cid = $this;
+            curr_active_cid.addClass("box-dark-open");
+        });
     });
     
     $(".contact-search").on("click", function(){

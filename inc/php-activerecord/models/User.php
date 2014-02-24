@@ -7,7 +7,8 @@ class User extends ActiveRecord\Model {
         
 	static $has_many = array(
 		array('pairs'),
-                array('pubkeys')
+                array('pubkeys'),
+                array('contacts')
 	);
         
         public static function _genUserHash($em, $pw, $salt) {
