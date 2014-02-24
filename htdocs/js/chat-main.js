@@ -334,7 +334,8 @@ $(function(){
             e.preventDefault();
             _priv.sendMessageToActiveChatSession(msg, function(_r){
                 if (!_r.err) {
-                    $("#curr_chat_pub_key").val("");
+                    $(".conversation-text-input").val("");
+                    curr_active_cid.click();
                 } else {
                     alert(_r.m);
                 }
