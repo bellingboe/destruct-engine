@@ -518,9 +518,9 @@ var _Chat = (function($) {
             if ("object" == typeof curr_active_cid) {
                 curr_active_cid.removeClass("box-dark-open").removeClass("active-chat");
                 if (this_active) {
-                    curr_active_cid = null;
-                    curr_cid = null;
-                    curr_interval = null
+                    curr_active_cid = undefined;
+                    curr_cid = undefined;
+                    curr_interval = undefined;
                     $(".welcome-screen").fadeIn();
                     return;
                 }
