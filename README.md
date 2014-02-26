@@ -1,4 +1,4 @@
-# [DestructEngine](https://destruct.co/)
+# [DestructEngine](https://destruct.co/) - by [@NerdWhoCodes](http://twitter.com/NerdWhoCodes)
 
 DestructEngine is the source code that powers the website [Destruct.co](https://destruct.co/) - a free service that offers various encrypotion tools
 
@@ -18,7 +18,7 @@ DestructEngine is the source code that powers the website [Destruct.co](https://
 
 # [Links](https://destruct.co/)
 
-* Links is the original concept of Destruct.co.
+Links is the original concept of Destruct.co.
 
 ## How It Works
 
@@ -32,7 +32,7 @@ DestructEngine is the source code that powers the website [Destruct.co](https://
 
 # [Keys](https://destruct.co/keys)
 
-* Keys is a web-based PGP key manager where anyone can create  public and private keys, store others' public keys, and encrypt/decrypt messages in armored format.
+Keys is a web-based PGP key manager where anyone can create  public and private keys, store others' public keys, and encrypt/decrypt messages in armored format.
 
 ## How It Works
 
@@ -45,7 +45,7 @@ DestructEngine is the source code that powers the website [Destruct.co](https://
 
 # [Chat](https://destruct.co/chat)
 
-* Chat is a direct result of the creation of the Keys experiment. Both features use the same account. Chat creates a new keypair with your password, and a special label. You can add people by searching for their email address, and once accepted, you can send and recieve AES-encrypted messages in semi realtime. As always, the message is encrypted before being sent to the server, and only the recipient can decrypt it. Even if someone were to gain access to the server, and database, it would be useless unless they had direct knowledge of every user's password.
+Chat is a direct result of the creation of the Keys experiment. Both features use the same account. Chat creates a new keypair with your password, and a special label. You can add people by searching for their email address, and once accepted, you can send and recieve AES-encrypted messages in semi realtime. As always, the message is encrypted before being sent to the server, and only the recipient can decrypt it. Even if someone were to gain access to the server, and database, it would be useless unless they had direct knowledge of every user's password.
 
 ## How It Works
 
@@ -54,7 +54,3 @@ DestructEngine is the source code that powers the website [Destruct.co](https://
 3. Users cannot chat with people they have not added.
 4. To respond to contact requests, simply click on the item under the `Contact Requests` menu item in the sidebar. and click Accept or Reject.
 5. Each users public key is shared whenever they accept a contact request. The private key is never shared with anyone, and is only decrypted in the browser for the duration of the session.
-
-========================
-
-* Created by: [@NerdWhoCodes](http://twitter.com/NerdWhoCodes)
