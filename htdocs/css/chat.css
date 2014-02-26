@@ -79,9 +79,30 @@ input[type="submit"]:active, .btn:active {
 .contacts-list .btn {
     margin: 15px;
 }
+.btn:hover {
+    -webkit-box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(113, 195, 255, 0.38);
+                        
+    -moz-box-shadow:    0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(113, 195, 255, 0.38);
+                        
+    box-shadow:         0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(113, 195, 255, 0.38);
+}
+
 .btn-green {
     background: #2d881e;
     border-bottom-color: #254f1e;
+}
+.btn-green:hover {
+    -webkit-box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(255, 246, 108, 0.45);
+                        
+    -moz-box-shadow:    0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(255, 246, 108, 0.45);
+                        
+    box-shadow:         0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 15px rgba(255, 246, 108, 0.45);
 }
 .btn-green:active {
     background: #307226;
@@ -93,16 +114,7 @@ input[type="submit"]:active, .btn:active {
 .btn-red:active {
     background: #722626;
 }
-.btn:hover {
-    -webkit-box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.3),
-                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
-                        
-    -moz-box-shadow:    0px 4px 7px 1px rgba(0, 0, 0, 0.3),
-                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
-                        
-    box-shadow:         0px 4px 7px 1px rgba(0, 0, 0, 0.3),
-                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
-}
+
 input[type="text"]:focus, input[type="password"]:focus {
     background: #fff;
 }
