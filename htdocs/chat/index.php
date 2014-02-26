@@ -13,7 +13,7 @@ require_once '../../inc/Functions.php';
 	 <header class="needs-logged-in">
 	    <div class="user-info needs-logged-in"></div>
 	    <div class="user-nav">
-		<a href="/keys/logout.php?p=chat" class="box-clickable">Logout</a>
+		<a href="/keys/logout.php?p=chat" class="box-clickable" id="do_logout">Logout</a>
 	    </div>
 	 </header>
     
@@ -35,7 +35,7 @@ require_once '../../inc/Functions.php';
 		<div class="contact-search">Add Contact</div>
 		<div class="contact-search-form form-group hide">
 		    <div class="close-btn contact-search-close">x</div>
-		    <input type="text" class="contact-search-text" placeholder="Search for email...">
+		    <input type="text" class="contact-search-text" placeholder="Search for FULL email address...">
 		    <div class="contact-search-results"></div>
 		</div>
 	    </span>

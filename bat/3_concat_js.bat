@@ -1,0 +1,1 @@
+concat.bat "js" ..\htdocs\js > ..\htdocs\js\scripts.js
