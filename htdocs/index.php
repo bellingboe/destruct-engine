@@ -98,6 +98,9 @@ if ($url !== null) {
             </p>
     
             <p class="authorline hotline">
+                     New! <a href="/chat/">Chat with end-to-end encryption</a> - meaning nobody (not even I) can read your messages except you and your recipient.
+	    </p>
+            <p class="authorline hotline">
                     Try the new <a href="/keys/">Keys experiment</a> - create & manage PGP keys in your browser.
 	    </p>
             <p class="authorline">

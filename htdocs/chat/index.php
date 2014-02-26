@@ -28,6 +28,23 @@ require_once '../../inc/Functions.php';
 		</label>
 		<input type="submit" id="login_s" value="Submit">
 	    </form>
+	    <section class="box-form">
+		<h2>Some Tidbits</h2>
+		<ul>
+		    <li>
+			Enter an email address and a password. You will use them to login.
+		    </li>
+		    <li>
+			Each account gets an encrypted PGP keypair, locked with your password. 
+		    </li>
+		    <li>
+			The server never stores, or captures, your password except to hash it to login.
+		    </li>
+		    <li>
+			Every chat message is encrypted with your public, and your recipients. Not even I (<a class='btn btn-green btn-small' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>) can read a single message.
+		    </li>
+		</ul>
+	    </section>
 	</div>
 	
 	<section class="needs-logged-in contacts-list">
@@ -70,6 +87,10 @@ require_once '../../inc/Functions.php';
 	    <div class="conversation-output-stream needs-active-chat"></div>
 	    <textarea class="conversation-text-input needs-active-chat"></textarea>
 	</section>
+	
+	<footer>
+	    <a class='btn' href='/'>A Destruct.co Experiment</a> made by <a class='btn btn-green' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>
+	</footer>
     <!--
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>

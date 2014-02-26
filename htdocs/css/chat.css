@@ -44,6 +44,7 @@ input[type="text"], input[type="password"] {
     background: rgba(210, 210, 210, 0.2);
 }
 input[type="submit"], .btn {
+    text-decoration: none;
     background: #1e5088;
     display: block;
     border: 0;
@@ -57,6 +58,15 @@ input[type="submit"], .btn {
     font-family: 'Exo', sans-serif;
     font-weight: 100;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+}
+a.btn,
+a.btn:link,
+a.btn:visited {
+    color:white;
+    display: inline-block;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin: 5px;
 }
 .btn-small {
     font-size: 13pt;
@@ -296,13 +306,16 @@ input.contact-search-text {
 }
 
 .welcome-screen h1,
-.welcome-screen h2 {
+.welcome-screen h2,
+.msin-landing h1,
+.main-landing h2{
     text-shadow: none;
     font-weight: 100;
     margin: 10px;
 }
 
-.welcome-screen h1 {
+.welcome-screen h1,
+.main-landing h1{
     font-size: 32pt;
     font-weight: 200;
     border-bottom: 3px solid rgba(16, 19, 23, 0.1);
@@ -310,16 +323,19 @@ input.contact-search-text {
     margin-bottom: 20px;
 }
 
-.welcome-screen h2 {
+.welcome-screen h2,
+.main-landing h2{
     font-size: 21pt;
     margin-left: 30px;
 }
 
-.welcome-screen ul {
+.welcome-screen ul,
+.main-landing ul{
     margin-left: 60px;
 }
 
-.welcome-screen ul li {
+.welcome-screen ul li,
+.main-landing ul li {
     padding:10px;
     font-weight: 100;
     font-size: 16pt;
@@ -377,4 +393,13 @@ input.contact-search-text {
 
 .msg-text-entry:hover .msg-ts {
     opacity: 0.6;
+}
+footer {
+    display: block;
+    padding: 20px;
+    margin-top: 20px;
+    border-top: 3px solid rgba(16, 19, 23, 0.1);
+    text-align: center;
+    font-weight: 700;
+    background: rgba(16, 19, 23, 0.1);
 }
