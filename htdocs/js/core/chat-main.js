@@ -271,6 +271,56 @@ var _Chat = (function($) {
             initUser: function (e, p) {
                 window.user_pass = p;
                 loadUserPage(e);
+            },
+            reloadConversation: function(cid, $this) {
+                $(".conversation-output-stream").empty();
+                _priv.loadConversation(cid, function(_r){
+                    if (_r.err) {
+                        $(".needs-active-chat").hide();
+                        alert(_r.m);
+                        return;
+                    }
+                    $(".conversation-output").fadeIn();
+                    curr_active_cid = $this;
+                    curr_active_cid.addClass("box-dark-open");
+                    curr_active_cid.addClass("active-chat");
+                    var user = _r.conversation_data.user;
+                    $("#conversation-header").html("Conversation with "+user.user_email);
+                    window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
+                    $("#curr_chat_pub_key").val(user.user_chat_public_key);
+                    $(".needs-active-chat").show();
+                    
+                    var m = _r.messages;
+        
+                    for(var i=0; i<m.length; i++) {
+                        var msg = m[i];
+                        var msg_obj = msg.data;
+                        var msg_k_enc = msg_obj.k;
+                        var msg_t_enc = msg_obj.t;
+                        
+                        var priv_key_obj = window.user_privkey_unlocked;
+                        var msg_key_obj = window.openpgp.message.readArmored(msg_k_enc);
+                        var dec_key = window.openpgp.decryptMessage(priv_key_obj, msg_key_obj);
+                        var dec_msg_text = unciph(dec_key, msg_t_enc);
+                        
+                        dec_msg_text = "<p>"+dec_msg_text.replace("\n", "</p><p>")+"</p>";
+                        
+                        var email_display = "You";
+                        var msg_class = "msg-me";
+                        
+                        if (msg.user_email !== window.user_email) {
+                            email_display = msg.user_email;
+                            msg_class = "msg-them";
+                        }
+                        
+                        var msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";
+                        
+                        email_display = "<span class='msg-name'>"+email_display+"</span>";
+                        email_display = email_display+":"+msg_date;
+                        
+                        var new_msg = $("<div>").addClass("msg-text-entry").addClass(msg_class).html(email_display+"<br>"+dec_msg_text).appendTo( $(".conversation-output-stream") );
+                    }
+                });
             }
         };
         
@@ -279,6 +329,7 @@ var _Chat = (function($) {
             _priv.loadUserKeypair();
             $("#login_signup").remove();
             $(".needs-logged-in").fadeIn();
+            $("body").toggleClass("landing");
             $(".user-info").html(window.user_email);
             _priv.loadUserContacts();
         };
@@ -374,7 +425,7 @@ var _Chat = (function($) {
                 _priv.sendMessageToActiveChatSession(msg, function(_r){
                     if (!_r.err) {
                         $(".conversation-text-input").val("");
-                        curr_active_cid.click();
+                         _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid);
                     } else {
                         alert(_r.m);
                     }
@@ -385,12 +436,12 @@ var _Chat = (function($) {
         });
         
         $(".contacts-list").on("click", ".contact-approved", function() {
-            $(".welcome-screen").fadeOut();
-            $(".conversation-output-stream").empty();
             var $this = $(this);
             var cid = $this.attr("data-cid");
             var this_active = $this.hasClass("active-chat");
+            
             $(".conversation-output").fadeOut();
+            $(".welcome-screen").fadeOut();
             
             if ("object" == typeof curr_active_cid) {
                 curr_active_cid.removeClass("box-dark-open").removeClass("active-chat");
@@ -400,55 +451,7 @@ var _Chat = (function($) {
                 }
             }
             
-            _priv.loadConversation(cid, function(_r){
-                if (_r.err) {
-                    $(".needs-active-chat").hide();
-                    alert(_r.m);
-                    return;
-                }
-                $(".conversation-output").fadeIn();
-                curr_active_cid = $this;
-                curr_active_cid.addClass("box-dark-open");
-                curr_active_cid.addClass("active-chat");
-                var user = _r.conversation_data.user;
-                $("#conversation-header").html("Conversation with "+user.user_email);
-                window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
-                $("#curr_chat_pub_key").val(user.user_chat_public_key);
-                $(".needs-active-chat").show();
-                
-                var m = _r.messages;
-    
-                for(var i=0; i<m.length; i++) {
-                    var msg = m[i];
-                    var msg_obj = msg.data;
-                    var msg_k_enc = msg_obj.k;
-                    var msg_t_enc = msg_obj.t;
-                    
-                    var priv_key_obj = window.user_privkey_unlocked;
-                    var msg_key_obj = window.openpgp.message.readArmored(msg_k_enc);
-                    var dec_key = window.openpgp.decryptMessage(priv_key_obj, msg_key_obj);
-                    var dec_msg_text = unciph(dec_key, msg_t_enc);
-                    
-                    dec_msg_text = "<p>"+dec_msg_text.replace("\n", "</p><p>")+"</p>";
-                    
-                    var email_display = "You";
-                    var msg_class = "msg-me";
-                    
-                    if (msg.user_email !== window.user_email) {
-                        email_display = msg.user_email;
-                        msg_class = "msg-them";
-                    }
-                    
-                    var msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";
-                    
-                    email_display = "<span class='msg-name'>"+email_display+"</span>";
-                    email_display = email_display+":"+msg_date;
-                    
-                    var new_msg = $("<div>").addClass("msg-text-entry").addClass(msg_class).html(email_display+"<br>"+dec_msg_text).appendTo( $(".conversation-output-stream") );
-                    
-                }
-                
-            });
+            _priv.reloadConversation(cid, $this);
         });
         
         $(".contact-search").on("click", function(){

@@ -9,7 +9,7 @@ require_once '../../inc/Functions.php';
     <link href="/css/chat.css" rel="stylesheet">
     <title>Chat</title>
 </head>
-    <body class="chat-main">
+    <body class="chat-main landing">
 	 <header class="needs-logged-in">
 	    <div class="user-info needs-logged-in"></div>
 	    <div class="user-nav">
