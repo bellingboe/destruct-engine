@@ -117,8 +117,6 @@ require_once '../../inc/Functions.php';
         <script src="/js/chat-main.js"></script>
     -->
     
-	<script src="/combined.js"></script>
-	
         <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -129,6 +127,8 @@ require_once '../../inc/Functions.php';
 		ga('require', 'linkid', 'linkid.js');
                 ga('send', 'pageview');
         </script>
+	
+	<script src="/combined.js"></script>
 	
 	<input type="hidden" id="curr_chat_pub_key">
     </body>

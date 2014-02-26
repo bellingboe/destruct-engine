@@ -56,6 +56,8 @@ var _Main = (function($) {
                     $("#rawdisplay").show().html(uc_clear);
                     location.hash = "";
                     
+                    ga('send', 'event', 'message', 'decrypt', 'links');
+                    
                     try {
                         window.history.pushState('decrypted', 'Destruct.co', '/');
                     } catch(err) { }
@@ -67,6 +69,7 @@ var _Main = (function($) {
             });
     
             $("#msgForm").submit(function(){
+                    ga('send', 'event', 'message', 'encrypt', 'links');
                     var p = random_string(null);
                     var mt = $("#msgContent").val();
                     var em = ciph(p, mt);

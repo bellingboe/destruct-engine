@@ -101,8 +101,6 @@ require_once '../../inc/Functions.php';
         <script src="/js/core/keys-main.js"></script>
 	-->
 	
-	<script src="/combined.js"></script>
-	
         <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -110,7 +108,10 @@ require_once '../../inc/Functions.php';
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
                 
                 ga('create', 'UA-27412705-2', 'destruct.co');
+		ga('require', 'linkid', 'linkid.js');
                 ga('send', 'pageview');
         </script>
+	
+	<script src="/combined.js"></script>
     </body>
 </html>
