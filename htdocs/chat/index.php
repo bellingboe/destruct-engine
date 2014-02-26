@@ -7,6 +7,23 @@ require_once '../../inc/Functions.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href='//fonts.googleapis.com/css?family=Exo:100,200,300,400,500,700' rel='stylesheet' type='text/css'>
     <link href="/css/chat.css" rel="stylesheet">
+    <meta property="twitter:account_id" content="4503599627845130" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@NerdWhoCodes">
+    <meta name="twitter:title" content="Chat with end-to-end AES encryption. No more prying eyes!">
+    <meta name="twitter:description" content="Everything is encrypted in 256-bit AES in combintation with PGP keys">
+    <meta name="twitter:creator" content="@NerdWhoCodes">
+    <meta name="twitter:image:src" content="">
+    <meta name="twitter:domain" content="destruct.co">
+    <meta name="twitter:app:name:iphone" content="">
+    <meta name="twitter:app:name:ipad" content="">
+    <meta name="twitter:app:name:googleplay" content="">
+    <meta name="twitter:app:url:iphone" content="">
+    <meta name="twitter:app:url:ipad" content="">
+    <meta name="twitter:app:url:googleplay" content="">
+    <meta name="twitter:app:id:iphone" content="">
+    <meta name="twitter:app:id:ipad" content="">
+    <meta name="twitter:app:id:googleplay" content="">
     <title>Chat</title>
 </head>
     <body class="chat-main landing">
