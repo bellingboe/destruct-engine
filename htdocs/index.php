@@ -40,9 +40,9 @@ if ($url !== null) {
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
-    <script src="/epiceditor.min.js"></script>
-    <script src="/js/vendor/markdown/markdown.min.js"></script>
+    <script src="/js/vendor/modernizr.js"></script>
+    <script src="/js/vendor/epiceditor.js"></script>
+    <script src="/js/vendor/markdown.js"></script>
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@NerdWhoCodes">
@@ -61,7 +61,7 @@ if ($url !== null) {
     <meta name="twitter:app:id:ipad" content="">
     <meta name="twitter:app:id:googleplay" content="">
 </head>
-    <body>
+    <body class="main">
 	<div id="wrapper">
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com/">upgrade your browser</a> or <a href="//www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -114,11 +114,11 @@ if ($url !== null) {
             </p>
 	</div>
         
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="/js/plugins.js"></script>
-	<script src="/js/aes.js"></script>
-        <script src="/js/main.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+        <script src="/js/core/plugins.js"></script>
+	<script src="/js/core/aes.js"></script>
+        <script src="/js/core/main.js"></script>
         <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

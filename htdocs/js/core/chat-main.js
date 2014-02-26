@@ -1,6 +1,17 @@
-
-(function($) {
+/*!
+ * chat-main.js
+ * https://destruct.co
+ *
+ * Copyright 2014 Brenden Ellingboe (brenden@brenden.me)
+ *
+ */
+var _Chat = (function($) {
+    
     $(function(){
+        
+        if (!$("body").hasClass("chat-main")) {
+            return;
+        }
         
         var key_size = 2048
         var key_splitter = "|**|";
@@ -171,7 +182,7 @@
                 }
                 return false;
             },
-            generateKey: function(e, p, l) {
+            generateKey: function(e, p, l, cb) {
                 var
                     new_key_pair = window.openpgp.generateKeyPair(1, key_size, l+" <"+e+">", e+p)
                     , priv = new_key_pair.privateKeyArmored
@@ -187,16 +198,16 @@
                 try {
                     var enc_key_str = ciph(e+p, keys_joined);
                 } catch(err) {
-                    cnsole.log(err);
+                    console.log(err);
                 }
                 if (enc_key_str) {
                     $.post("/keys/ajax/regkey.php", {d: enc_key_str, l: l, pub: pub}, function(r) {
-                        var ret_val = true;
                         if (r.key_err == true) {
                             alert("Error saving keypair.");
-                            ret_val = false;
+                            $("#do_logout").simulate("click");
+                        } else {
+                            cb(e, p);
                         }
-                        return ret_val;
                     }, "json");
                 }
                 return;
@@ -208,8 +219,8 @@
                     var voluntary_logout = false;
                     
                     if ("undefined" == typeof keys) {
-                        alert("Something is wrong with your account. We could not find the secure keys.  This is probably because you used a browser that doesn't support certain functions.");
-                        $("#do_logout").simulate("click");
+                        //alert("Something is wrong with your account. We could not find the secure keys.  This is probably because you used a browser that doesn't support certain functions.");
+                        //$("#do_logout").simulate("click");
                         return false;
                     }
                     
@@ -256,6 +267,10 @@
                 var key_unlocked = _priv.dcKey(data, ep);
                 
                 return key_unlocked;
+            },
+            initUser: function (e, p) {
+                window.user_pass = p;
+                loadUserPage(e);
             }
         };
         
@@ -370,13 +385,21 @@
         });
         
         $(".contacts-list").on("click", ".contact-approved", function() {
+            $(".welcome-screen").fadeOut();
             $(".conversation-output-stream").empty();
             var $this = $(this);
             var cid = $this.attr("data-cid");
+            var this_active = $this.hasClass("active-chat");
             $(".conversation-output").fadeOut();
+            
             if ("object" == typeof curr_active_cid) {
-                curr_active_cid.removeClass("box-dark-open");
+                curr_active_cid.removeClass("box-dark-open").removeClass("active-chat");
+                if (this_active) {
+                    $(".welcome-screen").fadeIn();
+                    return;
+                }
             }
+            
             _priv.loadConversation(cid, function(_r){
                 if (_r.err) {
                     $(".needs-active-chat").hide();
@@ -386,6 +409,7 @@
                 $(".conversation-output").fadeIn();
                 curr_active_cid = $this;
                 curr_active_cid.addClass("box-dark-open");
+                curr_active_cid.addClass("active-chat");
                 var user = _r.conversation_data.user;
                 $("#conversation-header").html("Conversation with "+user.user_email);
                 window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
@@ -405,6 +429,8 @@
                     var dec_key = window.openpgp.decryptMessage(priv_key_obj, msg_key_obj);
                     var dec_msg_text = unciph(dec_key, msg_t_enc);
                     
+                    dec_msg_text = "<p>"+dec_msg_text.replace("\n", "</p><p>")+"</p>";
+                    
                     var email_display = "You";
                     var msg_class = "msg-me";
                     
@@ -413,7 +439,10 @@
                         msg_class = "msg-them";
                     }
                     
-                    email_display = email_display+" - "+msg.sent_ts.date;
+                    var msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";
+                    
+                    email_display = "<span class='msg-name'>"+email_display+"</span>";
+                    email_display = email_display+":"+msg_date;
                     
                     var new_msg = $("<div>").addClass("msg-text-entry").addClass(msg_class).html(email_display+"<br>"+dec_msg_text).appendTo( $(".conversation-output-stream") );
                     
@@ -440,11 +469,12 @@
                         return false;
                     }
                     
-                    window.user_pass = pass;
-                    loadUserPage(email);
-                    
                     if (R.is_new == true) {
-                        _priv.generateKey(email, pass, "Chat");
+                        _priv.generateKey(email, pass, "Chat", function(e, p){
+                            _priv.initUser(e, p);
+                        });
+                    } else {
+                        _priv.initUser(email, pass);
                     }
     
                     return false;

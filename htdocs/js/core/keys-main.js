@@ -1,6 +1,17 @@
+/*!
+ * keys-main.js
+ * https://destruct.co
+ *
+ * Copyright 2014 Brenden Ellingboe (brenden@brenden.me)
+ *
+ */
+var _Keys = (function($) {
 
-(function($) {
     $(function(){
+        
+        if (!$("body").hasClass("keys-main")) {
+            return;
+        }
         
         var nl2br = function(str, is_xhtml) {
                var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';

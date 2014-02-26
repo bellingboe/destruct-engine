@@ -1,4 +1,10 @@
-// Avoid `console` errors in browsers that lack a console.
+/*!
+ * plugins.js
+ * https://destruct.co
+ *
+ * Copyright 2014 Brenden Ellingboe (brenden@brenden.me)
+ *
+ */
 (function() {
     var method;
     var noop = function () {};
@@ -20,8 +26,6 @@
         }
     }
 }());
-
-// Place any jQuery/helper plugins in here.
 
 /*
  * jquery.simulate - simulate browser mouse and keyboard events

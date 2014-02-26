@@ -5,15 +5,15 @@ require_once '../../inc/Functions.php';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link href='//fonts.googleapis.com/css?family=Exo:100,400,500,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Exo:100,200,300,400,500,700' rel='stylesheet' type='text/css'>
     <link href="/css/chat.css" rel="stylesheet">
     <title>Chat</title>
 </head>
-    <body>
+    <body class="chat-main">
 	 <header class="needs-logged-in">
 	    <div class="user-info needs-logged-in"></div>
 	    <div class="user-nav">
-		<a href="/keys/logout.php?p=chat" class="box-clickable" id="do_logout">Logout</a>
+		<a href="/keys/logout.php?p=chat" class="box-clickable btn-red btn" id="do_logout">Logout</a>
 	    </div>
 	 </header>
     
@@ -52,18 +52,34 @@ require_once '../../inc/Functions.php';
 	    <div class="contact-sent">None</div>
 	</section>
 	
-	<section class="needs-logged-in conversation-output hide">
+	<section class="needs-logged-in welcome-screen hide">
+	    <h1>Welcome</h1>
+	    <h2>Contacts</h2>
+	    <ul>
+		<li>
+		    To add contacts, click on the "Add" button on the left, enter their <i>full</i> email address, then click on it when it appears.
+		</li>
+		<li>
+		    When they approve your request, they will appear under "Contacts". If they reject your request, you will no logner see their email in any list.
+		</li>
+	    </ul>
+	</section>
+	
+	<section class="conversation-output hide">
 	    <h1 id="conversation-header" class="needs-active-chat"></h1>
 	    <div class="conversation-output-stream needs-active-chat"></div>
 	    <textarea class="conversation-text-input needs-active-chat"></textarea>
 	</section>
-    
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
         <script src="/js/plugins.js"></script>
 	<script src="/js/vendor/openpgp/openpgp.min.js"></script>
 	<script src="/js/aes.js"></script>
         <script src="/js/chat-main.js"></script>
+    -->
+    
+	<script src="/combined.js"></script>
 	
 	<input type="hidden" id="curr_chat_pub_key">
     </body>

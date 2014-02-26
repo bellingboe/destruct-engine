@@ -1,6 +1,17 @@
+/*!
+ * main.js
+ * https://destruct.co
+ *
+ * Copyright 2014 Brenden Ellingboe (brenden@brenden.me)
+ *
+ */
+var _Main = (function($) {
 
-(function($) {
     $(function(){
+        
+        if (!$("body").hasClass("main")) {
+            return;
+        }
     
             function nl2br (str, is_xhtml) {
                     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
@@ -18,8 +29,7 @@
                     },
             };
             var editor = new EpicEditor(opts).load();
-    
-            
+
             if ($("#errmsg").html()) {
                 try {
                     window.history.pushState('decrypted', 'Destruct.co', '/');
