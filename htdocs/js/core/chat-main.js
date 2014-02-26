@@ -108,7 +108,9 @@ var _Chat = (function($) {
                     
                     for (var i=0; i<contacts.length; i++) {
                         var contact = contacts[i];
-                        $("<span>")
+                        var unread_msg = contact.contact_conversation.unread;
+                        
+                        var contact_obj = $("<span>")
                             .addClass("btn-clear")
                             .addClass("contact-item")
                             .addClass("contact-approved")
@@ -116,6 +118,14 @@ var _Chat = (function($) {
                             .attr("data-cid", contact.contact_data.cid)
                             .html(contact.contact_user.e)
                             .appendTo(list_html);
+                        
+                        if (unread_msg > 0) {
+                            $("<span>")
+                                .addClass("unread-badge")
+                                .html(unread_msg)
+                                .appendTo(contact_obj);
+                        }
+
                     }
                     
                     for (var i=0; i<req.length; i++) {
@@ -273,7 +283,11 @@ var _Chat = (function($) {
                 loadUserPage(e);
             },
             reloadConversation: function(cid, $this) {
+                var conversation_stream = $(".conversation-output-stream");
+                
                 $(".conversation-output-stream").empty();
+                $this.find(".unread-badge").remove();
+                
                 _priv.loadConversation(cid, function(_r){
                     if (_r.err) {
                         $(".needs-active-chat").hide();
@@ -318,7 +332,13 @@ var _Chat = (function($) {
                         email_display = "<span class='msg-name'>"+email_display+"</span>";
                         email_display = email_display+":"+msg_date;
                         
-                        var new_msg = $("<div>").addClass("msg-text-entry").addClass(msg_class).html(email_display+"<br>"+dec_msg_text).appendTo( $(".conversation-output-stream") );
+                        var new_msg = $("<div>")
+                            .addClass("msg-text-entry")
+                            .addClass(msg_class)
+                            .html(email_display+"<br>"+dec_msg_text)
+                            .appendTo(conversation_stream);
+                        
+                        conversation_stream.scrollTop(conversation_stream.prop('scrollHeight') + 999);
                     }
                 });
             }

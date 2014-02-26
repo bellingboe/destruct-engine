@@ -32,10 +32,17 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
             case 1: // ============== GET ALL CONTACTS ==============
                 $u = User::find((int)$_SESSION['id']);
                 
+                // APPROVED
                 $approved_contacts = Contact::find('all', array('conditions' => array('(requester_id=? OR user_id=?) AND approved_ts != \'0000-00-00 00:00:00\'', $u->id, $u->id)));
+                
+                // SENT TO SOMEONE ELSE BY ME
                 $pending_contacts = Contact::find('all', array('conditions' => array('requester_id=? AND approved_ts = \'0000-00-00 00:00:00\'', $u->id)));
+                
+                // SENT BY SOMEONE ELSE TO ME
                 $sent_contacts = Contact::find('all', array('conditions' => array('user_id=? AND approved_ts = \'0000-00-00 00:00:00\'', $u->id)));
                 
+                
+                // APPROVED
                 $a_count = count($approved_contacts);
                 if ($a_count > 0) {
                     $a_ = array();
@@ -49,6 +56,12 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                             }
                         }
                         
+                        $unread_msg = Message::count(array('conditions' =>
+                                                        array('read_ts = ? AND contact_id = ? AND user_id = ?',
+                                                              '0000-00-00 00:00:00', $o->contact_id, $uid
+                                                         )
+                                                    ));
+                        
                         $cd = array(
                                     "contact_data" => array(
                                         "cid" => $o->contact_id,
@@ -58,6 +71,9 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                                         "uid" => $uid,
                                         "e" => $other_u->email_address,
                                         "publicKey" => $other_public_key
+                                    ),
+                                    "contact_conversation" => array(
+                                        "unread" => $unread_msg
                                     )
                             );
 
@@ -68,6 +84,7 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                     $json['contacts']['list'] = [];
                 }
                 
+                // SENT TO SOMEONE ELSE BY ME
                 $p_count = count($pending_contacts);
                 if ($p_count > 0) {
                     $p_ = array();
@@ -93,6 +110,7 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                     $json['contacts']['sent'] = [];
                 }
                 
+                 // SENT BY SOMEONE ELSE TO ME
                 $s_count = count($sent_contacts);
                 if ($s_count > 0) {
                     $s_ = array();

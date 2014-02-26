@@ -218,6 +218,10 @@ input.contact-search-text {
 .contact-item {
     padding-left: 15px;
     opacity: 1;
+    position: relative;
+    min-height: 45px;
+    line-height: 25px;
+    font-size: 16pt;
 }
 .close-btn {
     position: absolute;
@@ -406,6 +410,21 @@ input.contact-search-text {
 .msg-text-entry:hover .msg-ts {
     opacity: 0.6;
 }
+
+.unread-badge {
+    font-weight: 900;
+    padding: 5px;
+    background: rgb(30, 80, 136);
+    border-radius: 3px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: rgba(255, 255, 255, 0.7);
+    right: 15px;
+    position: absolute;
+    display: inline;
+    font-size: 10pt;
+}
+
 footer {
     display: block;
     padding: 20px;
