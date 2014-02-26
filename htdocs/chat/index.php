@@ -126,6 +126,7 @@ require_once '../../inc/Functions.php';
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
                 
                 ga('create', 'UA-27412705-2', 'destruct.co');
+		ga('require', 'linkid', 'linkid.js');
                 ga('send', 'pageview');
         </script>
 	
