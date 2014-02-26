@@ -19,7 +19,7 @@ var _Chat = (function($) {
         var curr_active_cid;
         var curr_cid;
         var curr_interval;
-        var lazy_reload_ms = 10000;
+        var lazy_reload_ms = 60000;
     
         var _priv = {
             accessCheck: function() {
@@ -373,7 +373,7 @@ var _Chat = (function($) {
                         var msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";
                         
                         email_display = "<span class='msg-name'>"+email_display+"</span>";
-                        email_display = email_display+":"+msg_date;
+                        email_display = email_display+msg_date;
                         
                         var new_msg = $("<div>")
                             .addClass("msg-text-entry")

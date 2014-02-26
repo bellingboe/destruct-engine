@@ -441,14 +441,13 @@ input.contact-search-text {
 }
 
 .msg-ts {
-    text-align: right;
     opacity: 0;
-    right: 10px;
-    position: absolute;
+    position: relative;
     font-size: 10pt;
     font-weight: 400;
     -webkit-transition: all ease-in-out 0.25s;
     transition: all ease-in-out 0.25s;
+    display: inline-block;
 }
 
 .msg-text-entry:hover .msg-ts {
