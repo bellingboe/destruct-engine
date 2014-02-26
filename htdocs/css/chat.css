@@ -232,27 +232,30 @@ input.contact-search-text {
     line-height: 45px;
     cursor: default;
     opacity: 0.6;
-    padding-left:0;
+    padding-left: 0;
+    color: rgba(223, 230, 233, 0.4);
+    font-size: 11pt;
+    font-weight: 100;
 }
 .list-empty:before {
     display: block;
-    width: 50px;
-    height: 2px;
+    width: 53px;
+    height: 1px;
     content: '';
     position: absolute;
     top: 22px;
-    background: rgba(255,255,255,0.2);
-    left: 26px;
+    background: rgba(223, 230, 233, 0.1);
+    left: 15px;
 }
 .list-empty:after {
     display: block;
-    width: 50px;
-    height: 2px;
+    width: 53px;
+    height: 1px;
     content: '';
     position: absolute;
     top: 22px;
-    background: rgba(255,255,255,0.2);
-    right: 26px;
+    background: rgba(223, 230, 233, 0.1);
+    right: 15px;
 }
 .close-btn {
     position: absolute;
