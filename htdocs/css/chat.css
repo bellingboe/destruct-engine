@@ -226,6 +226,13 @@ input.contact-search-text {
     line-height: 25px;
     font-size: 11pt;
 }
+.list-empty {
+    text-align: center;
+    display: block;
+    line-height: 45px;
+    cursor: default;
+    opacity: 0.6;
+}
 .close-btn {
     position: absolute;
     top: 0;

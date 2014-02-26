@@ -112,7 +112,7 @@ var _Chat = (function($) {
                     if (contacts.length == 0) {
                         $("<span>")
                             .addClass("contact-item")
-                            .addClass("center")
+                            .addClass("list-empty")
                             .html("No contacts.")
                             .appendTo(list_html);
                     }
@@ -142,7 +142,7 @@ var _Chat = (function($) {
                     if (req.length == 0) {
                         $("<span>")
                             .addClass("contact-item")
-                            .addClass("center")
+                            .addClass("list-empty")
                             .html("No contact requests.")
                             .appendTo(req_html);
                     }
@@ -185,7 +185,7 @@ var _Chat = (function($) {
                     if (sent.length == 0) {
                         $("<span>")
                             .addClass("contact-item")
-                            .addClass("center")
+                            .addClass("list-empty")
                             .html("No sent requests.")
                             .appendTo(sent_html);
                     }
