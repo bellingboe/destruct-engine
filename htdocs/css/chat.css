@@ -221,7 +221,7 @@ input.contact-search-text {
     position: relative;
     min-height: 45px;
     line-height: 25px;
-    font-size: 16pt;
+    font-size: 11pt;
 }
 .close-btn {
     position: absolute;
@@ -394,6 +394,10 @@ input.contact-search-text {
 
 .msg-them p {
     border-left: 2px solid rgba(94, 109, 116, 0.4);
+}
+
+.msg-new p {
+    border-left: 2px solid rgb(30, 80, 136);
 }
 
 .msg-ts {

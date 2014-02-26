@@ -305,6 +305,10 @@ var _Chat = (function($) {
                     $(".needs-active-chat").show();
                     
                     var m = _r.messages;
+                    
+                    if (m.length > 0) {
+                        m.reverse();
+                    }
         
                     for(var i=0; i<m.length; i++) {
                         var msg = m[i];
@@ -325,6 +329,9 @@ var _Chat = (function($) {
                         if (msg.user_email !== window.user_email) {
                             email_display = msg.user_email;
                             msg_class = "msg-them";
+                            if (msg.is_new) {
+                                msg_class = "msg-new";
+                            }
                         }
                         
                         var msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";

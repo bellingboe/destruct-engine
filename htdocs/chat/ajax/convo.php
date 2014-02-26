@@ -69,11 +69,15 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                             $m_['user_email'] = $u->email_address;
                         }
                         
-                        if ($m->user_id !== $u->id && !$m->read_ts) {
+                        $is_new = false;
+                        
+                        if ($m->user_id !== $u->id && $m->read_ts == null) {
                             $m->read_ts = "NOW()";
                             $m->save();
+                            $is_new = true;
                         }
                         
+                        $m_['is_new'] = $is_new;
                         $m_['read_ts'] = $m->read_ts;
                         $m_['sent_ts'] = $m->sent_ts;
                         $m_['data'] = json_decode(base64_decode($m->enc_text));
