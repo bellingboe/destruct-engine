@@ -215,6 +215,9 @@ input.contact-search-text {
 .add-contact-wrapper {
     position: relative;
 }
+.center {
+    text-align:center;
+}
 .contact-item {
     padding-left: 15px;
     opacity: 1;

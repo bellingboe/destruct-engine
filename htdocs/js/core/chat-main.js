@@ -17,6 +17,9 @@ var _Chat = (function($) {
         var key_splitter = "|**|";
         var valid_storage_change = false;
         var curr_active_cid;
+        var curr_cid;
+        var curr_interval;
+        var lazy_reload_ms = 10000;
     
         var _priv = {
             accessCheck: function() {
@@ -106,6 +109,14 @@ var _Chat = (function($) {
                     var sent = r.contacts.sent;
                     var req = r.contacts.requests;
                     
+                    if (contacts.length == 0) {
+                        $("<span>")
+                            .addClass("contact-item")
+                            .addClass("center")
+                            .html("No contacts.")
+                            .appendTo(list_html);
+                    }
+                    
                     for (var i=0; i<contacts.length; i++) {
                         var contact = contacts[i];
                         var unread_msg = contact.contact_conversation.unread;
@@ -126,6 +137,14 @@ var _Chat = (function($) {
                                 .appendTo(contact_obj);
                         }
 
+                    }
+                    
+                    if (req.length == 0) {
+                        $("<span>")
+                            .addClass("contact-item")
+                            .addClass("center")
+                            .html("No contact requests.")
+                            .appendTo(req_html);
                     }
                     
                     for (var i=0; i<req.length; i++) {
@@ -161,6 +180,14 @@ var _Chat = (function($) {
                             .addClass("req-reject")
                             .html("Reject")
                             .appendTo(req_actions);
+                    }
+                    
+                    if (sent.length == 0) {
+                        $("<span>")
+                            .addClass("contact-item")
+                            .addClass("center")
+                            .html("No sent requests.")
+                            .appendTo(sent_html);
                     }
                     
                     for (var i=0; i<sent.length; i++) {
@@ -229,8 +256,6 @@ var _Chat = (function($) {
                     var voluntary_logout = false;
                     
                     if ("undefined" == typeof keys) {
-                        //alert("Something is wrong with your account. We could not find the secure keys.  This is probably because you used a browser that doesn't support certain functions.");
-                        //$("#do_logout").simulate("click");
                         return false;
                     }
                     
@@ -295,7 +320,10 @@ var _Chat = (function($) {
                         return;
                     }
                     $(".conversation-output").fadeIn();
+                    
+                    curr_cid = cid;
                     curr_active_cid = $this;
+                    
                     curr_active_cid.addClass("box-dark-open");
                     curr_active_cid.addClass("active-chat");
                     var user = _r.conversation_data.user;
@@ -347,7 +375,21 @@ var _Chat = (function($) {
                         
                         conversation_stream.scrollTop(conversation_stream.prop('scrollHeight') + 999);
                     }
+                    
+                    _priv.stopRefreshInterval();
+                    _priv.setOffRefreshInterval();
+                    
                 });
+            },
+            setOffRefreshInterval: function() {
+                curr_interval = setInterval(function(){
+                    _priv.reloadConversation(curr_cid, curr_active_cid);
+                }, lazy_reload_ms);
+            },
+            stopRefreshInterval: function() {
+                if ("undefined" !== typeof curr_interval) {
+                    window.clearInterval(curr_interval);
+                }
             }
         };
         
@@ -452,7 +494,8 @@ var _Chat = (function($) {
                 _priv.sendMessageToActiveChatSession(msg, function(_r){
                     if (!_r.err) {
                         $(".conversation-text-input").val("");
-                         _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid);
+                        _priv.stopRefreshInterval();
+                        _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid);
                     } else {
                         alert(_r.m);
                     }
@@ -467,12 +510,17 @@ var _Chat = (function($) {
             var cid = $this.attr("data-cid");
             var this_active = $this.hasClass("active-chat");
             
+            _priv.stopRefreshInterval();
+            
             $(".conversation-output").fadeOut();
             $(".welcome-screen").fadeOut();
             
             if ("object" == typeof curr_active_cid) {
                 curr_active_cid.removeClass("box-dark-open").removeClass("active-chat");
                 if (this_active) {
+                    curr_active_cid = null;
+                    curr_cid = null;
+                    curr_interval = null
                     $(".welcome-screen").fadeIn();
                     return;
                 }
