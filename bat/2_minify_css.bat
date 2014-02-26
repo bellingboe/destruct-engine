@@ -1,1 +1,1 @@
-java -jar C:\yuic.jar --type css -v -o ..\htdocs\combined.css
+java -jar C:\yuic.jar --type css -v -o ..\htdocs\combined.css ..\htdocs\combined.css

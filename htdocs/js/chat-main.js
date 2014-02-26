@@ -1,11 +1,5 @@
-/*
- * chat-main.js - core JS script for /chats
- *
- * Copyright (c) 2014 Brenden Ellingboe (brenden@brenden.me)
- *
- */
 
-;(function($) {
+(function($) {
     $(function(){
         
         var key_size = 2048

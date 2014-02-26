@@ -1,11 +1,5 @@
-/*
- * keys-main.js - core JS script for /keys
- *
- * Copyright (c) 2014 Brenden Ellingboe (brenden@brenden.me)
- *
- */
 
-;(function($) {
+(function($) {
     $(function(){
         
         var nl2br = function(str, is_xhtml) {
