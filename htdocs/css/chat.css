@@ -58,11 +58,13 @@ input[type="submit"], .btn {
     font-family: 'Exo', sans-serif;
     font-weight: 100;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    -webkit-transition: all ease-in-out 0.25s;
+    transition: all ease-in-out 0.25s;
 }
 a.btn,
 a.btn:link,
 a.btn:visited {
-    color:white;
+    color: #fff;
     display: inline-block;
     padding-bottom: 3px;
     padding-top: 3px;
@@ -90,6 +92,16 @@ input[type="submit"]:active, .btn:active {
 }
 .btn-red:active {
     background: #722626;
+}
+.btn:hover {
+    -webkit-box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
+                        
+    -moz-box-shadow:    0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
+                        
+    box-shadow:         0px 4px 7px 1px rgba(0, 0, 0, 0.3),
+                        inset 0px 0px 30px 4px rgba(255, 255, 255, 0.39);
 }
 input[type="text"]:focus, input[type="password"]:focus {
     background: #fff;
@@ -279,7 +291,7 @@ input.contact-search-text {
     width: 60%;
     margin-left: 20%;
     height: 2px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(223, 230, 233, 0.1);
     margin-top: 25px;
     margin-bottom: 10px;
 }
