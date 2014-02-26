@@ -42,7 +42,15 @@ var _Chat = (function($) {
                     }
                 });
             },
+            hasActiveChat: function() {
+                return ( ("undefined" !== typeof curr_active_cid) && ("undefined" !== typeof curr_cid) && ("undefined" !== typeof curr_interval) )
+            },
             sendMessageToActiveChatSession: function(t, cb) {
+                if (!_priv.hasActiveChat()) {
+                    alert("No active chat session.");
+                    return;
+                }
+                
                 var pub_arr = [];
                 
                 var pub_key_contact = $("#curr_chat_pub_key").val();
@@ -539,29 +547,28 @@ var _Chat = (function($) {
         });
         
         $("#user_form").submit(function(){
-                var email = $("#login_e").val();
-                var pass = $("#login_p").val();
-                $.post("/keys/ajax/lookup.php", {em:email, pw:pass}, function(R) {
-                    if (R.id == 0) {
-                        alert("Error logging in or creating account.");
-                        return false;
-                    }
-                    
-                    if (R.is_new == true) {
-                        _priv.generateKey(email, pass, "Chat", function(e, p){
-                            _priv.initUser(e, p);
-                        });
-                    } else {
-                        _priv.initUser(email, pass);
-                    }
-    
+            var email = $("#login_e").val();
+            var pass = $("#login_p").val();
+            $.post("/keys/ajax/lookup.php", {em:email, pw:pass}, function(R) {
+                if (R.id == 0) {
+                    alert("Error logging in or creating account.");
                     return false;
-                }, "json")
-                .fail(function(d) {
-                    return false;
-                });
+                }
                 
+                if (R.is_new == true) {
+                    _priv.generateKey(email, pass, "Chat", function(e, p){
+                        _priv.initUser(e, p);
+                    });
+                } else {
+                    _priv.initUser(email, pass);
+                }
+    
                 return false;
+            }, "json")
+            .fail(function(d) {
+                return false;
+            });
+            return false;
         });
     
         _priv.accessCheck();

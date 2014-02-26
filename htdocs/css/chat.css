@@ -81,10 +81,9 @@ input[type="submit"]:active, .btn:active {
 }
 
 .btn:hover {
-    
 }
 
-.btn-green, {
+.btn-green {
     background: #2d881e;
     border-bottom-color: #254f1e;
 }
