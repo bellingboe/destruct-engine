@@ -151,7 +151,10 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 header a,
 header a:link,
-header a:visited {
+header a:visited,
+header a.btn,
+header a.btn:link
+{
     display: inline-block;
     height: 60px;
     line-height: 40px;
@@ -163,6 +166,7 @@ header a:visited {
     width: 100px;
     text-align: center;
     box-shadow: none;
+    margin: 0;
 }
 header a:hover {
 }
