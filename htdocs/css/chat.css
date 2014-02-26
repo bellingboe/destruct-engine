@@ -172,6 +172,7 @@ header a:hover {
 }
 .main-landing {
     display: none;
+    margin-bottom:100px;
 }
 .contacts-list {
     background: #232629;
@@ -407,7 +408,7 @@ footer {
     text-align: center;
     font-weight: 700;
     background: rgba(16, 19, 23, 0.1);
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
