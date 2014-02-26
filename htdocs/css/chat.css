@@ -232,6 +232,27 @@ input.contact-search-text {
     line-height: 45px;
     cursor: default;
     opacity: 0.6;
+    padding-left:0;
+}
+.list-empty:before {
+    display: block;
+    width: 50px;
+    height: 2px;
+    content: '';
+    position: absolute;
+    top: 22px;
+    background: rgba(255,255,255,0.2);
+    left: 26px;
+}
+.list-empty:after {
+    display: block;
+    width: 50px;
+    height: 2px;
+    content: '';
+    position: absolute;
+    top: 22px;
+    background: rgba(255,255,255,0.2);
+    right: 26px;
 }
 .close-btn {
     position: absolute;
