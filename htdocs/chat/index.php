@@ -18,7 +18,7 @@ require_once '../../inc/Functions.php';
 	 </header>
     
 	<div class="main-landing" id="login_signup">
-	    <h1 class="center-text header-callout">Login / Signup</h1>
+	    <h1 class="center-text header-callout landing-head">Login / Signup</h1>
 	    <form action="" method="POST" id="user_form" class="box-form">
 		<label>
 		    <span>Email</span> <input type="text" id="login_e">

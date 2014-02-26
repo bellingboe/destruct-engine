@@ -347,6 +347,12 @@ input.contact-search-text {
     font-size: 16pt;
 }
 
+.main-landing h1.landing-head {
+    background: rgba(16, 19, 23, 0.1);
+    margin-top: 0;
+    padding-top: 30px;
+}
+
 .conversation-text-input {
     border: 0;
     width: 100%;
