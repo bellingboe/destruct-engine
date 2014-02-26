@@ -37,19 +37,14 @@ if ($url !== null) {
     <meta name="blitz" content="mu-eadc3b3f-8c5dfdb5-a84bd1bb-03a24e26">
     <meta name="description" content="Share a confidential note via a web link that will self-destruct after it is read by your intended recipient.">
     <meta name="viewport" content="width=device-width">
-    
-    <link rel="stylesheet" href="/combined.css">
-    
-    <!--
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/style.css">
-	
+    <!--
     <script src="/js/vendor/modernizr.js"></script>
     <script src="/js/vendor/epiceditor.js"></script>
     <script src="/js/vendor/markdown.js"></script>
     -->
-    
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@NerdWhoCodes">
