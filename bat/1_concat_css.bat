@@ -1,1 +1,1 @@
-concat.bat "css" ..\htdocs\css > ..\htdocs\css\styles.css
+concat.bat "css" ..\htdocs\css > ..\htdocs\combined.css

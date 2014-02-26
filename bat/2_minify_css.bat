@@ -1,1 +1,1 @@
-java -jar C:\yuic.jar --type css -v -o '.css$:-min.css' ..\htdocs\css\*.css
+java -jar C:\yuic.jar --type css -v -o ..\htdocs\combined.css

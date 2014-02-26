@@ -1,1 +1,1 @@
-java -jar C:\yuic.jar --type js -v -o '.js$:-min.js' ..\htdocs\js\*.js
+java -jar C:\yuic.jar --type js -v -o ..\htdocs\combined.js
