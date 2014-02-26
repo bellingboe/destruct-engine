@@ -448,6 +448,7 @@ input.contact-search-text {
     -webkit-transition: all ease-in-out 0.25s;
     transition: all ease-in-out 0.25s;
     display: inline-block;
+    margin-left: 10px;
 }
 
 .msg-text-entry:hover .msg-ts {
