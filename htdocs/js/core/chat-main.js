@@ -19,7 +19,8 @@ var _Chat = (function($) {
         var curr_active_cid;
         var curr_cid;
         var curr_interval;
-        var lazy_reload_ms = 60000;
+        var lazy_reload_ms = 30000;
+        var last_msg_id = 0;
     
         var _priv = {
             accessCheck: function() {
@@ -74,8 +75,12 @@ var _Chat = (function($) {
                 }, "json");
     
             },
-            loadConversation: function(c, cb) {
-                $.getJSON("/chat/ajax/convo.php?cid=" + c, function(r) {
+            loadConversation: function(c, load_new, cb) {
+                var last_id_str = "";
+                if (!load_new) {
+                    last_id_str = "&since="+last_msg_id;
+                }
+                $.getJSON("/chat/ajax/convo.php?cid="+c+last_id_str, function(r) {
                     cb(r);
                 });
             },
@@ -315,30 +320,38 @@ var _Chat = (function($) {
                 window.user_pass = p;
                 loadUserPage(e);
             },
-            reloadConversation: function(cid, $this) {
+            reloadConversation: function(cid, $this, start_new) {
                 var conversation_stream = $(".conversation-output-stream");
                 
-                $(".conversation-output-stream").empty();
+                if (start_new) {
+                    $(".conversation-output-stream").empty();
+                }
+                
                 $this.find(".unread-badge").remove();
                 
-                _priv.loadConversation(cid, function(_r){
+                _priv.loadConversation(cid, start_new, function(_r){
                     if (_r.err) {
                         $(".needs-active-chat").hide();
                         alert(_r.m);
                         return;
                     }
-                    $(".conversation-output").fadeIn();
                     
-                    curr_cid = cid;
-                    curr_active_cid = $this;
-                    
-                    curr_active_cid.addClass("box-dark-open");
-                    curr_active_cid.addClass("active-chat");
                     var user = _r.conversation_data.user;
-                    $("#conversation-header").html("Conversation with "+user.user_email);
-                    window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
-                    $("#curr_chat_pub_key").val(user.user_chat_public_key);
-                    $(".needs-active-chat").show();
+                    
+                    if (start_new) {
+                        $(".conversation-output").fadeIn();
+                        
+                        curr_cid = cid;
+                        curr_active_cid = $this;
+                        curr_active_cid.addClass("box-dark-open");
+                        curr_active_cid.addClass("active-chat");
+                        
+                        $("#conversation-header").html("Conversation with "+user.user_email);
+                        window.localStorage.setItem("chat_"+window.user_email+"_"+cid, user.user_chat_public_key);
+                        
+                        $("#curr_chat_pub_key").val(user.user_chat_public_key);
+                        $(".needs-active-chat").show();
+                    }
                     
                     var m = _r.messages;
                     
@@ -347,10 +360,15 @@ var _Chat = (function($) {
                     }
         
                     for(var i=0; i<m.length; i++) {
-                        var msg = m[i];
-                        var msg_obj = msg.data;
-                        var msg_k_enc = msg_obj.k;
-                        var msg_t_enc = msg_obj.t;
+                        var msg = m[i],
+                            msg_obj = msg.data,
+                            msg_k_enc = msg_obj.k,
+                            msg_t_enc = msg_obj.t,
+                            msg_id = msg.id;
+                            
+                        if (msg_id > last_msg_id) {
+                            last_msg_id = msg_id;
+                        }
                         
                         var priv_key_obj = window.user_privkey_unlocked;
                         var msg_key_obj = window.openpgp.message.readArmored(msg_k_enc);
@@ -377,9 +395,17 @@ var _Chat = (function($) {
                         
                         var new_msg = $("<div>")
                             .addClass("msg-text-entry")
+                            .addClass("hide")
                             .addClass(msg_class)
+                            .attr("data-m-id", msg_id)
                             .html(email_display+"<br>"+dec_msg_text)
                             .appendTo(conversation_stream);
+                            
+                        if (!start_new) {
+                            new_msg.fadeIn();
+                        } else {
+                            new_msg.show();
+                        }
                         
                         conversation_stream.scrollTop(conversation_stream.prop('scrollHeight') + 999);
                     }
@@ -391,7 +417,7 @@ var _Chat = (function($) {
             },
             setOffRefreshInterval: function() {
                 curr_interval = setInterval(function(){
-                    _priv.reloadConversation(curr_cid, curr_active_cid);
+                    _priv.reloadConversation(curr_cid, curr_active_cid, false);
                 }, lazy_reload_ms);
             },
             stopRefreshInterval: function() {
@@ -503,7 +529,7 @@ var _Chat = (function($) {
                     if (!_r.err) {
                         $(".conversation-text-input").val("");
                         _priv.stopRefreshInterval();
-                        _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid);
+                        _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid, false);
                     } else {
                         alert(_r.m);
                     }
@@ -517,6 +543,8 @@ var _Chat = (function($) {
             var $this = $(this);
             var cid = $this.attr("data-cid");
             var this_active = $this.hasClass("active-chat");
+            
+            last_msg_id = 0;
             
             _priv.stopRefreshInterval();
             
@@ -534,7 +562,7 @@ var _Chat = (function($) {
                 }
             }
             
-            _priv.reloadConversation(cid, $this);
+            _priv.reloadConversation(cid, $this, true);
         });
         
         $(".contact-search").on("click", function(){

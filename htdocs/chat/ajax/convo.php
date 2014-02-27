@@ -14,7 +14,15 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
         
         if ($contact_auth) {
             $contact_object = Contact::find((int)$_GET['cid']);
-            $convo_messsages = $contact_object->messages;
+            
+            if (isset($_GET['since'])) {
+                $since_id = (int)$_GET['since'];
+                $convo_messsages = Message::find('all', array('conditions' => array('contact_id=? AND id > ?', $contact_object->contact_id, $since_id),
+                                                              'limit' => 20,
+                                                              'order' => 'id DESC'));
+            } else {
+                $convo_messsages = $contact_object->messages;
+            }
             
             if ($contact_object->user_id == $u->id) {
                 $other_id = $contact_object->requester_id;
@@ -23,7 +31,6 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
             }
             
             $my_id = $u->id;
-            
             $contact_with_user = User::find($other_id);
             
             if ($_POST && isset($_POST['t']) && isset($_POST['k'])) {
