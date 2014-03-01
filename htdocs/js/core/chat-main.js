@@ -607,6 +607,12 @@ var _Chat = (function($) {
             var cid = parentContainer.attr("data-cid");
             var uid = parentContainer.attr("data-uid");
             
+            console.log(parentContainer);
+            console.log(cid);
+            console.log(uid);
+            
+            return;
+            
             _priv.rejectContactRequest(cid, uid, function(_r){
                 $("#remove_" + cid).trigger("click");
                 if (!_r.err) {
