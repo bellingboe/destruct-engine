@@ -150,12 +150,19 @@ require_once '../../inc/Functions.php';
 	
 	<script src="/combined.js"></script>
 	
+	<!--
 	<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	     twttr.conversion.trackPid('l4bnc');
 	</script>
+	-->
+	
 	<noscript>
 	     <img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4bnc&p_id=Twitter" />
 	</noscript>
+	
+	<div class="sheet-msg-box"></div>
+	<div class="sheet-overlay"></div>
+	
     </body>
 </html>
