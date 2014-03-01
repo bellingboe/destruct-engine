@@ -195,6 +195,35 @@ var _Chat = (function($) {
                                 .attr("data-cid", contact.contact_data.cid)
                                 .html(contact.contact_user.e)
                                 .appendTo(list_html);
+                                
+                            var contact_actions = $("<div>")
+                                .addClass("hide")
+                                .addClass("contact-action")
+                                .attr("id", "remove-"+contact.contact_data.cid+"-action")
+                                .appendTo(list_html);
+                                
+                            var contact_rem_confirm = $("<span>")
+                                .addClass("btn")
+                                .addClass("btn-green")
+                                .addClass("btn-small")
+                                .addClass("contact-remove-confirm")
+                                .html("Remove Contact")
+                                .appendTo(contact_actions);
+                                
+                            var contact_rem_cancel = $("<span>")
+                                .addClass("btn")
+                                .addClass("btn-transparent")
+                                .addClass("btn-small")
+                                .addClass("contact-remove-cancel")
+                                .attr("data-cid", contact.contact_data.cid)
+                                .html("Cancel")
+                                .appendTo(contact_actions);
+                                
+                            $("<span>")
+                                .addClass("contact-remove")
+                                .attr("id", "remove_" + contact.contact_data.cid)
+                                .html("X")
+                                .appendTo(contact_obj)
                             
                             if (unread_msg > 0) {
                                 $("<span>")
@@ -557,6 +586,37 @@ var _Chat = (function($) {
             });
         });
         
+        $(".contacts-list").on("click", ".contact-remove", function(e) {
+            e.stopPropagation();
+            var action_item = $(this).parent(".contact-approved");
+            action_item.toggleClass("box-dark-open").toggleClass("remove-active");
+            var cid = action_item.attr("data-cid");
+            var rem_action = $("#remove-"+cid+"-action");
+            rem_action.toggle();
+            rem_action.toggleClass("remove-active");
+        });
+        
+        $(".contacts-list").on("click", ".contact-remove-cancel", function(e) {
+            var cid = $(this).attr("data-cid");
+            var close_id = $("#remove_"+cid);
+            close_id.trigger("click");
+        });
+        
+        $(".contacts-list").on("click", ".contact-remove-confirm", function(e) {
+            var parentContainer = $(this).parent().siblings(".contact-item");
+            var cid = parentContainer.attr("data-cid");
+            var uid = parentContainer.attr("data-uid");
+            
+            _priv.rejectContactRequest(cid, uid, function(_r){
+                $("#remove_" + cid).trigger("click");
+                if (!_r.err) {
+                    _priv.loadUserContacts();
+                } else {
+                    alert(_r.m);
+                }
+            });
+        });
+        
         $(".contacts-list").on("click", ".add-contact-action", function() {
             _priv.sendContactRequest($(this).attr("data-uid"), function(_r){
                 $(".contact-search-close").click();
@@ -575,7 +635,7 @@ var _Chat = (function($) {
             req_action.toggle();
         });
         
-        $(".contacts-list").on("click", ".req-approve", function() {
+        $(".contacts-list").on("click", ".req-approve", function(e) {
             var parentContainer = $(this).parent().siblings(".contact-item");
             var cid = parentContainer.attr("data-cid");
             var uid = parentContainer.attr("data-uid");
@@ -624,10 +684,16 @@ var _Chat = (function($) {
             return true;
         });
         
-        $(".contacts-list").on("click", ".contact-approved", function() {
+        $(".contacts-list").on("click", ".contact-approved", function(e) {
             var $this = $(this);
             var cid = $this.attr("data-cid");
             var this_active = $this.hasClass("active-chat");
+            var this_removing = $this.hasClass("remove-active");
+            
+            if (this_removing) {
+                e.stopPropagation();
+                return;
+            }
             
             last_msg_id = 0;
             
