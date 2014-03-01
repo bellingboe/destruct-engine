@@ -20,6 +20,11 @@ header {
     background: rgb(16, 19, 23);
     border-bottom: 3px solid rgb(10, 13, 16);
 }
+#pw-lbl {
+    float: left;
+    display: inline-block;
+    width: auto;
+}
 .center-text {
     padding:10px;
     width:100%;

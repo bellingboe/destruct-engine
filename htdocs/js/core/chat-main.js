@@ -13,16 +13,29 @@ var _Chat = (function($) {
             return;
         }
         
-        var key_size = 2048
-        var key_splitter = "|**|";
-        var valid_storage_change = false;
-        var curr_active_cid;
-        var curr_cid;
-        var curr_interval;
-        var lazy_reload_ms = 30000;
-        var last_msg_id = 0;
+        var search_res_display = $(".contact-search-results"),
+            login_page = $("#login_signup");
+        
+        var key_size = 2048,
+            key_splitter = "|**|",
+            valid_storage_change = false,
+            curr_active_cid,
+            curr_cid,
+            curr_interval,
+            lazy_reload_ms = 30000,
+            last_msg_id = 0;
     
         var _priv = {
+            isValidAddr: function(e) {
+                var email_match = e.match(/^[+a-zA-Z0-9_.-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,6}$/);
+                if (email_match == null) {
+                    return false;
+                }
+                if ("string" == typeof email_match[0]) {
+                    return true;
+                }
+                return false;
+            },
             accessCheck: function() {
                 $.getJSON("/keys/ajax/access.php", function(r) {
                     if (r.id !== 0) {
@@ -39,7 +52,7 @@ var _Chat = (function($) {
                     } else {
                         valid_storage_change = true;
                         window.localStorage.removeItem( window.localStorage.key(0) );
-                        $("#login_signup").fadeIn();
+                        login_page.show();
                     }
                 });
             },
@@ -339,7 +352,7 @@ var _Chat = (function($) {
                     var user = _r.conversation_data.user;
                     
                     if (start_new) {
-                        $(".conversation-output").fadeIn();
+                        $(".conversation-output").show();
                         
                         curr_cid = cid;
                         curr_active_cid = $this;
@@ -430,8 +443,8 @@ var _Chat = (function($) {
         var loadUserPage = function(em) {
             window.user_email = em;
             _priv.loadUserKeypair();
-            $("#login_signup").remove();
-            $(".needs-logged-in").fadeIn();
+            login_page.hide();
+            $(".needs-logged-in").show();
             $("body").toggleClass("landing");
             $(".user-info").html(window.user_email);
             _priv.loadUserContacts();
@@ -450,8 +463,9 @@ var _Chat = (function($) {
         });
         */
         
+        $("#login_p").pwstrength(); 
+        
         $(".contact-search-text").on("keyup", function() {
-            var search_res_display = $(".contact-search-results");
             var search_text = $(this).val();
             search_res_display.removeClass("box-shape").html(" . . . ");
             
@@ -460,7 +474,7 @@ var _Chat = (function($) {
                 return;
             }
             
-            var search_res = _priv.searchForContacts(search_text, function(_r){
+            _priv.searchForContacts(search_text, function(_r){
                 if (_r.length == 0) {
                     search_res_display.addClass("box-shape").html("No results.");
                     return;
@@ -477,6 +491,7 @@ var _Chat = (function($) {
         $(".contacts-list").on("click", ".add-contact-action", function() {
             _priv.sendContactRequest($(this).attr("data-uid"), function(_r){
                 $(".contact-search-close").click();
+                $(".contact-search-text").val();
                 if (_r.sent) {
                     _priv.loadUserContacts();
                 }
@@ -548,8 +563,8 @@ var _Chat = (function($) {
             
             _priv.stopRefreshInterval();
             
-            $(".conversation-output").fadeOut();
-            $(".welcome-screen").fadeOut();
+            $(".conversation-output").hide();
+            $(".welcome-screen").hide();
             
             if ("object" == typeof curr_active_cid) {
                 curr_active_cid.removeClass("box-dark-open").removeClass("active-chat");
@@ -557,7 +572,7 @@ var _Chat = (function($) {
                     curr_active_cid = undefined;
                     curr_cid = undefined;
                     curr_interval = undefined;
-                    $(".welcome-screen").fadeIn();
+                    $(".welcome-screen").show();
                     return;
                 }
             }
@@ -574,13 +589,30 @@ var _Chat = (function($) {
             $(this).closest(".form-group").toggle();
         });
         
-        $("#user_form").submit(function(){
-            var email = $("#login_e").val();
-            var pass = $("#login_p").val();
+        $("#user_form").submit(function(e){
+            e.preventDefault();
+            
+            var email = $("#login_e").val(),
+                pass = $("#login_p").val(),
+                pass_strength = $.pwstrength(pass);
+            
+            if (!_priv.isValidAddr(email)) {
+                    alert("Please provide a valid email address.");
+                    $("#login_e").focus();
+                    return false;
+            }
+            
+            if (pass.length == 0) {
+                    alert("Please provide a password.");
+                    $("#login_p").focus();
+                    return false;
+            }
+            
             $.post("/keys/ajax/lookup.php", {em:email, pw:pass}, function(R) {
+                
                 if (R.id == 0) {
                     alert("Error logging in or creating account.");
-                    return false;
+                    return;
                 }
                 
                 if (R.is_new == true) {
@@ -590,12 +622,11 @@ var _Chat = (function($) {
                 } else {
                     _priv.initUser(email, pass);
                 }
-    
-                return false;
+                
             }, "json")
             .fail(function(d) {
-                return false;
             });
+            
             return false;
         });
     

@@ -6,7 +6,10 @@ require_once '../../inc/Functions.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href='//fonts.googleapis.com/css?family=Exo:100,200,300,400,500,700' rel='stylesheet' type='text/css'>
+	
     <link href="/css/chat.css" rel="stylesheet">
+    <link href="/css/pw.css" rel="stylesheet">
+
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@NerdWhoCodes">
@@ -46,15 +49,21 @@ require_once '../../inc/Functions.php';
 	  </header>
      
 	  <div class="main-landing" id="login_signup">
-	      <h1 class="center-text header-callout landing-head">Login / Signup</h1>
+	      <h1 class="center-text header-callout landing-head">Chat</h1>
 	      <form action="" method="POST" id="user_form" class="box-form">
-		  <label>
-		      <span>Email</span> <input type="text" id="login_e">
-		  </label>
-		  <label>
-		      <span>Password</span> <input type="password" id="login_p">
-		  </label>
-		  <input type="submit" id="login_s" value="Submit">
+		<label>
+		    <span>Email</span> <input type="text" id="login_e">
+		</label>
+		<label>
+		    <span>
+			<span id="pw-lbl">Password</span>
+			<div id="pwindicator">
+			    <div class="bar"></div>
+			    <div class="label"></div>
+			</div>
+		    </span> <input type="password" id="login_p" data-indicator="pwindicator">
+		</label>
+		<input type="submit" id="login_s" value="Submit">
 	      </form>
 	      <section class="box-form">
 		  <h2>Some Tidbits</h2>
@@ -66,10 +75,10 @@ require_once '../../inc/Functions.php';
 			  Each account gets an encrypted PGP keypair, locked with your password. 
 		      </li>
 		      <li>
-			  The server never stores, or captures, your password except to hash it to login.
+			  The server salts, and hashes your password, and never stores the actual password itself.
 		      </li>
 		      <li>
-			  Every chat message is encrypted with your public, and your recipients. Not even I (<a class='btn btn-green btn-small' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>) can read a single message.
+			  Every chat message is encrypted with your public key, and your recipients. Not even I (<a class='btn btn-green btn-small' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>) can read a single message.
 		      </li>
 		  </ul>
 	      </section>
@@ -84,9 +93,7 @@ require_once '../../inc/Functions.php';
 		     <div class="contact-search-results"></div>
 		 </div>
 	     </span>
-	     
-	     <div class="sep"></div>
-	     
+	     	     
 	     <div class="contact-header">Contacts</div>
 	     <div class="contact-list">None</div>
 	     
@@ -97,58 +104,58 @@ require_once '../../inc/Functions.php';
 	     <div class="contact-sent">None</div>
 	 </section>
 	
-	  <section class="needs-logged-in welcome-screen hide">
-	      <h1>Welcome</h1>
-	      <h2>Contacts</h2>
-	      <ul>
-		  <li>
-		      To add contacts, click on the "Add" button on the left, enter their <i>full</i> email address, then click on it when it appears.
-		  </li>
-		  <li>
-		      When they approve your request, they will appear under "Contacts". If they reject your request, you will no logner see their email in any list.
-		  </li>
-	      </ul>
-	  </section>
+	<section class="needs-logged-in welcome-screen hide">
+	    <h1>Welcome</h1>
+	    <h2>Contacts</h2>
+	    <ul>
+		<li>
+		    To add contacts, click on the "Add" button on the left, enter their <i>full</i> email address, then click on it when it appears.
+		</li>
+		<li>
+		    When they approve your request, they will appear under "Contacts". If they reject your request, you will no logner see their email in any list.
+		</li>
+	    </ul>
+	</section>
+      
+	<section class="conversation-output hide">
+	    <h1 id="conversation-header" class="needs-active-chat"></h1>
+	    <div class="conversation-output-stream needs-active-chat"></div>
+	    <textarea class="conversation-text-input needs-active-chat"></textarea>
+	</section>
 	
-	  <section class="conversation-output hide">
-	      <h1 id="conversation-header" class="needs-active-chat"></h1>
-	      <div class="conversation-output-stream needs-active-chat"></div>
-	      <textarea class="conversation-text-input needs-active-chat"></textarea>
-	  </section>
-	  
-	  <footer>
-	      <a class='btn' href='/'>A Destruct.co Experiment</a> made by <a class='btn btn-green' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>
-	  </footer>
-	  <!--
-	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	  <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-	  <script src="/js/plugins.js"></script>
-	  <script src="/js/vendor/openpgp/openpgp.min.js"></script>
-	  <script src="/js/aes.js"></script>
-	  <script src="/js/chat-main.js"></script>
-	  -->
-	  
-	  <script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		  
-		  ga('create', 'UA-27412705-2', 'destruct.co');
-		  ga('require', 'linkid', 'linkid.js');
-		  ga('send', 'pageview');
-	  </script>
-	  
-	  <script src="/combined.js"></script>
-	  
-	  <input type="hidden" id="curr_chat_pub_key">
-	  
-	  <script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
-	  <script type="text/javascript">
-	       twttr.conversion.trackPid('l4bnc');
-	  </script>
-	  <noscript>
-	       <img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4bnc&p_id=Twitter" />
-	  </noscript>
+	<input type="hidden" id="curr_chat_pub_key">
+	
+	<footer>
+	    <a class='btn' href='/'>A Destruct.co Experiment</a> made by <a class='btn btn-green' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>
+	</footer>
+	<!--
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+	<script src="/js/plugins.js"></script>
+	<script src="/js/vendor/openpgp/openpgp.min.js"></script>
+	<script src="/js/aes.js"></script>
+	<script src="/js/chat-main.js"></script>
+	-->
+	
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-27412705-2', 'destruct.co');
+		ga('require', 'linkid', 'linkid.js');
+		ga('send', 'pageview');
+	</script>
+	
+	<script src="/combined.js"></script>
+	
+	<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	     twttr.conversion.trackPid('l4bnc');
+	</script>
+	<noscript>
+	     <img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4bnc&p_id=Twitter" />
+	</noscript>
     </body>
 </html>

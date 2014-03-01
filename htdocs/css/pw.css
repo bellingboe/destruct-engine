@@ -1,0 +1,86 @@
+/*
+ * ==================
+ * Password Strength
+ * ==================
+ */
+
+#pwindicator {
+    font-size: 14pt;
+    float: left;
+    display: inline;
+    font-weight: 700;
+    text-shadow: none;
+    margin-left: 10px;
+}
+
+#pwindicator .label {
+    float: left;
+}
+
+.bar {
+    height: 2px;
+    float: left;
+    margin-top: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display:none;
+}
+
+.pw-very-weak .bar {
+    background: #de442b;
+    width: 30px;
+}
+
+.pw-very-weak .label {
+    color: #de442b;
+}
+
+.pw-weak .bar {
+    background: #de442b;
+    width: 60px;
+}
+
+.pw-weak .label {
+    color: #de442b;
+}
+
+.pw-mediocre .bar {
+    background: #f3f01a;
+    width: 90px;
+}
+
+.pw-mediocre .label {
+    color: #f3f01a;
+}
+
+.pw-strong .bar {
+    background: #f3b31a;
+    width: 120px;
+}
+
+.pw-strong .label {
+    color: greenyellow;
+}
+
+.pw-very-strong .bar {
+    background: #0d0;
+    width: 150px;
+}
+
+.pw-very-strong .label {
+    color: #0d0;
+}
+
+.pw-strong:after {
+    content: ' - OK';
+    margin-left: 5px;
+    font-size: 10pt;
+    color: rgb(102, 167, 74);
+}
+
+.pw-very-strong:after {
+    content: ' - GOOD';
+    margin-left: 5px;
+    font-size: 10pt;
+    color: #0d0;
+}
