@@ -487,8 +487,10 @@ var _Chat = (function($) {
                                 
                             dec_msg_key = window.openpgp.decryptAndVerifyMessage(priv_key_obj, pub_arr, msg_key_obj);
                             
-                            if ("undefined" !== typeof dec_msg_key.signatures) {
-                                sig_key_hex = dec_msg_key.signatures[0].keyid.toHex();
+                            if ("undefined" !== typeof dec_msg_key.signatures && "undefined" !== typeof dec_msg_key.signatures[0]) {
+                                if (dec_msg_key.signatures[0].hasOwnProperty("keyid")) {
+                                    sig_key_hex = dec_msg_key.signatures[0].keyid.toHex();
+                                }
                             }
                             
                             dec_msg_text = unciph(dec_msg_key.text, msg_t_enc);
