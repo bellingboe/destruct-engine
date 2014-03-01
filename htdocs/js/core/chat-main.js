@@ -207,6 +207,8 @@ var _Chat = (function($) {
                                 .addClass("btn-green")
                                 .addClass("btn-small")
                                 .addClass("contact-remove-confirm")
+                                .attr("data-uid", contact.contact_user.uid)
+                                .attr("data-cid", contact.contact_data.cid)
                                 .html("Remove Contact")
                                 .appendTo(contact_actions);
                                 
@@ -215,6 +217,7 @@ var _Chat = (function($) {
                                 .addClass("btn-transparent")
                                 .addClass("btn-small")
                                 .addClass("contact-remove-cancel")
+                                .attr("data-uid", contact.contact_user.uid)
                                 .attr("data-cid", contact.contact_data.cid)
                                 .html("Cancel")
                                 .appendTo(contact_actions);
@@ -603,18 +606,12 @@ var _Chat = (function($) {
         });
         
         $(".contacts-list").on("click", ".contact-remove-confirm", function(e) {
-            var parentContainer = $(this).parent().siblings(".contact-item");
-            var cid = parentContainer.attr("data-cid");
-            var uid = parentContainer.attr("data-uid");
-            
-            console.log(parentContainer);
-            console.log(cid);
-            console.log(uid);
-            
-            return;
-            
+            var remove_confirm = $(this);
+            var cid = remove_confirm.attr("data-cid");
+            var uid = remove_confirm.attr("data-uid");
+
             _priv.rejectContactRequest(cid, uid, function(_r){
-                $("#remove_" + cid).trigger("click");
+                //$("#remove_" + cid).trigger("click");
                 if (!_r.err) {
                     _priv.loadUserContacts();
                 } else {
