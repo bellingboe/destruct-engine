@@ -110,8 +110,6 @@ var _Chat = (function($) {
                         txt = t,
                         enc_key,
                         enc_text;
-                        
-                    text = _priv.htmlEncode(text);
                     
                     window.openpgp.initWorker('/openpgp.worker.js');
                     
@@ -509,7 +507,7 @@ var _Chat = (function($) {
                             }
                             
                             dec_msg_text = unciph(dec_msg_key.text, msg_t_enc);
-                            dec_msg_text = "<p>"+dec_msg_text.replace("\n", "</p><p>")+"</p>";
+                            dec_msg_text = "<p>"+_priv.htmlEncode(dec_msg_text).replace("\n", "</p><p>")+"</p>";
                                 
                             if (msg_id > last_msg_id) {
                                 last_msg_id = msg_id;
