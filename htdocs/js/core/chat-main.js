@@ -36,6 +36,9 @@ var _Chat = (function($) {
             last_msg_id = 0,
             
             _priv = {
+                htmlEncode: function(str){
+                  return $('<div/>').text(str).html();
+                },
                 displayMessage: function(t) {
                     sheet_overlay.fadeIn();
                     sheet_msg.html(t).fadeIn();
@@ -107,6 +110,8 @@ var _Chat = (function($) {
                         txt = t,
                         enc_key,
                         enc_text;
+                        
+                    text = _priv.htmlEncode(text);
                     
                     window.openpgp.initWorker('/openpgp.worker.js');
                     
