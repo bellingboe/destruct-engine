@@ -140,6 +140,11 @@ var _Chat = (function($) {
                         cb(r);
                     }, "json");
                 },
+                removeContact: function(c, cb) {
+                    $.post("/chat/ajax/contacts.php", {cid: c, action: "remove"}, function(r) {
+                        cb(r);
+                    }, "json");
+                },
                 approveContactRequest: function(c, u, cb) {
                     $.post("/chat/ajax/contacts.php", {uid: u, cid: c, action: "approve"}, function(r) {
                         cb(r);
@@ -173,7 +178,8 @@ var _Chat = (function($) {
                             unread_msg,
                             contact_obj,
                             c_req,
-                            contact_item;
+                            contact_item,
+                            sent_item;
                         
                         if (contacts.length == 0) {
                             $("<span>")
@@ -191,7 +197,6 @@ var _Chat = (function($) {
                                 .addClass("btn-clear")
                                 .addClass("contact-item")
                                 .addClass("contact-approved")
-                                .attr("data-uid", contact.contact_user.uid)
                                 .attr("data-cid", contact.contact_data.cid)
                                 .html(contact.contact_user.e)
                                 .appendTo(list_html);
@@ -207,7 +212,6 @@ var _Chat = (function($) {
                                 .addClass("btn-green")
                                 .addClass("btn-small")
                                 .addClass("contact-remove-confirm")
-                                .attr("data-uid", contact.contact_user.uid)
                                 .attr("data-cid", contact.contact_data.cid)
                                 .html("Remove Contact")
                                 .appendTo(contact_actions);
@@ -217,7 +221,6 @@ var _Chat = (function($) {
                                 .addClass("btn-transparent")
                                 .addClass("btn-small")
                                 .addClass("contact-remove-cancel")
-                                .attr("data-uid", contact.contact_user.uid)
                                 .attr("data-cid", contact.contact_data.cid)
                                 .html("Cancel")
                                 .appendTo(contact_actions);
@@ -226,7 +229,7 @@ var _Chat = (function($) {
                                 .addClass("contact-remove")
                                 .attr("id", "remove_" + contact.contact_data.cid)
                                 .html("X")
-                                .appendTo(contact_obj)
+                                .appendTo(contact_obj);
                             
                             if (unread_msg > 0) {
                                 $("<span>")
@@ -290,14 +293,21 @@ var _Chat = (function($) {
                         
                         for (var i=0; i<sent.length; i++) {
                             var c_sent = sent[i];
-                            $("<span>")
+                            sent_item = $("<span>")
                                 .addClass("btn-clear")
                                 .addClass("contact-item")
                                 .addClass("contact-sent")
-                                .attr("data-uid", c_sent.contact_user.uid)
                                 .attr("data-cid", c_sent.contact_data.cid)
                                 .html(c_sent.contact_user.e)
                                 .appendTo(sent_html);
+                                
+                            $("<span>")
+                                .addClass("contact-remove")
+                                .addClass("contact-remove-confirm")
+                                .attr("id", "remove_" + c_sent.contact_data.cid)
+                                .attr("data-cid", c_sent.contact_data.cid)
+                                .html("X")
+                                .appendTo(sent_item);
                         }
                     });
                 },
@@ -612,10 +622,8 @@ var _Chat = (function($) {
         $(".contacts-list").on("click", ".contact-remove-confirm", function(e) {
             var remove_confirm = $(this);
             var cid = remove_confirm.attr("data-cid");
-            var uid = remove_confirm.attr("data-uid");
 
-            _priv.rejectContactRequest(cid, uid, function(_r){
-                //$("#remove_" + cid).trigger("click");
+            _priv.removeContact(cid, function(_r){
                 if (!_r.err) {
                     _priv.loadUserContacts();
                 } else {

@@ -10,13 +10,15 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
     
     $mode = 1; // ============== GET ALL CONTACTS ==============
     
-    if ($_POST && isset($_POST['uid'])) {
+    if ($_POST && (isset($_POST['uid']) || isset($_POST['cid']))) {
         $mode = 2; // ============== SEND CONTACT REQUEST ==============
         if (isset($_POST['action']) && isset($_POST['cid'])) {
             if ($_POST['action'] == "approve") {
                 $mode = 3; // ============== APPROVE CONTACT REQUEST ==============
             } else if ($_POST['action'] == "reject") {
                 $mode = 4; // ============== REJECT CONTACT REQUEST ==============
+            } else if ($_POST['action'] == "remove") {
+                $mode = 5; // ============== REMOVE CONTACT ==============
             } else {
                 $mode = 0; // FAILURE MODE
             }
@@ -33,14 +35,19 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                 $u = User::find((int)$_SESSION['id']);
                 
                 // APPROVED
-                $approved_contacts = Contact::find('all', array('conditions' => array('(requester_id=? OR user_id=?) AND approved_ts != \'0000-00-00 00:00:00\'', $u->id, $u->id)));
+                $approved_contacts = Contact::find('all', array('conditions' => array('(requester_id=? OR user_id=?) AND approved_ts > TIMESTAMP(0)',
+                                                                                      $u->id, $u->id
+                                                                                )));
                 
                 // SENT TO SOMEONE ELSE BY ME
-                $pending_contacts = Contact::find('all', array('conditions' => array('requester_id=? AND approved_ts = \'0000-00-00 00:00:00\'', $u->id)));
+                $pending_contacts = Contact::find('all', array('conditions' => array("requester_id=? AND approved_ts = TIMESTAMP(0)",
+                                                                                     $u->id
+                                                                                )));
                 
                 // SENT BY SOMEONE ELSE TO ME
-                $sent_contacts = Contact::find('all', array('conditions' => array('user_id=? AND approved_ts = \'0000-00-00 00:00:00\'', $u->id)));
-                
+                $sent_contacts = Contact::find('all', array('conditions' => array("user_id=? AND approved_ts = TIMESTAMP(0)",
+                                                                                  $u->id
+                                                                            )));
                 
                 // APPROVED
                 $a_count = count($approved_contacts);
@@ -57,10 +64,9 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                         }
                         
                         $unread_msg = Message::count(array('conditions' =>
-                                                        array('read_ts = ? AND contact_id = ? AND user_id = ?',
-                                                              '0000-00-00 00:00:00', $o->contact_id, $uid
-                                                         )
-                                                    ));
+                                                        array('read_ts = TIMESTAMP(0) AND contact_id = ? AND user_id = ?',
+                                                              $o->contact_id, $uid
+                                                         )));
                         
                         $cd = array(
                                     "contact_data" => array(
@@ -141,7 +147,9 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                 $u1 = User::find((int)$_SESSION['id']);
                 $u2 = User::find($add_id);
                 
-                $existing_connection = Contact::find('all', array('conditions' => array('(user_id=? AND requester_id=?) OR (user_id=? AND requester_id=?)', $u1->id, $u2->id, $u2->id, $u1->id)));
+                $existing_connection = Contact::find('all', array('conditions' => array('(user_id=? AND requester_id=?) OR (user_id=? AND requester_id=?)',
+                                                                                        $u1->id, $u2->id, $u2->id, $u1->id
+                                                                                 )));
                 if (count($existing_connection) == 0) {
                     $contact = new Contact;
                     $contact->requester_id = $u1->id;
@@ -161,7 +169,9 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                 $u2 = User::find($add_id);
                 $cid = (int)$_POST['cid'];
                 
-                $contact_to_approve = Contact::find('all', array('conditions' => array('user_id=? AND requester_id=? AND contact_id=?', $u1->id, $u2->id, $cid)));
+                $contact_to_approve = Contact::find('all', array('conditions' => array('user_id=? AND requester_id=? AND contact_id=?',
+                                                                                       $u1->id, $u2->id, $cid
+                                                                                )));
                 if (count($contact_to_approve) == 0) {
                     $json['m'] = "Could not approve contact request.";
                     $json['err'] = true;
@@ -183,7 +193,9 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                 $u2 = User::find($add_id);
                 $cid = (int)$_POST['cid'];
                 
-                $contact_to_reject = Contact::find('all', array('conditions' => array('user_id=? AND requester_id=? AND contact_id=?', $u1->id, $u2->id, $cid)));
+                $contact_to_reject = Contact::find('all', array('conditions' => array('user_id=? AND requester_id=? AND contact_id=?',
+                                                                                      $u1->id, $u2->id, $cid
+                                                                                )));
                 if (count($contact_to_reject) == 0) {
                     $json['m'] = "Could not reject contact request.";
                     $json['err'] = true;
@@ -194,10 +206,30 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                     $json['err'] = false;
                 }
             break;
+            case 5: // ============== REMOVE CONTACT ==============
+                $u1 = User::find((int)$_SESSION['id']);
+                $cid = (int)$_POST['cid'];
+                
+                $contact_to_remove = Contact::find('all', array('conditions' =>
+                                                                array("(requester_id=? OR user_id=?) AND contact_id=?",
+                                                                      $u1->id, $u1->id, $cid
+                                                                )));
+                
+                if (count($contact_to_remove) == 0) {
+                    $json['m'] = "Could not remove contact.";
+                    $json['err'] = true;
+                } else {
+                    $contactObj = $contact_to_remove[0];
+                    $contactObj->delete();
+                    $json['m'] = "Contact removed.";
+                    $json['err'] = false;
+                }
+            break;
         }
     } catch(\Exception $e) {
+        $json['debug'] = array("mode" => $mode, "action" => $_POST['action']);
         $json['err'] = true;
-        $json['err_string'] = $e->getMessage();
+        $json['m'] = $e->getMessage();
     }
 }
 
