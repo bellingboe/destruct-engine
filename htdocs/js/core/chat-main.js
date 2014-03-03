@@ -434,7 +434,7 @@ var _Chat = (function($) {
                 },
                 initUser: function (e, p) {
                     window.user_pass = p;
-                    _priv.loadUserPage(e);
+                    loadUserPage(e);
                 },
                 reloadConversation: function(cid, $this, start_new) {
                     if (start_new) {
