@@ -434,7 +434,7 @@ var _Chat = (function($) {
                 },
                 initUser: function (e, p) {
                     window.user_pass = p;
-                    loadUserPage(e);
+                    _priv.loadUserPage(e);
                 },
                 reloadConversation: function(cid, $this, start_new) {
                     if (start_new) {
@@ -496,6 +496,7 @@ var _Chat = (function($) {
                                 , msg_class = "msg-me"
                                 , msg_date
                                 , new_msg
+                                , dl_link
                                 , sig_key_hex;
                                 
                             dec_msg_key = window.openpgp.decryptAndVerifyMessage(priv_key_obj, pub_arr, msg_key_obj);
@@ -521,7 +522,9 @@ var _Chat = (function($) {
                                 }
                             }
                             
-                            msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+"</span>";
+                            dl_link = "<a target='_blank' href='/chat/dl.php?m="+msg_id+"&k="+dec_msg_key.text+"'>[View]</a>";
+                            
+                            msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+" - "+dl_link+"</span>";
                             
                             email_display = "<span class='msg-name'>"+email_display+"</span>";
                             email_display = email_display+msg_date;
