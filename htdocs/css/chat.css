@@ -462,6 +462,17 @@ input.contact-search-text {
     margin-left: 10px;
 }
 
+.msg-ts a,
+.msg-ts a:link,
+.msg-ts a:visited {
+    color: #1e5088;
+    text-decoration: none;
+}
+
+.msg-ts a:active {
+    color: #1e374f;
+}
+
 .msg-text-entry:hover .msg-ts {
     opacity: 0.6;
 }
