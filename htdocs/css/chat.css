@@ -4,6 +4,20 @@
     box-sizing: border-box;
     outline: none;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+
 body {
     background: #292E30;
     color: #fff;
