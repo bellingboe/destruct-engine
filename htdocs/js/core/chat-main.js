@@ -387,9 +387,12 @@ var _Chat = (function($) {
                                 return false;
                             }
                             
-                            reader.onload = function() {
-                                console.log("reader.onload...");
+                            reader.onloadend = function() {
+                                console.log("reader.onloadend...");
                                // var b64str = reader.result.split(",")[1];
+                               
+                               console.log(read.result);
+                               
                                var b64str = btoa(_UpCrypt.uint8ToString(reader.result));
                                
                                console.log("b64str");
