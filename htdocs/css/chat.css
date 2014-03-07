@@ -62,7 +62,7 @@ input[type="text"], input[type="password"] {
     border-bottom: 3px solid rgba(21, 21, 22, 0.85);
     background: rgba(210, 210, 210, 0.2);
 }
-input[type="submit"], .btn {
+.btn {
     text-decoration: none;
     background: #1e5088;
     display: block;
@@ -90,7 +90,7 @@ a.btn:visited {
 .btn-small {
     font-size: 13pt;
 }
-input[type="submit"]:active, .btn:active {
+.btn:active {
     background: #183f6b;
 }
 .contacts-list .btn {
@@ -122,6 +122,13 @@ input[type="submit"]:active, .btn:active {
 .btn-red:active {
     background: #722626;
 }
+.btn-purple {
+    background: #313b64;
+    border-bottom-color: #272f50;
+}
+.btn-purple:active {
+    background: #262d4c;
+}
 input[type="text"]:focus, input[type="password"]:focus {
     background: #fff;
 }
@@ -135,6 +142,19 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .btn-clear:hover, .box-dark-open {
     background: rgba(0, 0, 0, 0.4);
+}
+.btn-action {
+    font-weight: 400;
+    text-transform: lowercase;
+    border-bottom: 0;
+    box-shadow: none;
+    
+    color: rgb(49, 59, 100) !important;
+    background: rgb(193, 196, 210);
+    text-shadow: none;
+}
+.btn-action:active {
+    color: white !important;
 }
 .contact-search-results {
     display: block;
@@ -363,7 +383,7 @@ input.contact-search-text {
     height: auto;
     display: block;
     position: absolute;
-    bottom: 100px;
+    bottom: 145px;
     top: 50px;
     overflow-y: scroll;
 }
@@ -592,4 +612,40 @@ footer {
     border-bottom: 3px solid;
     border-bottom-color: rgb(30, 55, 79);
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+ul#form li { list-style: none;height: 30px; }
+
+.chat-actions-toolbar {
+    bottom: 100px;
+    position: absolute;
+    width: 100%;
+    color: rgb(0, 0, 0);
+    padding: 0;
+    background: #2a313a;
+    border-bottom: 2px solid rgb(30, 55, 79);
+    height: 45px;
+    line-height: 35px;
+}
+
+.toolbar-form {
+    display: inline-block;
+    float: left;
+}
+
+.toolbar-status {
+    float: left;
+    height: 43px;
+    line-height: 43px;
+    padding-left: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: 300;
+    font-size: 10pt;
+    cursor: default;
+}
+
+.chat-file-dl {
+    font-weight: 400;
+    font-size: 11pt;
+    text-transform: uppercase;
 }

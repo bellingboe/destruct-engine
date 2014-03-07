@@ -15,6 +15,240 @@ var _Chat = (function($) {
         
         var sheet_overlay = $(".sheet-overlay");
         var sheet_msg = $(".sheet-msg-box");
+        
+        /*
+         * UP-CRYPT LIBRARY
+         */
+        
+        var _UpCrypt = {
+
+            xhr: null,
+            aes_key: null,
+            
+            aesKey: function() {
+                return this.aes_key;
+            },
+            
+            setAesKey: function(k) {
+                this.aes_key = k;
+            },
+            
+            init: function() {
+                $("#up-file-status").html("");
+                $("#up-file-files").val("");
+                this.setXhr();
+            },
+            
+            tearDown: function() {
+               
+            },
+            
+            Base64Crypt: function (b64string, key) {
+                var bytes = Crypto.util.base64ToBytes(b64string);
+                var crypt = Crypto.AES.encrypt(Crypto.charenc.Binary.bytesToString(bytes), key);
+                return crypt;
+            },
+            
+            Base64Decrypt: function (b64string, key) {
+                var decrypt = Crypto.AES.decrypt(b64string, key);
+                return Crypto.util.bytesToBase64(Crypto.charenc.Binary.stringToBytes(decrypt));
+            },
+            
+            PackData: function (boundary, data, filename, varname) {
+                var datapack = '';
+                datapack += '--' + boundary + '\r\n';
+                datapack += 'Content-Disposition: form-data; ';
+                datapack += 'name="' + varname + '"; filename="' + filename + '"\r\n';
+                datapack += 'Content-Type: application/octet-stream\r\n\r\n';
+                datapack += data;
+                datapack += '\r\n';
+                datapack += '--' + boundary + '--';
+                return datapack;
+            },
+            
+            uploadData: function (url, datapack, boundary) {
+                var xhr = new XMLHttpRequest();
+                /*
+                xhr.onreadystatechange = function() {
+                    if(this.readyState == 4)
+                       alert("error in upload!");
+                }
+                */
+                xhr.open('POST', url);
+                xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+                xhr.send(datapack);
+            },
+            
+            getBlob: function (url, callback) {
+              var xhr = new XMLHttpRequest();  // Create new XHR object
+              xhr.open("GET", url);            // Specify URL to fetch
+              xhr.responseType = "blob"        // We'd like a Blob, please
+              xhr.onload = function() {        // onload is easier than onreadystatechange
+                  callback(xhr.response);      // Pass the blob to our callback
+              }                                // Note .response, not .responseText
+              xhr.send(null);                  // Send the request now
+            },
+            
+            processBlob: function blobTest(f,n,c) {
+                this.getBlob(f, function(d){
+                  $("a")
+                    .attr("href",URL.createObjectURL(d))
+                    .attr("download", n)
+                    .html("Download " + n + "now")
+                    .appendTo( c );
+                });
+                return true;
+            },
+            
+            blobToUrl: function(d, t, i){
+                var file_dl_btn = $("<a>")
+                    .attr("href", URL.createObjectURL(d))
+                    .attr("id", i)
+                    .attr("download", t)
+                    .html(t)
+                    
+                file_dl_btn.addClass("btn").addClass("btn-small").addClass("btn-purple").addClass("btn-action");
+                    
+                return file_dl_btn.prop("outerHTML");
+            },
+            
+            b64toBlob: function(b64Data, contentType, sliceSize) {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+            
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+            
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+            
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+            
+                    var byteArray = new Uint8Array(byteNumbers);
+            
+                    byteArrays.push(byteArray);
+                }
+            
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
+            },
+                        
+            pullData: function (file, outelement, key) {
+                this.xhr.onreadystatechange = function() {
+                console.log("pulling!");
+                    if(xhr.readyState == 4){
+                        var outdata = xhr.responseText;
+                        var decrypted = "data:application/octet-stream;base64,";
+                        console.log(outdata);
+                        try {
+                                console.log(outelement.href);
+                                if(!outelement.href.match("base64")) {
+                                        decrypted += _UpCrypt.Base64Decrypt(outdata, key);
+                                        console.log(decrypted);
+                                        outelement.href = decrypted;
+                                        outelement.className = "downloaded";
+                                }
+                        }
+                        catch(err) {
+                                alert("wrong key!");
+                        }
+                        };
+                };
+                this.xhr.open('GET', "uploads/"+file, true);
+                this.xhr.send();
+                return false;
+            },
+            
+            setFileNameDisplay: function (s) {
+                $("#up-file-status").html("File Attached: <strong style='font-size: 11pt;'>" + s + "</strong>");
+            },
+            
+            upload: function (event) {
+                if ( event.preventDefault ) {
+                    event.preventDefault();
+                }
+                
+                event.returnValue = false;
+                
+                var reader = new FileReader()
+                , aes_key = this.aesKey()
+                , files = document.getElementById('up-file-files').files
+                , key = aes_key
+                , filename = document.getElementById('up-file-files').value
+                ;
+                
+                if(!key) {
+                  alert("key not set!");
+                  return false;
+                }
+                
+                if(!files[0]) {
+                  alert("no file selected!")
+                  return false;
+                }
+                
+                reader.onload = function() {
+                  
+                    var b64str = reader.result.split(",")[1];
+                    $("#up-file-status").html("encrypting file ...");
+                    var crypt = _UpCrypt.Base64Crypt(b64str, key);
+                    $("#up-file-status").html("uploading ...");
+
+                    /*
+                    var boundary = "-----------------"+Math.floor(Math.random()*32768)+Math.floor(Math.random()*32768);
+                    var datapack = _UpCrypt.PackData(boundary, crypt, filename, "fileupload");
+                    try {
+                        _UpCrypt.uploadData("/chat/upload.php", datapack, boundary);
+                        $("#up-file-status").html("uploaded successfully!");
+                    }
+                    catch(er) {
+                        $("#up-file-status").html("error uploading!");
+                    }
+                    */
+                };
+                
+                reader.readAsDataURL(files[0]);
+                return false;
+            },
+            
+            setXhr: function () {
+                this.xhr = new XMLHttpRequest();
+            },
+            
+            fileList: function(){
+                var upload_obj = this;
+                this.xhr.onreadystatechange = function() {
+                    if(this.xhr.readyState == 4){
+                      var files = xhr.responseText;
+                      var filelist = "<ul>";
+                      files = files.split(";");
+                      
+                      for(var i in files) {
+                        if(files[i].length > 1){
+                          filelist += '<li><a href="#" class="fileel" id="' + files[i] + '">'+files[i]+'</a></li>';
+                        }
+                      }
+                      filelist += "</ul>";
+                      document.getElementById("stored").innerHTML = filelist;
+                    var links = document.getElementsByTagName("a");
+                    for (var i in links) {
+                      if(links[i].className == "fileel") {
+                            links[i].addEventListener('click', function(e){
+                                _UpCrypt.pullData(e.target.id, e.target, upload_obj.aesKey())
+                            }, false);
+                        }
+                      }
+                    }
+                };
+                  
+                //xhr.open('GET', "upload.php?getfilelist", true);
+                //xhr.send();
+                //console.log(xhr.responseText); 
+            }
+        };
 
         var enc_wait_text = "Generating Encryption Key...<br><br>Please do not close your browser window.",
             search_res_display = $(".contact-search-results"),
@@ -25,6 +259,9 @@ var _Chat = (function($) {
             req_html = $(".contact-requests"),
             sent_html = $(".contact-sent"),
             body = $("body"),
+            
+            file_send_event = null,
+            file_send = 0,
             
             key_size = 2048,
             key_splitter = "|**|",
@@ -94,12 +331,12 @@ var _Chat = (function($) {
                 hasActiveChat: function() {
                     return ( ("undefined" !== typeof curr_active_cid) && ("undefined" !== typeof curr_cid) && ("undefined" !== typeof curr_interval) )
                 },
-                sendMessageToActiveChatSession: function(t, cb) {
+                sendMessageToActiveChatSession: function(t, is_file, cb) {
                     if (!_priv.hasActiveChat()) {
                         alert("No active chat session.");
                         return;
                     }
-                                    
+                    
                     var pub_key_contact = $("#curr_chat_pub_key").val(),
                         cid = curr_active_cid.attr("data-cid"),
                         aesKey = random_string(32),
@@ -123,9 +360,45 @@ var _Chat = (function($) {
                         enc_key = res;
                         enc_text = ciph(aesKey, txt);
                         
-                        $.post("/chat/ajax/convo.php?cid=" + cid, {t: enc_text, k: enc_key}, function(r) {
-                            cb(r);
-                        }, "json");
+                        if (is_file) {
+                            var reader = new FileReader()
+                            , files = document.getElementById('up-file-files').files
+                            , filename = document.getElementById('up-file-files').value
+                            , file_binary = {}
+                            ;
+
+                            if(!files[0]) {
+                                alert("no file selected!")
+                                return false;
+                            }
+                            
+                            reader.onload = function() {
+                                var b64str = reader.result.split(",")[1];
+                                
+                                $("#up-file-status").html("encrypting file ...");
+                                
+                                var crypt = _UpCrypt.Base64Crypt(b64str, aesKey);
+                                $("#up-file-status").html("uploading ...");
+                                
+                                var content_type = $('input[type="file"]').prop('files')[0].type;
+                                
+                                file_binary = {d: crypt, c: content_type, n: filename.replace("C:\\fakepath\\", "")};
+                                
+                                $.post("/chat/ajax/convo.php?cid=" + cid, {is_file: 1, fb: file_binary, t: enc_text, k: enc_key}, function(r) {
+                                    cb(r);
+                                }, "json");
+                                
+                            };
+                            
+                            reader.readAsDataURL(files[0]);
+                        } else {
+                            
+                            $.post("/chat/ajax/convo.php?cid=" + cid, {is_file: 0, t: enc_text, k: enc_key}, function(r) {
+                                cb(r);
+                            }, "json");
+                            
+                        }
+                        
                         return true;
                     });
                 },
@@ -460,6 +733,8 @@ var _Chat = (function($) {
                         if (start_new) {
                             $(".conversation-output").show();
                             
+                            _UpCrypt.init();
+                            
                             curr_cid = cid;
                             curr_active_cid = $this;
                             curr_active_cid.addClass("box-dark-open");
@@ -496,8 +771,9 @@ var _Chat = (function($) {
                                 , msg_class = "msg-me"
                                 , msg_date
                                 , new_msg
-                                , dl_link
-                                , sig_key_hex;
+                                , dl_link = ""
+                                , sig_key_hex
+                                , file_msg = "";
                                 
                             dec_msg_key = window.openpgp.decryptAndVerifyMessage(priv_key_obj, pub_arr, msg_key_obj);
                             
@@ -507,8 +783,20 @@ var _Chat = (function($) {
                                 }
                             }
                             
+                            if (msg.is_file) {
+                                var filename = msg.f.n;
+                                var filedata = msg.f.d;
+                                var filetype = msg.f.c;
+                                
+                                var dec_file_data = _UpCrypt.Base64Decrypt(filedata, dec_msg_key.text);
+                                var b64_to_blob = _UpCrypt.b64toBlob(dec_file_data, filetype);
+                                var blob_btn = _UpCrypt.blobToUrl(b64_to_blob, filename, "msg_file_" + msg_id);
+                                                                
+                                file_msg = "<br><span class='chat-file-dl'>&mdash; File Attached: " + blob_btn + "</span>";
+                            }
+                            
                             dec_msg_text = unciph(dec_msg_key.text, msg_t_enc);
-                            dec_msg_text = "<p>"+_priv.htmlEncode(dec_msg_text).replace("\n", "</p><p>")+"</p>";
+                            dec_msg_text = "<p>" + _priv.htmlEncode(dec_msg_text).replace("\n", "</p><p>") + file_msg + "</p>";
                                 
                             if (msg_id > last_msg_id) {
                                 last_msg_id = msg_id;
@@ -522,9 +810,9 @@ var _Chat = (function($) {
                                 }
                             }
                             
-                            dl_link = "<a target='_blank' href='/chat/dl.php?m="+msg_id+"&k="+dec_msg_key.text+"'>[View]</a>";
+                            //dl_link = " - <a target='_blank' href='/chat/dl.php?m="+msg_id+"&k="+dec_msg_key.text+"'>[View]</a>";
                             
-                            msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+" - "+dl_link+"</span>";
+                            msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+dl_link+"</span>";
                             
                             email_display = "<span class='msg-name'>"+email_display+"</span>";
                             email_display = email_display+msg_date;
@@ -559,6 +847,7 @@ var _Chat = (function($) {
                     if ("undefined" !== typeof curr_interval) {
                         window.clearInterval(curr_interval);
                     }
+                    _UpCrypt.tearDown();
                 }
             },
             loadUserPage = function(em) {
@@ -691,8 +980,10 @@ var _Chat = (function($) {
             if (e.keyCode == 13 && !e.shiftKey) {
                 e.preventDefault();
                 $(".conversation-text-input").val("").blur();
-                _priv.sendMessageToActiveChatSession(msg, function(_r){
+                _UpCrypt.setFileNameDisplay("encrypting file ...");
+                _priv.sendMessageToActiveChatSession(msg, file_send, function(_r){
                     if (!_r.err) {
+                        $("#up-file-status").html("");
                         _priv.stopRefreshInterval();
                         _priv.reloadConversation(curr_active_cid.attr("data-cid"), curr_active_cid, false);
                     } else {
@@ -744,6 +1035,25 @@ var _Chat = (function($) {
         
         $(".close-btn").on("click", function() {
             $(this).closest(".form-group").toggle();
+        });
+        
+        $("#upload_file_crypt").on("submit", function(e) {
+            file_send_event = e;
+            file_send_event.preventDefault();
+            $("#up-file-files").simulate("click");
+            return false;
+        });
+        
+        $("#up-file-files").on("change", function() {
+            if ($(this).val().length > 0) {
+                file_send = true;
+                _UpCrypt.setFileNameDisplay($(this).val().replace("C:\\fakepath\\", ""));
+                _UpCrypt.setAesKey(random_string(32));
+            } else {
+                _UpCrypt.setFileNameDisplay("No file selected.");
+                file_send = false;
+                $("#up-file-files").val("")
+            }
         });
         
         $("#user_form").submit(function(e){

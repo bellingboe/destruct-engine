@@ -34,18 +34,28 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
             $contact_with_user = User::find($other_id);
             
             if ($_POST && isset($_POST['t']) && isset($_POST['k'])) {
+                
+                $is_file = (int)$_POST['is_file'];
+                
                 $json['err'] = false;
                 $json['msg_sent'] = true;
                 
                 $m_data = array();
                 $m_data['t'] = $_POST['t'];
                 $m_data['k'] = $_POST['k'];
-
+                
                 $msg = new Message();
                 $msg->user_id = $u->id;
                 $msg->contact_id = $contact_object->contact_id;
                 $msg->sent_ts = "NOW()";
+                $msg->is_file = (int)$is_file;
                 $msg->enc_text = base64_encode(json_encode($m_data));
+
+                if ($is_file) {
+                    $file_data = $_POST['fb'];
+                    $msg->enc_file = base64_encode(json_encode($file_data));
+                }
+                
                 $msg->save();
             } else {
                 foreach ($contact_with_user->pairs as $p) {
@@ -69,6 +79,7 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                         $m_ = [];
                         $m_['id'] = $m->id;
                         $m_['user_id'] = $m->user_id;
+                        $m_['is_file'] = $m->is_file;
                         
                         if ($m->user_id == $other_id) {
                             $m_['user_email'] = $contact_with_user->email_address;
@@ -88,6 +99,10 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
                         $m_['read_ts'] = $m->read_ts;
                         $m_['sent_ts'] = $m->sent_ts;
                         $m_['data'] = json_decode(base64_decode($m->enc_text));
+                        if ($m->is_file) {
+                            $m_['f'] = json_decode(base64_decode($m->enc_file));
+                        }
+                        
                         $json['messages'][] = $m_;
                     }
                 }

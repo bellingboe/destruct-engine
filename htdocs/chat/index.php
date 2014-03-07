@@ -53,7 +53,7 @@ require_once '../../inc/Functions.php';
 			</div>
 		    </span> <input type="password" id="login_p" data-indicator="pwindicator">
 		</label>
-		<input type="submit" id="login_s" value="Submit">
+		<input type="submit" id="login_s" class="btn" value="Submit">
 	      </form>
 	      <section class="box-form">
 		  <h2>Some Tidbits</h2>
@@ -110,6 +110,17 @@ require_once '../../inc/Functions.php';
 	<section class="conversation-output hide">
 	    <h1 id="conversation-header" class="needs-active-chat"></h1>
 	    <div class="conversation-output-stream needs-active-chat"></div>
+	    
+	    <div class="chat-actions-toolbar">
+		<form id="upload_file_crypt" action="" class="toolbar-form">
+		    <input type="submit" name="send-file" class="btn btn-green btn-small" id="send-file" value="Attach File">
+		    <div class="hide">
+			<input name="files[]" type="file" class="hide" id="up-file-files">
+		    </div>
+		</form>
+		<div id="up-file-status" class="toolbar-status"></div>
+	    </div>
+
 	    <textarea class="conversation-text-input needs-active-chat"></textarea>
 	</section>
 	
