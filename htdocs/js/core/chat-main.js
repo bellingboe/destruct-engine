@@ -392,7 +392,6 @@ var _Chat = (function($) {
                                // var b64str = reader.result.split(",")[1];
                                
                                console.log(reader);
-                               console.log(reader.result);
                                
                                //var b64str = Crypto.charenc.Binary.bytesToString(reader.result);
                                
