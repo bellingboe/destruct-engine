@@ -390,14 +390,9 @@ var _Chat = (function($) {
                             reader.onloadend = function() {
                                 console.log("reader.onloadend...");
                                // var b64str = reader.result.split(",")[1];
-                               
-                               console.log(reader);
-                               
+
                                var b64str = Crypto.charenc.Binary.stringToBytes(reader.result);
                                 b64str = Crypto.util.bytesToBase64(b64str);
-                               
-                               console.log("b64str");
-                               console.log(b64str);
                                 
                                 $("#up-file-status").html("encrypting file ...");
                                 
