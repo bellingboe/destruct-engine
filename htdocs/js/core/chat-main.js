@@ -43,6 +43,14 @@ var _Chat = (function($) {
                
             },
             
+            uint8ToString: function (buf) {
+                var i, length, out = '';
+                for (i = 0, length = buf.length; i < length; i += 1) {
+                    out += String.fromCharCode(buf[i]);
+                }
+                return out;
+            },
+                        
             Base64Crypt: function (b64string, key) {
                 var bytes = Crypto.util.base64ToBytes(b64string);
                 var crypt = Crypto.AES.encrypt(Crypto.charenc.Binary.bytesToString(bytes), key);
@@ -382,7 +390,7 @@ var _Chat = (function($) {
                             reader.onload = function() {
                                 console.log("reader.onload...");
                                // var b64str = reader.result.split(",")[1];
-                               var b64str = Crypto.util.bytesToBase64(reader.result);
+                               var b64str = btoa(_UpCrypt.uint8ToString(reader.result));
                                
                                console.log("b64str");
                                console.log(b64str);
@@ -402,9 +410,9 @@ var _Chat = (function($) {
                                 
                             };
                             
-                            console.log("readAsBinaryString...");
+                            console.log("readAsArrayBuffer...");
                             //reader.readAsDataURL(files[0]);
-                            reader.readAsBinaryString(files[0])
+                            reader.readAsArrayBuffer(files[0])
                         } else {
                             
                             $.post("/chat/ajax/convo.php?cid=" + cid, {is_file: 0, t: enc_text, k: enc_key}, function(r) {
