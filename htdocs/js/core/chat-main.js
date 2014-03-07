@@ -393,9 +393,8 @@ var _Chat = (function($) {
                                
                                console.log(reader);
                                
-                               //var b64str = Crypto.charenc.Binary.bytesToString(reader.result);
-                               
-                               var b64str = Crypto.util.bytesToBase64(reader.result);
+                               var b64str = Crypto.charenc.Binary.stringToBytes(reader.result);
+                                b64str = Crypto.util.bytesToBase64(b64str);
                                
                                console.log("b64str");
                                console.log(b64str);
@@ -415,9 +414,8 @@ var _Chat = (function($) {
                                 
                             };
                             
-                            console.log("readAsArrayBuffer...");
                             //reader.readAsDataURL(files[0]);
-                            reader.readAsBinaryString(files[0])
+                            reader.readAsText(files[0])
                         } else {
                             
                             $.post("/chat/ajax/convo.php?cid=" + cid, {is_file: 0, t: enc_text, k: enc_key}, function(r) {
