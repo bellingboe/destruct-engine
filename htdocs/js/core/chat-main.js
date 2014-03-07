@@ -365,6 +365,9 @@ var _Chat = (function($) {
                         enc_text = ciph(aesKey, txt);
                         
                         if (is_file) {
+                            
+                            console.log("is file...");
+                            
                             var reader = new FileReader()
                             , files = document.getElementById('up-file-files').files
                             , filename = document.getElementById('up-file-files').value
@@ -377,6 +380,7 @@ var _Chat = (function($) {
                             }
                             
                             reader.onload = function() {
+                                console.log("reader.onload...");
                                 var b64str = reader.result.split(",")[1];
                                 
                                 $("#up-file-status").html("encrypting file ...");
@@ -394,6 +398,7 @@ var _Chat = (function($) {
                                 
                             };
                             
+                            console.log("reader.readAsDataURL...");
                             reader.readAsDataURL(files[0]);
                         } else {
                             
