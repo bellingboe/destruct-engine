@@ -384,6 +384,7 @@ var _Chat = (function($) {
                                // var b64str = reader.result.split(",")[1];
                                var b64str = Crypto.util.bytesToBase64(reader.result);
                                
+                               console.log("b64str");
                                console.log(b64str);
                                 
                                 $("#up-file-status").html("encrypting file ...");
@@ -401,7 +402,7 @@ var _Chat = (function($) {
                                 
                             };
                             
-                            console.log("reader.readAsDataURL...");
+                            console.log("readAsBinaryString...");
                             //reader.readAsDataURL(files[0]);
                             reader.readAsBinaryString(files[0])
                         } else {
