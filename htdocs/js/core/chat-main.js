@@ -1007,7 +1007,9 @@ var _Chat = (function($) {
                 return;
             }
             
+            file_send = 0;
             last_msg_id = 0;
+            _UpCrypt.setFileNameDisplay("");
             
             _priv.stopRefreshInterval();
             
