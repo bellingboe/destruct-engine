@@ -810,7 +810,7 @@ var _Chat = (function($) {
                                 }
                             }
                             
-                            //dl_link = " - <a target='_blank' href='/chat/dl.php?m="+msg_id+"&k="+dec_msg_key.text+"'>[View]</a>";
+                            dl_link = "<span style='display:none;'> - <a target='_blank' href='/chat/dl.php?m="+msg_id+"&k="+dec_msg_key.text+"'>[View]</a></span>";
                             
                             msg_date = "<span class='msg-ts'>"+msg.sent_ts.date+dl_link+"</span>";
                             
