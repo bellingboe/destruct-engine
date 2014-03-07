@@ -39,6 +39,7 @@ CREATE TABLE `contacts` (
 -- The actual encrypted chat messages
 --
 
+DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
  `is_file` tinyint(1) NOT NULL DEFAULT '0',
