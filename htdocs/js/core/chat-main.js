@@ -391,7 +391,7 @@ var _Chat = (function($) {
                                 console.log("reader.onloadend...");
                                // var b64str = reader.result.split(",")[1];
                                
-                               console.log(read.result);
+                               console.log(reader.result);
                                
                                var b64str = btoa(_UpCrypt.uint8ToString(reader.result));
                                
