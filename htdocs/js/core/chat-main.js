@@ -388,11 +388,7 @@ var _Chat = (function($) {
                             }
                             
                             reader.onloadend = function() {
-                                console.log("reader.onloadend...");
-                               // var b64str = reader.result.split(",")[1];
-
-                               var b64str = Crypto.charenc.Binary.stringToBytes(reader.result);
-                                b64str = Crypto.util.bytesToBase64(b64str);
+                                var b64str = reader.result.split(",")[1];
                                 
                                 $("#up-file-status").html("encrypting file ...");
                                 
@@ -409,8 +405,7 @@ var _Chat = (function($) {
                                 
                             };
                             
-                            //reader.readAsDataURL(files[0]);
-                            reader.readAsText(files[0])
+                            reader.readAsDataURL(files[0]);
                         } else {
                             
                             $.post("/chat/ajax/convo.php?cid=" + cid, {is_file: 0, t: enc_text, k: enc_key}, function(r) {
