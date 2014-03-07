@@ -163,7 +163,11 @@ var _Chat = (function($) {
             },
             
             setFileNameDisplay: function (s) {
-                $("#up-file-status").html("File Attached: <strong style='font-size: 11pt;'>" + s + "</strong>");
+                var str = "";
+                if (s.length > 0) {
+                    str = "File Attached: <strong style='font-size: 11pt;'>" + s + "</strong>";
+                }
+                $("#up-file-status").html(str);
             },
             
             upload: function (event) {
