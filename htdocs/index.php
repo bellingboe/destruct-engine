@@ -114,7 +114,8 @@ if ($url !== null) {
                      New! <a href="/chat/">Chat with end-to-end encryption</a> - meaning nobody (not even I) can read your messages except you and your recipient.
 	    </p>
             <p class="authorline hotline">
-                    Try the new <a href="/keys/">Keys experiment</a> - create & manage PGP keys in your browser.
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="NerdWhoCodes">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	    </p>
             <p class="authorline">
                     Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
