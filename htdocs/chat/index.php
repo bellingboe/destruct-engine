@@ -29,7 +29,7 @@ require_once '../../inc/Functions.php';
     <meta name="twitter:app:id:iphone" content="">
     <meta name="twitter:app:id:ipad" content="">
     <meta name="twitter:app:id:googleplay" content="">
-    <title>Chat</title>
+    <title>Secure end-to-end AES+PGP Chat Sessions</title>
 </head>
      <body class="chat-main landing">
       
