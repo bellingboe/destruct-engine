@@ -9,6 +9,8 @@ require_once '../../inc/Functions.php';
 	
     <link href="/css/chat.css" rel="stylesheet">
     <link href="/css/pw.css" rel="stylesheet">
+     
+    <meta name="description" content="Secure end-to-end AES+PGP chat sessions.">
 
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
