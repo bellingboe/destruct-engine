@@ -40,6 +40,14 @@ require_once '../../inc/Functions.php';
      
 	  <div class="main-landing" id="login_signup">
 	      <h1 class="center-text header-callout landing-head">Chat</h1>
+	      
+	      <div style="text-align: center;">
+		<a href="https://twitter.com/NerdWhoCodes" class="twitter-follow-button" data-show-count="false">Follow @NerdWhoCodes</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="NerdWhoCodes">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	       </div>
+	  
 	      <form action="" method="POST" id="user_form" class="box-form">
 		<label>
 		    <span>Email</span> <input type="text" id="login_e">
