@@ -10,9 +10,11 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
     
     $public = false;
     $key_attr = "pairs";
+    $pub_str = "pub_string";
     
     if (isset($_GET['public'])) {
         $key_attr = "pubkeys";
+        $pub_str = "key_data";
         $public = true;
     }
     
@@ -23,13 +25,18 @@ if (!isset($_SESSION['id']) || (int)$_SESSION['id'] == 0) {
         $key_count = count($keys);
         if ($key_count > 0) {
             $k = array();
+            
             foreach ($keys as $i=>$o) {
                 if ((isset($_GET['chat']) && $o->key_label == "Chat") || (!isset($_GET['chat']))) {
                     $data = $o->key_data;
-                    $kd = array("key_data" => $data, "id" => $o->id, "label" => $o->key_label, "pub_string" => $o->pub_string);
+                    $kd = array("key_data" => $data,
+                                "id" => $o->id,
+                                "label" => $o->key_label,
+                                "pub_string" => $o->$pub_str);
                     $k[] = $kd;
                 }
             }
+            
             $json['keys'] = $k;
             $json['key_count'] = $key_count;
         } else {
