@@ -123,6 +123,7 @@ require_once '../../inc/Functions.php';
                 ga('send', 'pageview');
         </script>
 	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/combined.js"></script>
     </body>
 </html>

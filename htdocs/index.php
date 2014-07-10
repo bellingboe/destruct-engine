@@ -152,6 +152,7 @@ if ($url !== null) {
 	<script src="/js/core/main.js"></script>
 	-->
 	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/combined.js"></script>
 	
 	<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>

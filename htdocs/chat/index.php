@@ -140,6 +140,7 @@ require_once '../../inc/Functions.php';
 	    <a class='btn' href='/'>A Destruct.co Experiment</a> made by <a class='btn btn-green' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>
 	</footer>
 	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/combined.js"></script>
 	
 	<div class="sheet-msg-box"></div>
