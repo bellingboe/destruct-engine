@@ -216,7 +216,7 @@
 								$("#app_login")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
-										$("#app_page").css({top: 0}).show().fadeIn();
+										$("#app_page").removeClass("hiding").css({top: 0}).show();
 									}});
 							} else {
 								alert("Incorrect PIN. Try again.");
@@ -280,6 +280,7 @@
 								$("#app_setup2")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$("#app_setup2").hide();
+										$("#app_page").removeClass("hiding").css({top: 0}).show();
 									}});
 							} else {
 								alert("PINs don't match. Try again.");
