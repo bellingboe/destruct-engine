@@ -2,6 +2,9 @@
 <html>
 	<head>
       	<script type="text/javascript" src="jquery.js"></script>
+      	<script type="text/javascript" src="aes.js"></script>
+      	<script type="text/javascript" src="openpgp.js"></script>
+
 		<link href='https://fonts.googleapis.com/css?family=Advent+Pro:400,500,600,700,300,200,100' rel='stylesheet' type='text/css'>
 		<meta name="apple-mobile-web-app-capable" content="yes" />
       	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -13,7 +16,7 @@
 			* {
 				box-sizing: border-box;
 				-webkit-tap-highlight-color: rgba(0,0,0,0);
-  				-webkit-tap-highlight-color: transparent; /* For some Androids */
+  				-webkit-tap-highlight-color: transparent; 
 			}
 			body, html {
 				padding: 0;
@@ -109,8 +112,10 @@
 
 		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
+			<p class="id-name hiding"></p>
+			<input type="button" class="big-btn app-id-action" value="Create Identity">
 			<input type="button" class="big-btn app-clear-pin" value="Clear Master PIN">
-			<input type="button" class="big-btn app-exit" value="Exit Ciphertext">
+			<input type="button" class="big-btn app-exit" value="Exit Session">
 			<input type="button" class="big-btn app-help" value="Help">
 		</section>
 
@@ -263,6 +268,83 @@
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
+				var active_id_object = function() {
+					return window.localStorage.getItem("ct_id_obj");
+				};
+
+				var getLocalMessages = function() {
+					return window.localStorage.getItem("ct_msgs");
+				};
+
+				var placeIdentityIntoStorage = function(id) {
+					window.localStorage.setItem("ct_id_obj", id);
+				};
+
+				var generateNewIdentity() {
+					var new_id_str = random_string(5)+"-"+random_string(5);
+
+					var identity = {
+						username: new_id_str,
+						pgp_email: new_id_str+" <anon-"+new_id_str+"@getciphertext.com>"
+					};
+
+					window.openpgp.initWorker('openpgp.worker.js');
+                    window.openpgp.generateKeyPair(1, 2048, identity.pgp_email:, setup_app_password, function(err, res){
+                        if (err) {
+                            alert("Error creating key.", 2500);
+                            console.log(err);
+                            return false;
+                        }
+                        
+                        var
+                            new_key_pair = res
+                            , priv = new_key_pair.privateKeyArmored
+                            , pub = new_key_pair.publicKeyArmored
+                            , raw_key = JSON.stringify(new_key_pair.key)
+
+                    	identity.key = [];
+                    	identity.key.pub = pub;
+                    	identity.key.priv = priv;
+                        identity.key.raw = raw_key;
+
+                        try {
+                            ident_enc = ciph(setup_app_password, JSON.stringify(identity));
+                            placeIdentityIntoStorage(ident_enc);
+                        } catch(_e) {
+                            console.log(_e);
+                        }
+                        
+                        return true;
+                    });
+				};
+
+				myId = active_id_object();
+
+				if (!myId) {
+					$(".app-id-action").attr("data-has-id", "0").val("Create First Identity");
+					$(".id-name").removeClass("hiding").html("Create an identity to get started.");
+				} else {
+					$(".app-id-action").attr("data-has-id", "1").val("Create New Identity");
+					$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
+				}
+
+				$(".app-id-action").on("click", function(){
+					var has_id = $(this).attr("data-has-id") == "0" ? false : true;
+					if (has_id) {
+						var confirm_new = confirm("Are you sure? This will remove all data related to this identity and immediately create a new one.");
+						if (confirm_new) {
+							try {
+								window.localStorage.removeItem("ct_id_obj");
+								window.localStorage.removeItem("ct_msgs");
+							} catch (e) { }
+							$(this).attr("disabled", "disabled");
+						}
+					} else {
+
+						$(this).attr("disabled", "disabled");
+					}
+				});
+
 				if ( !setup_app_password ) {
 					pin_index = 0;
 					$("#app_setup")
@@ -301,7 +383,6 @@
 						}
 					} else {
 						var btn_val = $(this).val();
-						console.log("#login_masterpass_form input[data-idx="+which_pin+"]");
 						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
 							pin_index = which_pin + 1;
