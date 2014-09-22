@@ -112,7 +112,7 @@
 
 		<section id="app_setup2" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
-			<p>Please Confirm your M<aster PIN.</p>
+			<p>Confirm your Master PIN.</p>
 
 			<form action="" method="post" class="pin-form" id="new_masterpass_form2">
 				<input type="password" class="pin-display" maxlength="1" data-idx="0" disabled>
@@ -202,6 +202,7 @@
 						}
 					} else {
 						var btn_val = $(this).val();
+						consol.elog("#login_masterpass_form input[data-idx="+which_pin+"]");
 						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
 							pin_index = which_pin + 1;
