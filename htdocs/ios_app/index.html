@@ -175,7 +175,7 @@
 					.on("mousedown", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
-						$("#new_masterpass_form input[data-idx="+which_pin+"]").val('');
+						$("#new_masterpass_form input[data-idx="+(which_pin-1)+"]").val('');
 						if (which_pin > 0) {
 							pin_index = which_pin - 1;
 						}
@@ -204,7 +204,7 @@
 					.on("mousedown", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
-						$("#new_masterpass_form2  input[data-idx="+which_pin+"]").val('');
+						$("#new_masterpass_form2  input[data-idx="+(which_pin-1)+"]").val('');
 						if (which_pin > 0) {
 							pin_index = which_pin - 1;
 						}
