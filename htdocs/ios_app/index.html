@@ -10,15 +10,28 @@
 			body {
 				font-family: "Advent Pro";
 			}
+			* {
+				box-sizing: border-box;
+			}
 			body, html {
 				padding: 0;
 				margin: 0;
 			}
+			section {
+				width: 100%;
+				padding: 10px;
+				position: absolute;
+			}
 			.appTitle {
 				font-weight: 100;
 				text-align: center;
+				font-size:36pt;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
 			}
-			#app_page {
+			.hiding {
 				display: none;
 			}
 		</style>
@@ -26,13 +39,61 @@
 	</head>
 	<body>
 
-		<section id="app_page">
+		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
+		</section>
+
+		<section id="app_setup" class="hiding">
+			<h1 class="appTitle">Ciphertext</h1>
+			<p>Choose a Master Password.</p>
+
+			<form action="" method="post" id="new_masterpass_form">
+
+			</form>
+		</section>
+
+		<section id="app_login" class="hiding">
+			<h1 class="appTitle">Ciphertext</h1>
+			<p>Enter Your Master Password.</p>
+
+			<form action="" method="post" id="login_masterpass_form">
+
+			</form>
 		</section>
 
 		<script>
 			$(function(){
-				$("#app_page").fadeIn(1500);
+
+				$("#app_setup")
+					.css({top: parseInt($(window).height() + 1, 10)});
+
+				$("#app_login")
+					.css({top: parseInt($(window).height() + 1, 10)});
+
+				$("#new_masterpass_form")
+					.on("submit", function(){
+
+					return false;
+
+				});
+
+				$("#login_masterpass_form")
+					.on("submit", function(){
+
+					return false;
+
+				});
+
+				var setup_app_password = window.localStorage.getItem("ct_masterpass");
+				if ( !setup_app_password ) {
+					$("#app_setup")
+						.css({display: "block"})
+						.animate({top: 0});
+				} else {
+					$("#app_login")
+						.css({display: "block"})
+						.animate({top: 0});
+				}
 			});
 		</script>
 	</body>
