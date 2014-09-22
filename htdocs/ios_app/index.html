@@ -40,7 +40,8 @@
 				text-align: center;
 			}
 			.pin-form input[type="text"], 
-			.pin-form input[type="password"]
+			.pin-form input[type="password"],
+			.pin-form input[type="button"]
 			{
 				border: 1px solid;
 				width: 15%;
@@ -48,10 +49,18 @@
 				height: 50px;
 				font-size: 36pt;
 				border-radius: 0;
+				text-align: center;
 			}
 			.pin-form input[disabled] {
 				background: #ffffff;
 				color: #000000;
+				border: 1px solid;
+			}
+			.pin-form input[type="button"] {
+				width: 25%;
+				border-radius: 12%;
+				background: #000000;
+				color: #ffffff;
 			}
 		</style>
 		<title>Ciphertext</title>
@@ -71,6 +80,17 @@
 				<input type="password" class="pin-display" disabled>
 				<input type="password" class="pin-display" disabled>
 				<input type="password" class="pin-display" disabled>
+
+				<input type="button" value="1">
+				<input type="button" value="2">
+				<input type="button" value="3"><br>
+				<input type="button" value="4">
+				<input type="button" value="5">
+				<input type="button" value="6"><br>
+				<input type="button" value="7">
+				<input type="button" value="8">
+				<input type="button" value="9"><br>
+				<input type="button" value="0">
 			</form>
 		</section>
 
@@ -83,6 +103,17 @@
 				<input type="password" class="pin-display" disabled>
 				<input type="password" class="pin-display" disabled>
 				<input type="password" class="pin-display" disabled>
+
+				<input type="button" value="1">
+				<input type="button" value="2">
+				<input type="button" value="3"><br>
+				<input type="button" value="4">
+				<input type="button" value="5">
+				<input type="button" value="6"><br>
+				<input type="button" value="7">
+				<input type="button" value="8">
+				<input type="button" value="9"><br>
+				<input type="button" value="0">
 			</form>
 		</section>
 
@@ -109,13 +140,16 @@
 
 				});
 
+				var pin_index;
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
 				if ( !setup_app_password ) {
+					pin_index = 0;
 					$("#app_setup")
 						.css({display: "block"})
 						.animate({top: 0});
 				} else {
+					pin_index = 0;
 					$("#app_login")
 						.css({display: "block"})
 						.animate({top: 0});
