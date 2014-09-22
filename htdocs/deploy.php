@@ -38,10 +38,11 @@
  
                 // Run the build script as a background process
 		
-		$cmd = './cmd/build.sh '.$url.' '.$payload->repository->name;
-                $build = shell_exec($cmd);
-		$output .= "<span style=\"color: #6BE234;\">\$</span> <span style=\"color: #729FCF;\">{$cmd}\n</span>";
-		$output .= htmlentities(trim($build)) . "\n";
+			//$cmd = './cmd/build.sh '.$url.' '.$payload->repository->name;
+        	$cmd = 'cd ..';
+            $build = shell_exec($cmd);
+			$output .= "<span style=\"color: #6BE234;\">\$</span> <span style=\"color: #729FCF;\">{$cmd}\n</span>";
+			$output .= htmlentities(trim($build)) . "\n";
         }
  
 	// The commands
