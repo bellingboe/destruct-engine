@@ -31,9 +31,13 @@
 		</section>
 
 		<script>
-		$(document).ready((function(){
-			$("#app_page").fadeIn(1500);
-		});
+		(function($){
+
+			$(function(){
+				$("#app_page").fadeIn(1500);
+			});
+			
+		})(jQuery);
 		</script>
 
 	</body>
