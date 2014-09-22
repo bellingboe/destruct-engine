@@ -206,16 +206,15 @@
 						if (which_pin < 3) {
 							pin_index = which_pin + 1;
 						} else {
-							pin_index = 0;
 							$("#login_masterpass_form .pin-display").each(function(){
 								master_pin_string = "" + master_pin_string + "" + $(this).val();
 							});
 
 							if (master_pin_string === setup_app_password) {
-								$("#app_loggin")
+								$("#app_login")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
-										$("#app_page").css({top: 0}).fadeIn();
+										$("#app_page").css({top: 0}).show().fadeIn();
 									}});
 							} else {
 								alert("Incorrect PIN. Try again.");
