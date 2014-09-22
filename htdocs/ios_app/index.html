@@ -55,6 +55,7 @@
 				background: #ffffff;
 				color: #000000;
 				border: 1px solid;
+				margin-left: 7%;
 			}
 			.pin-form input[type="button"] {
 				width: 33%;
@@ -81,10 +82,10 @@
 			<p>Choose a Master PIN.</p>
 
 			<form action="" method="post" class="pin-form" id="new_masterpass_form">
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="0" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="1" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="2" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="3" disabled>
 
 				<p></p>
 
@@ -98,6 +99,7 @@
 				<input type="button" value="8">
 				<input type="button" value="9"><br>
 				<input type="button" value="0">
+				<input type="button" value="<<" class="pin-back">
 			</form>
 		</section>
 
@@ -106,10 +108,10 @@
 			<p>Enter Your Master PIN.</p>
 
 			<form action="" method="post" class="pin-form" id="login_masterpass_form">
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
-				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="0" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="1" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="2" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="3" disabled>
 
 				<p></p>
 
@@ -123,11 +125,14 @@
 				<input type="button" value="8">
 				<input type="button" value="9"><br>
 				<input type="button" value="0">
+				<input type="button" value="<<" class="pin-back">
 			</form>
 		</section>
 
 		<script>
 			$(function(){
+
+				var pin_index = 0;
 
 				$("#app_setup")
 					.css({top: parseInt($(window).height() + 1, 10)});
@@ -135,11 +140,45 @@
 				$("#app_login")
 					.css({top: parseInt($(window).height() + 1, 10)});
 
+				$("#new_masterpass_form input[type=button]")
+					.on("mousedown", function(){
+					var which_pin = pin_index;
+					if ($)this).hasClass("pin-back")) {
+						$("#new_masterpass_form input[data-idx="+which_pin+"]").val('');
+						if (which_pin > 0) {
+							which_pin = which_pin - 1;
+						}
+					} else {
+						var btn_val = $(this).val();
+						$("#new_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
+						if (which_pin < 3) {
+							which_pin = which_pin + 1;
+						}
+					}
+					return false;
+				});
+
+				$("#login_masterpass_form input[type=button]")
+					.on("mousedown", function(){
+					var which_pin = pin_index;
+					if ($)this).hasClass("pin-back")) {
+						$("#login_masterpass_form input[data-idx="+which_pin+"]").val('');
+						if (which_pin > 0) {
+							which_pin = which_pin - 1;
+						}
+					} else {
+						var btn_val = $(this).val();
+						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
+						if (which_pin < 3) {
+							which_pin = which_pin + 1;
+						}
+					}
+					return false;
+				});
+
 				$("#new_masterpass_form")
 					.on("submit", function(){
-
 					return false;
-
 				});
 
 				$("#login_masterpass_form")
@@ -149,7 +188,6 @@
 
 				});
 
-				var pin_index;
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
 				if ( !setup_app_password ) {
