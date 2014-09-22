@@ -101,6 +101,9 @@
 				background: #000000;
 				color: #ffffff;
 			}
+			.big-btn[disabled] {
+				opacity:0.4;
+			}
 			.normal-font p {
 				font-family: Arial, sans-serif;
 				text-align:left;
@@ -294,7 +297,8 @@
 				};
 
 				var generateNewIdentity = function() {
-					$(".id-name").removeClass("hiding").css({color: "grey"}).html("Creating key, please wait... ");
+					$(".app-id-action")..attr("disabled", "disabled").val("Creating New Identity...");
+					$(".id-name").removeClass("hiding").css({color: "grey"}).html("Creating identity, please wait... ");
 
 					var new_id_str = random_string(5)+"-"+random_string(5);
 
@@ -310,18 +314,12 @@
                             return false;
                         }
                         
-                        var
-                            new_key_pair = res
-                            , priv = new_key_pair.privateKeyArmored
-                            , pub = new_key_pair.publicKeyArmored
-                            , raw_key = JSON.stringify(new_key_pair.key)
+                        var new_key_pair = res;
 
-                    	identity.key = [];
-                    	identity.key.pub = pub;
-                    	identity.key.priv = priv;
-                        identity.key.raw = raw_key;
-
-                        console.log(new_key_pair);
+                    	identity.key = {};
+                    	identity.key.pub = new_key_pair.publicKeyArmored;
+                    	identity.key.priv = new_key_pair.privateKeyArmored;
+                        identity.key.raw = JSON.stringify(new_key_pair.key);
 
                         try {
                             ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
@@ -340,10 +338,10 @@
 					myId = active_id_object();
 
 					if (!myId) {
-						$(".app-id-action").attr("data-has-id", "0").val("Create First Identity");
+						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "0").val("Create First Identity");
 						$(".id-name").removeClass("hiding").html("Create an identity to get started.");
 					} else {
-						$(".app-id-action").attr("data-has-id", "1").val("Create New Identity");
+						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "1").val("Create New Identity");
 						$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
 					}
 				};
@@ -359,11 +357,9 @@
 								window.localStorage.removeItem("ct_id_obj");
 								window.localStorage.removeItem("ct_msgs");
 							} catch (e) { }
-							$(this).attr("disabled", "disabled");
 							generateNewIdentity();
 						}
 					} else {
-						$(this).attr("disabled", "disabled");
 						generateNewIdentity();
 					}
 				});
