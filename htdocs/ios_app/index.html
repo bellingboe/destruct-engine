@@ -213,10 +213,10 @@
 
 							if (master_pin_string === setup_app_password) {
 								$("#app_loggin")
-									.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
+									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
 										$("#app_page").css({top: 0}).fadeIn();
-									});
+									}});
 							} else {
 								alert("Incorrect PIN. Try again.");
 								$(".pin-display").val("");
@@ -277,9 +277,9 @@
 							if (master_pin_string === master_pin_string2) {
 								window.localStorage.setItem("ct_masterpass", master_pin_string2);
 								$("#app_setup2")
-									.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
+									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$("#app_setup2").hide();
-									});
+									}});
 							} else {
 								alert("PINs don't match. Try again.");
 								$(".pin-display").val("");
