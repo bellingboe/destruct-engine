@@ -43,11 +43,15 @@
 			.pin-form input[type="password"]
 			{
 				border: 1px solid;
-				width: 20%;
+				width: 19%;
 				margin-left: 5%;
 				height: 50px;
 				font-size: 36pt;
 				border-radius: 0;
+			}
+			.pin-form input[disabled] {
+				background: #ffffff;
+				color: #000000;
 			}
 		</style>
 		<title>Ciphertext</title>
@@ -63,10 +67,10 @@
 			<p>Choose a Master PIN.</p>
 
 			<form action="" method="post" class="pin-form" id="new_masterpass_form">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
 			</form>
 		</section>
 
@@ -75,10 +79,10 @@
 			<p>Enter Your Master PIN.</p>
 
 			<form action="" method="post" class="pin-form" id="login_masterpass_form">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
-				<input type="password" class="pin-display">
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
+				<input type="password" class="pin-display" disabled>
 			</form>
 		</section>
 
