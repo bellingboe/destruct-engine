@@ -179,7 +179,7 @@
 					.css({top: parseInt($(window).height() + 1, 10)});
 
 				$("#new_masterpass_form input[type=button]")
-					.on("mousedown", function(){
+					.on("mouseup", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
 						$("#new_masterpass_form input[data-idx="+(which_pin-1)+"]").val('');
@@ -207,7 +207,7 @@
 				});
 
 				$("#new_masterpass_form2 input[type=button]")
-					.on("mousedown", function(){
+					.on("mouseup", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
 						$("#new_masterpass_form2  input[data-idx="+(which_pin-1)+"]").val('');
@@ -223,28 +223,29 @@
 							// ----------------------  Save master PIN ---------------------- //
 							$("#new_masterpass_form2 .pin-display").each(function(){
 								master_pin_string2 = "" + master_pin_string2 + "" + $(this).val();
-
-								if (master_pin_string === master_pin_string2) {
-									window.localStorage.setItem("ct_masterpass", master_pin_string2);
-									$("#app_setup2")
-										.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
-											$("#app_setup2").hide();
-										});
-								} else {
-									console.log(master_pin_string + " / " + master_pin_string2);
-									alert("PINs don't match. Try again.");
-									$(".pin-display").val("");
-									pin_index = 0;
-									master_pin_string = "";
-									master_pin_string2 = "";
-									$("#app_setu2")
-										.hide()
-										.css({top: parseInt($(window).height() + 1, 10)});
-									$("#app_setup")
-										.css({display: "block"})
-										.animate({top: 0});
-								}
 							});
+
+							if (master_pin_string === master_pin_string2) {
+								window.localStorage.setItem("ct_masterpass", master_pin_string2);
+								$("#app_setup2")
+									.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
+										$("#app_setup2").hide();
+									});
+							} else {
+								console.log(master_pin_string + " / " + master_pin_string2);
+								alert("PINs don't match. Try again.");
+								$(".pin-display").val("");
+								pin_index = 0;
+								master_pin_string = "";
+								master_pin_string2 = "";
+								$("#app_setu2")
+									.hide()
+									.css({top: parseInt($(window).height() + 1, 10)});
+								$("#app_setup")
+									.css({display: "block"})
+									.animate({top: 0});
+							}
+							
 						}
 					}
 				});
