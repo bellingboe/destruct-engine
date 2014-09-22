@@ -146,13 +146,13 @@
 					if ($(this).hasClass("pin-back")) {
 						$("#new_masterpass_form input[data-idx="+which_pin+"]").val('');
 						if (which_pin > 0) {
-							which_pin = which_pin - 1;
+							pin_index = which_pin - 1;
 						}
 					} else {
 						var btn_val = $(this).val();
 						$("#new_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
-							which_pin = which_pin + 1;
+							pin_index = which_pin + 1;
 						}
 					}
 					return false;
@@ -164,13 +164,13 @@
 					if ($(this).hasClass("pin-back")) {
 						$("#login_masterpass_form input[data-idx="+which_pin+"]").val('');
 						if (which_pin > 0) {
-							which_pin = which_pin - 1;
+							pin_index = which_pin - 1;
 						}
 					} else {
 						var btn_val = $(this).val();
 						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
-							which_pin = which_pin + 1;
+							pin_index = which_pin + 1;
 						}
 					}
 					return false;
