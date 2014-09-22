@@ -178,6 +178,55 @@
 				$("#app_login")
 					.css({top: parseInt($(window).height() + 1, 10)});
 
+				var setup_app_password = window.localStorage.getItem("ct_masterpass");
+
+				if ( !setup_app_password ) {
+					pin_index = 0;
+					$("#app_setup")
+						.css({display: "block"})
+						.animate({top: 0});
+				} else {
+					pin_index = 0;
+					$("#app_login")
+						.css({display: "block"})
+						.animate({top: 0});
+				}
+
+				$("#login_masterpass_form input[type=button]")
+					.on("mouseup", function(){
+					var which_pin = pin_index;
+					if ($(this).hasClass("pin-back")) {
+						$("#login_masterpass_form input[data-idx="+(which_pin-1)+"]").val('');
+						if (which_pin > 0) {
+							pin_index = which_pin - 1;
+						}
+					} else {
+						var btn_val = $(this).val();
+						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
+						if (which_pin < 3) {
+							pin_index = which_pin + 1;
+						} else {
+							pin_index = 0;
+							$("#login_masterpass_form .pin-display").each(function(){
+								master_pin_string = "" + master_pin_string + "" + $(this).val();
+							});
+
+							if (master_pin_string === setup_app_password) {
+								$("#app_loggin")
+									.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
+										$(this).hide();
+										$("#app_page").css({top: 0}).fadeIn();
+									});
+							} else {
+								alert("Incorrect PIN. Try again.");
+								$(".pin-display").val("");
+								pin_index = 0;
+								master_pin_string = "";
+							}
+						}
+					}
+				});
+
 				$("#new_masterpass_form input[type=button]")
 					.on("mouseup", function(){
 					var which_pin = pin_index;
@@ -232,7 +281,6 @@
 										$("#app_setup2").hide();
 									});
 							} else {
-								console.log(master_pin_string + " / " + master_pin_string2);
 								alert("PINs don't match. Try again.");
 								$(".pin-display").val("");
 								pin_index = 0;
@@ -245,7 +293,6 @@
 									.css({display: "block"})
 									.animate({top: 0});
 							}
-
 						}
 					}
 				});
@@ -276,20 +323,6 @@
 					.on("submit", function(){
 					return false;
 				});
-
-				var setup_app_password = window.localStorage.getItem("ct_masterpass");
-
-				if ( !setup_app_password ) {
-					pin_index = 0;
-					$("#app_setup")
-						.css({display: "block"})
-						.animate({top: 0});
-				} else {
-					pin_index = 0;
-					$("#app_login")
-						.css({display: "block"})
-						.animate({top: 0});
-				}
 			});
 		</script>
 	</body>
