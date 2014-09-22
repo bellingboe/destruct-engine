@@ -270,6 +270,9 @@
 
 				var active_id_object = function() {
 					var enc_ident = window.localStorage.getItem("ct_id_obj");
+					if (!enc_ident) {
+						return false;
+					}
 					var identity = unciph(setup_app_password, enc_ident);
 					var id_parsed = JSON.parse(identity);
 
