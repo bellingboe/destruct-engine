@@ -193,7 +193,7 @@
 				}
 
 				$("#login_masterpass_form input[type=button]")
-					.on("mouseup", function(){
+					.on("click", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
 						$("#login_masterpass_form input[data-idx="+(which_pin-1)+"]").val('');
@@ -208,10 +208,10 @@
 							pin_index = which_pin + 1;
 						} else {
 							$("#login_masterpass_form .pin-display").each(function(){
-								master_pin_string = "" + master_pin_string + "" + $(this).val();
+								master_pin_entry = "" + master_pin_entry+ "" + $(this).val();
 							});
 
-							if (master_pin_string === setup_app_password) {
+							if (master_pin_entry === setup_app_password) {
 								$("#app_login")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
@@ -221,14 +221,14 @@
 								alert("Incorrect PIN. Try again.");
 								$(".pin-display").val("");
 								pin_index = 0;
-								master_pin_string = "";
+								master_pin_entry = "";
 							}
 						}
 					}
 				});
 
 				$("#new_masterpass_form input[type=button]")
-					.on("mouseup", function(){
+					.on("click", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
 						$("#new_masterpass_form input[data-idx="+(which_pin-1)+"]").val('');
@@ -256,7 +256,7 @@
 				});
 
 				$("#new_masterpass_form2 input[type=button]")
-					.on("mouseup", function(){
+					.on("click", function(){
 					var which_pin = pin_index;
 					if ($(this).hasClass("pin-back")) {
 						$("#new_masterpass_form2  input[data-idx="+(which_pin-1)+"]").val('');
@@ -297,6 +297,7 @@
 					}
 				});
 
+/*
 				$("#login_masterpass_form input[type=button]")
 					.on("mousedown", function(){
 					var which_pin = pin_index;
@@ -313,6 +314,7 @@
 						}
 					}
 				});
+*/
 
 				$("#new_masterpass_form")
 					.on("submit", function(){
