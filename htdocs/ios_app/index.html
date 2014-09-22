@@ -269,7 +269,13 @@
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
 				var active_id_object = function() {
-					return window.localStorage.getItem("ct_id_obj");
+					var enc_ident = window.localStorage.getItem("ct_id_obj");
+					var identity = unciph(setup_app_password, enc_ident);
+					var id_parsed = JSON.parse(identity);
+
+					console.log(id_parsed);
+
+					return id_parsed;
 				};
 
 				var getLocalMessages = function() {
@@ -281,7 +287,7 @@
 				};
 
 				var generateNewIdentity = function() {
-					$(".id-name").removeClass("hiding").css({color: "grey"}).html("... Creating key ...");
+					$(".id-name").removeClass("hiding").css({color: "grey"}).html("Creating key, please wait... ");
 
 					var new_id_str = random_string(5)+"-"+random_string(5);
 
