@@ -297,7 +297,7 @@
 				};
 
 				var generateNewIdentity = function() {
-					$(".app-id-action")..attr("disabled", "disabled").val("Creating New Identity...");
+					$(".app-id-action").attr("disabled", "disabled").val("Creating New Identity...");
 					$(".id-name").removeClass("hiding").css({color: "grey"}).html("Creating identity, please wait... ");
 
 					var new_id_str = random_string(5)+"-"+random_string(5);
