@@ -111,7 +111,7 @@
 			.normal-center {
 				text-align:center;
 				font-family: Arial;
-				font-size: 18pt;
+				font-size: 16pt;
 			}
 		</style>
 		<title>Ciphertext</title>
@@ -125,6 +125,12 @@
 			<input type="button" class="big-btn app-clear-pin" value="Clear Master PIN">
 			<input type="button" class="big-btn app-exit" value="Exit Session">
 			<input type="button" class="big-btn app-help" value="Help">
+			<input type="button" class="big-btn app-messages hiding" value="Messages">
+		</section>
+
+		<section id="app_messages" class="hiding">
+			<p>Messages</p>
+			<input type="button" class="big-btn app-close-messages" value="Back">
 		</section>
 
 		<section id="app_help" class="hiding normal-font">
@@ -288,8 +294,6 @@
 					var identity = unciph(get_master_pin(), enc_ident);
 					var id_parsed = JSON.parse(identity);
 
-					console.log(id_parsed);
-
 					return id_parsed;
 				};
 
@@ -313,7 +317,7 @@
 					};
 
 					window.openpgp.initWorker('openpgp.worker.js');
-                    window.openpgp.generateKeyPair(1, 2048, identity.pgp_email, setup_app_password, function(err, res){
+                    window.openpgp.generateKeyPair(1, 2048, identity.pgp_email, get_master_pin(), function(err, res){
                         if (err) {
                             $(".id-name").removeClass("hiding").css({color: "red"}).html("Error creating keypair: "+err);
                             return false;
@@ -346,8 +350,9 @@
 						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "0").val("Create First Identity");
 						$(".id-name").removeClass("hiding").html("Create an identity to get started.");
 					} else {
-						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "1").val("Create New Identity");
+						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "1").val("New Identity");
 						$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
+						$(".app-messages").removeClass("hiding");
 					}
 				};
 
@@ -393,7 +398,15 @@
 					openPage("#app_help", "up", "up");
 				});
 
+				$(".app-messages").on("click", function(){
+					openPage("#app_messages", "up", "up");
+				});
+
 				$(".app-close-help").on("click", function(){
+					openPage("#app_page", "down", "down");
+				});
+
+				$(".app-close-messages").on("click", function(){
 					openPage("#app_page", "down", "down");
 				});
 
