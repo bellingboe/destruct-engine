@@ -103,6 +103,32 @@
 			</form>
 		</section>
 
+		<section id="app_setup2" class="hiding">
+			<h1 class="appTitle">Ciphertext</h1>
+			<p>Please Confirm your M<aster PIN.</p>
+
+			<form action="" method="post" class="pin-form" id="new_masterpass_form2">
+				<input type="password" class="pin-display" maxlength="1" data-idx="0" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="1" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="2" disabled>
+				<input type="password" class="pin-display" maxlength="1" data-idx="3" disabled>
+
+				<p></p>
+
+				<input type="button" value="1">
+				<input type="button" value="2">
+				<input type="button" value="3"><br>
+				<input type="button" value="4">
+				<input type="button" value="5">
+				<input type="button" value="6"><br>
+				<input type="button" value="7">
+				<input type="button" value="8">
+				<input type="button" value="9"><br>
+				<input type="button" value="0">
+				<input type="button" value="<<" class="pin-back">
+			</form>
+		</section>
+
 		<section id="app_login" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
 			<p>Enter Your Master PIN.</p>
@@ -133,8 +159,13 @@
 			$(function(){
 
 				var pin_index = 0;
+				var master_pin_string = "";
+				var master_pin_string2 = "";
 
 				$("#app_setup")
+					.css({top: parseInt($(window).height() + 1, 10)});
+
+				$("#app_setup2")
 					.css({top: parseInt($(window).height() + 1, 10)});
 
 				$("#app_login")
@@ -153,6 +184,60 @@
 						$("#new_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
 							pin_index = which_pin + 1;
+						} else {
+							pin_index = 0;
+							$("#new_masterpass_form .pin-display").each(function(){
+								master_pin_string = "" + $(this).val();
+							});
+							$("#app_setup")
+								.hide()
+								.css({top: parseInt($(window).height() + 1, 10)});
+							$("#app_setup2")
+								.css({display: "block"})
+								.animate({top: 0});
+						}
+					}
+					return false;
+				});
+
+				$("#new_masterpass_form2 input[type=button]")
+					.on("mousedown", function(){
+					var which_pin = pin_index;
+					if ($(this).hasClass("pin-back")) {
+						$("#new_masterpass_form2  input[data-idx="+which_pin+"]").val('');
+						if (which_pin > 0) {
+							pin_index = which_pin - 1;
+						}
+					} else {
+						var btn_val = $(this).val();
+						$("#new_masterpass_form2  input[data-idx="+which_pin+"]").val(btn_val);
+						if (which_pin < 3) {
+							pin_index = which_pin + 1;
+						} else {
+							// ----------------------  Save master PIN ---------------------- //
+							$("#new_masterpass_form2 .pin-display").each(function(){
+								master_pin_string2 = "" + $(this).val();
+
+								if (master_pin_string === master_pin_string2) {
+									window.localStorage.setItem("ct_masterpass", master_pin_string2);
+									$("#app_setup2")
+										.animate({top: parseInt($(window).height() + 1, 10)}, "normal", function(){
+											$("#app_setup2").hide();
+										});
+								} else {
+									console.log(master_pin_string + " / " + master_pin_string2);
+									alert("PINs don't match. Try again.");
+									$(".pin-display").val("");
+									master_pin_string = "";
+									master_pin_string2 = "";
+									$("#app_setu2")
+										.hide()
+										.css({top: parseInt($(window).height() + 1, 10)});
+									$("#app_setup")
+										.css({display: "block"})
+										.animate({top: 0});
+								}
+							});
 						}
 					}
 					return false;
