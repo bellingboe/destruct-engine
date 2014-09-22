@@ -291,10 +291,9 @@
 					};
 
 					window.openpgp.initWorker('openpgp.worker.js');
-                    window.openpgp.generateKeyPair(1, 2048, identity.pgp_email:, setup_app_password, function(err, res){
+                    window.openpgp.generateKeyPair(1, 2048, identity.pgp_email, setup_app_password, function(err, res){
                         if (err) {
                             $(".id-name").removeClass("hiding").css({color: "red"}).html("Error creating keypair: "+err);
-                            console.log(err);
                             return false;
                         }
                         
