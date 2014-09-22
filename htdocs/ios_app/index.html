@@ -98,6 +98,10 @@
 				background: #000000;
 				color: #ffffff;
 			}
+			.normal-font p {
+				font-family: Arial, sans-serif;
+				text-align:left;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -110,7 +114,7 @@
 			<input type="button" class="big-btn app-help" value="Help">
 		</section>
 
-		<section id="app_help" class="hiding">
+		<section id="app_help" class="hiding normal-font">
 			<h1 class="appTitle">Ciphertext Help</h1>
 			<p>Ciphertext is a secure, anonymous chat and message service used for the sensitive andclassified transfer of information.</p>
 
@@ -307,7 +311,7 @@
 							});
 
 							if (master_pin_entry === setup_app_password) {
-								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0});
+								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0}).addClass("page-open");
 								$("#app_login")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
@@ -371,7 +375,7 @@
 
 							if (master_pin_string === master_pin_string2) {
 								window.localStorage.setItem("ct_masterpass", master_pin_string2);
-								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0});
+								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0}).addClass("page-open");
 								$("#app_setup2")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$("#app_setup2").hide();
