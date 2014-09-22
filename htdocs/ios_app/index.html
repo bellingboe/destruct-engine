@@ -213,10 +213,10 @@
 							});
 
 							if (master_pin_entry === setup_app_password) {
+								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0});
 								$("#app_login")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$(this).hide();
-										$("#app_page").removeClass("hiding").css({top: 0}).show();
 									}});
 							} else {
 								alert("Incorrect PIN. Try again.");
@@ -277,10 +277,10 @@
 
 							if (master_pin_string === master_pin_string2) {
 								window.localStorage.setItem("ct_masterpass", master_pin_string2);
+								$("#app_page").css({top: -parseInt($(window).height() + 1, 10)}).removeClass("hiding").animate({top: 0});
 								$("#app_setup2")
 									.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
 										$("#app_setup2").hide();
-										$("#app_page").removeClass("hiding").css({top: 0}).show();
 									}});
 							} else {
 								alert("PINs don't match. Try again.");
