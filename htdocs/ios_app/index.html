@@ -202,7 +202,7 @@
 						}
 					} else {
 						var btn_val = $(this).val();
-						consol.elog("#login_masterpass_form input[data-idx="+which_pin+"]");
+						console.log("#login_masterpass_form input[data-idx="+which_pin+"]");
 						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
 						if (which_pin < 3) {
 							pin_index = which_pin + 1;
