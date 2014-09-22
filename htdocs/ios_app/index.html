@@ -268,12 +268,16 @@
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
+				var get_master_pin = function() {
+					return window.localStorage.getItem("ct_masterpass");
+				};
+
 				var active_id_object = function() {
 					var enc_ident = window.localStorage.getItem("ct_id_obj");
 					if (!enc_ident) {
 						return false;
 					}
-					var identity = unciph(setup_app_password, enc_ident);
+					var identity = unciph(get_master_pin(), enc_ident);
 					var id_parsed = JSON.parse(identity);
 
 					console.log(id_parsed);
@@ -317,8 +321,10 @@
                     	identity.key.priv = priv;
                         identity.key.raw = raw_key;
 
+                        console.log(new_key_pair);
+
                         try {
-                            ident_enc = ciph(setup_app_password, JSON.stringify(identity));
+                            ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
                             placeIdentityIntoStorage(ident_enc);
                         } catch(_e) {
                             console.log(_e);
