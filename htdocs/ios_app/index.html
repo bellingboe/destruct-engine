@@ -39,6 +39,14 @@
 				font-weight: 300;
 				text-align: center;
 			}
+			.pin-form input[type="text"], 
+			.pin-form input[type="password"]
+			{
+				border: 1px solid;
+				width: 20%;
+				margin: 2%
+				font-size: 36pt;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -50,19 +58,25 @@
 
 		<section id="app_setup" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
-			<p>Choose a Master Password.</p>
+			<p>Choose a Master PIN.</p>
 
-			<form action="" method="post" id="new_masterpass_form">
-
+			<form action="" method="post" class="pin-form" id="new_masterpass_form">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
 			</form>
 		</section>
 
 		<section id="app_login" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
-			<p>Enter Your Master Password.</p>
+			<p>Enter Your Master PIN.</p>
 
-			<form action="" method="post" id="login_masterpass_form">
-
+			<form action="" method="post" class="pin-form" id="login_masterpass_form">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
+				<input type="password" class="pin-display">
 			</form>
 		</section>
 
@@ -90,10 +104,13 @@
 				});
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
+
 				if ( !setup_app_password ) {
 					$("#app_setup")
 						.css({display: "block"})
 						.animate({top: 0});
+
+						$("new_masterpass_form pin-display:eq(0)").focus();
 				} else {
 					$("#app_login")
 						.css({display: "block"})
