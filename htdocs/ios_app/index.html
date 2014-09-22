@@ -194,7 +194,7 @@
 						} else {
 							pin_index = 0;
 							$("#new_masterpass_form .pin-display").each(function(){
-								master_pin_string = master_pin_string + "" + $(this).val();
+								master_pin_string = "" + master_pin_string + "" + $(this).val();
 							});
 							$("#app_setup")
 								.hide()
@@ -222,7 +222,7 @@
 						} else {
 							// ----------------------  Save master PIN ---------------------- //
 							$("#new_masterpass_form2 .pin-display").each(function(){
-								master_pin_string2 = master_pin_string2 + "" + $(this).val();
+								master_pin_string2 = "" + master_pin_string2 + "" + $(this).val();
 
 								if (master_pin_string === master_pin_string2) {
 									window.localStorage.setItem("ct_masterpass", master_pin_string2);
