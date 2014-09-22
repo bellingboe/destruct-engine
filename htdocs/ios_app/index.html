@@ -107,6 +107,18 @@
 			<h1 class="appTitle">Ciphertext</h1>
 			<input type="button" class="big-btn app-clear-pin" value="Clear Master PIN">
 			<input type="button" class="big-btn app-exit" value="Exit Ciphertext">
+			<input type="button" class="big-btn app-help" value="Help">
+		</section>
+
+		<section id="app_help" class="hiding">
+			<h1 class="appTitle">Ciphertext Help</h1>
+			<p>Ciphertext is a secure, anonymous chat and message service used for the sensitive andclassified transfer of information.</p>
+
+			<p>You can create and destroy your chat conversations, and your <strong>identities</strong> at any time. An identity is simply a "user". You'll be given a random set of numbmers and letters - that serves as your username for that identity and is how people will contact you. Each identity comes with a 2048-bit PGP keypair generated <strong>on the device, and NEVER transferred outside the device itself.</strong></p>
+			<p>When you add someone (or vice-versa) to your contacts, the server only acts as a transport of user public keys, never private keys. When someone sends you a message, they use their private key, and your puiblic key to encrypt the message that nobody else besides you two will ever be able to decrypt it. </p>
+			<p>What makes <strong>Ciphertext</strong> secure and unique, is that the transfer of private keys, and passwords never happens. It's all client-based. We never know your PINs, or your keypair passwords.</p>
+		
+			<input type="button" class="big-btn app-close-help" value="Back">
 		</section>
 
 		<section id="app_setup" class="hiding">
@@ -204,7 +216,46 @@
 				var logOut = function() {
 					window.localStorage.removeItem("ct_masterpass");
 					location.reload();
-				}
+				};
+
+				var openPage = function(id, new_up_down, old_up_down) {
+					var old = $(".page-open");
+					var page = $(id);
+
+					if (old) {
+						switch (old_up_down) {
+							case "up":
+								old.animate({top: -parseInt($(window).height() + 1, 10)}, {complete: function(){
+									$(this).addClass("hiding").removeClass("page-open");
+								}});
+							break;
+							case "down":
+								old.animate({top: parseInt($(window).height() + 1, 10)}, {complete: function(){
+									$(this).addClass("hiding").removeClass("page-open");
+								}});
+							break;
+						}
+					}
+
+					switch (new_up_down) {
+						case "up":
+							page
+							.css({top: parseInt($(window).height() + 1, 10)})
+							.removeClass("hiding")
+							.animate({top: 0}, {complete: function(){
+								$(this).addClass("page-open");
+							}});
+						break;
+						case "down":
+							page
+							.css({top: -parseInt($(window).height() + 1, 10)})
+							.removeClass("hiding")
+							.animate({top: 0}, {complete: function(){
+								$(this).addClass("page-open");
+							}});
+						break;
+					}
+				};
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
@@ -224,9 +275,16 @@
 					logOut();
 				});
 
-
 				$(".app-exit").on("click", function(){
 					location.reload();
+				});
+
+				$(".app-help").on("click", function(){
+					openPage("#app_help", "up", "up");
+				});
+
+				$(".app-close-help").on("click", function(){
+					openPage("#app_page", "down", "down");
 				});
 
 				$("#login_masterpass_form input[type=button]")
