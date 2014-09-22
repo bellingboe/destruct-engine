@@ -202,7 +202,6 @@
 								.animate({top: 0});
 						}
 					}
-					return false;
 				});
 
 				$("#new_masterpass_form2 input[type=button]")
@@ -246,7 +245,6 @@
 							});
 						}
 					}
-					return false;
 				});
 
 				$("#login_masterpass_form input[type=button]")
@@ -264,7 +262,6 @@
 							pin_index = which_pin + 1;
 						}
 					}
-					return false;
 				});
 
 				$("#new_masterpass_form")
@@ -274,9 +271,7 @@
 
 				$("#login_masterpass_form")
 					.on("submit", function(){
-
 					return false;
-
 				});
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
