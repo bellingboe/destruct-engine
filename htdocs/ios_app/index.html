@@ -280,7 +280,9 @@
 					window.localStorage.setItem("ct_id_obj", id);
 				};
 
-				var generateNewIdentity() {
+				var generateNewIdentity = function() {
+					$(".id-name").removeClass("hiding").css({color: "grey"}).html("... Creating key ...");
+
 					var new_id_str = random_string(5)+"-"+random_string(5);
 
 					var identity = {
@@ -291,7 +293,7 @@
 					window.openpgp.initWorker('openpgp.worker.js');
                     window.openpgp.generateKeyPair(1, 2048, identity.pgp_email:, setup_app_password, function(err, res){
                         if (err) {
-                            alert("Error creating key.", 2500);
+                            $(".id-name").removeClass("hiding").css({color: "red"}).html("Error creating keypair: "+err);
                             console.log(err);
                             return false;
                         }
@@ -313,20 +315,26 @@
                         } catch(_e) {
                             console.log(_e);
                         }
+
+                        refreshIdStatus();
                         
                         return true;
                     });
 				};
 
-				myId = active_id_object();
+				var refreshIdStatus = function() {
+					myId = active_id_object();
 
-				if (!myId) {
-					$(".app-id-action").attr("data-has-id", "0").val("Create First Identity");
-					$(".id-name").removeClass("hiding").html("Create an identity to get started.");
-				} else {
-					$(".app-id-action").attr("data-has-id", "1").val("Create New Identity");
-					$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
-				}
+					if (!myId) {
+						$(".app-id-action").attr("data-has-id", "0").val("Create First Identity");
+						$(".id-name").removeClass("hiding").html("Create an identity to get started.");
+					} else {
+						$(".app-id-action").attr("data-has-id", "1").val("Create New Identity");
+						$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
+					}
+				};
+
+				refreshIdStatus();
 
 				$(".app-id-action").on("click", function(){
 					var has_id = $(this).attr("data-has-id") == "0" ? false : true;
@@ -338,10 +346,11 @@
 								window.localStorage.removeItem("ct_msgs");
 							} catch (e) { }
 							$(this).attr("disabled", "disabled");
+							generateNewIdentity();
 						}
 					} else {
-
 						$(this).attr("disabled", "disabled");
+						generateNewIdentity();
 					}
 				});
 
