@@ -31,7 +31,7 @@
 			.appTitle {
 				font-weight: 100;
 				text-align: center;
-				font-size:36pt;
+				font-size:32pt;
 				width: 100%;
 			}
 			.hiding {
@@ -75,6 +75,27 @@
 				color: #000000;
 				background: #ffffff;
 			}
+			.big-btn {
+				border: 0;
+				width: 100%;
+				padding: 15px;
+				bor-radius: 20px;
+				border: 1px solid #000000;
+				background: #ffffff;
+				color: #000000;
+				text-align: center;
+				height: 70px;
+				line-height: 70px;
+				font-weight: 500;
+				-webkit-appearance: none;
+				margin-top:10px;
+				clear:both;
+				text-decoration: none;
+			}
+			.big-btn:active {
+				background: #000000;
+				color: #ffffff;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -82,6 +103,8 @@
 
 		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
+			<input type="button" class="big-btn app-clear-pin" value="Clear Master PIN">
+			<input type="button" class="big-btn app-exit" value="Exit Ciphertext">
 		</section>
 
 		<section id="app_setup" class="hiding">
@@ -179,6 +202,11 @@
 				$("#app_login")
 					.css({top: parseInt($(window).height() + 1, 10)});
 
+				var logOut = function() {
+					window.localStorage.removeItem("ct_masterpass");
+					location.reload();
+				}
+
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
 				if ( !setup_app_password ) {
@@ -192,6 +220,15 @@
 						.css({display: "block"})
 						.animate({top: 0});
 				}
+
+				$(".app-clear-pin").on("click", function(){
+					logOut();
+				});
+
+
+				$(".app-exit").on("click", function(){
+					location.reload();
+				});
 
 				$("#login_masterpass_form input[type=button]")
 					.on("click", function(){
