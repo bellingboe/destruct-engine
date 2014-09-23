@@ -8,13 +8,12 @@ var app = require('express')()
     }, app)
   , io = require('socket.io')(https);
 
-io.set('transports', [
-    'websocket'
-//  , 'flashsocket'
-//  , 'htmlfile'
-//  , 'xhr-polling'
-//  , 'jsonp-polling'
-]);
+io.set('transports', ['websocket', 
+                      'flashsocket', 
+                      'htmlfile', 
+                      'xhr-polling', 
+                      'jsonp-polling', 
+                      'polling']);
 
 app.get('/', function(req, res){
   res.send('<h1>Hello world</h1>');
