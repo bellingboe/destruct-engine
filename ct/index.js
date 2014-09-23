@@ -25,8 +25,6 @@ io.on('connection', function(socket){
 	socket.on('id-with-key', function(id, key){
 		users[socket.id] = {k: key, i: id};
 		io.emit('socket-from-key', id, socket.id);
-		
-		console.log(users);
 	});
 	socket.on("disconnect", function(){
 		try {
