@@ -28,16 +28,13 @@ io.on('connection', function(socket){
 		
 		console.log(users);
 	});
-	socket.on("disconnect", function(s, t, u){
-	  
-	  console.log("disocnn arg")
-	  console.log(s);
-	  console.log(t);
-	  console.log(u);
-	  
-		var id = users[s].i;
+	socket.on("disconnect", function(){
+
+	  var who = users.indexOf(socket.id);
+
+		var id = users[who].i;
 		io.emit('idDisconn', id, socket.id);
-		delete users[socket.id];
+		delete users[who];
 		
 		console.log(users);
 	})
