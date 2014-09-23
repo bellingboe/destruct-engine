@@ -1,0 +1,6 @@
+{
+  "name": "ciphertext-socket-server",
+  "version": "0.0.1",
+  "description": "Socket server for Ciphertext",
+  "dependencies": {}
+}
