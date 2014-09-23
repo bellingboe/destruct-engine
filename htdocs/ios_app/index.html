@@ -335,7 +335,7 @@
                     	identity.key = {};
                     	identity.key.pub = new_key_pair.publicKeyArmored;
                     	identity.key.priv = new_key_pair.privateKeyArmored;
-                        identity.key.raw = JSON.stringify(new_key_pair.key);
+                        identity.key.raw = new_key_pair.key;
 
                         try {
                             ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
