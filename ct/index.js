@@ -28,10 +28,12 @@ io.on('connection', function(socket){
 		
 		console.log(users);
 	});
-	socket.on("disconnect", function(s){
+	socket.on("disconnect", function(s, t, u){
 	  
 	  console.log("disocnn arg")
 	  console.log(s);
+	  console.log(t);
+	  console.log(u);
 	  
 		var id = users[s].i;
 		io.emit('idDisconn', id, socket.id);
