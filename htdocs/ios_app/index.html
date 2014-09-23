@@ -122,8 +122,7 @@
 			<h1 class="appTitle">Ciphertext</h1>
 			<p class="id-name hiding normal-center"></p>
 			<input type="button" class="big-btn app-id-action" value="Create Identity">
-			<input type="button" class="big-btn app-clear-pin" value="Clear Master PIN">
-			<input type="button" class="big-btn app-exit" value="Exit Session">
+			<input type="button" class="big-btn app-clear-pin" value="Clear All Data">
 			<input type="button" class="big-btn app-help" value="Help">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
 		</section>
@@ -238,6 +237,8 @@
 
 				var logOut = function() {
 					window.localStorage.removeItem("ct_masterpass");
+                    window.localStorage.removeItem("ct_id_obj");
+                    window.localStorage.removeItem("ct_msgs");
 					location.reload();
 				};
 
