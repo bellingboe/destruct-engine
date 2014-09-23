@@ -32,9 +32,9 @@ io.on('connection', function(socket){
 
 	  var who = users.indexOf(socket.id);
 
-		var id = users[who].i;
+		var id = users[socket.id].i;
 		io.emit('idDisconn', id, socket.id);
-		delete users[who];
+		delete users[socket.id];
 		
 		console.log(users);
 	})
