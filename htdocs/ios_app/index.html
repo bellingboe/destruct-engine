@@ -240,7 +240,7 @@
 <script>
 			var socket = io('https://destruct.co:3000');
 			
-			var is_online = false;
+			var is_online = 0;
 
 			$(function(){
 				
@@ -407,6 +407,7 @@
 
                         refreshIdStatus();
                         
+						is_online = 1;
                         return true;
                     });
 				};
@@ -426,6 +427,10 @@
 						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "0").val("Create First Identity");
 						$(".id-name").removeClass("hiding").html("Create an identity to get started.");
 					} else {
+						if (is_online == 0) {
+							socket.emit('id-with-key', myId.username, myId.key.pub);
+						}
+						
 						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "1").val("New Identity");
 						$(".id-name").removeClass("hiding").html("Your ID: " + myId.username);
                         $(".id-display").html(myId.username);
