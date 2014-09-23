@@ -135,7 +135,8 @@
         
         <section id="app_id_data" class="hiding">
             <p>Your ID is <span class="id-display"></span></p>
-            
+            <p>Created: <span class="id-created-date"></span></p>
+            <input type="button" class="big-btn app-close-id-data" value="Back">
         </section>
 
 		<section id="app_help" class="hiding normal-font">
@@ -368,6 +369,8 @@
                         $(".id-display").html(myId.username);
 						$(".app-messages").removeClass("hiding");
                         $(".app-identity-data").removeClass("hiding");
+              
+                        $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
 					}
 				};
 
@@ -424,6 +427,10 @@
 				$(".app-close-messages").on("click", function(){
 					openPage("#app_page", "down", "down");
 				});
+              
+                $(".app-close--id-data").on("click", function(){
+                    openPage("#app_page", "down", "down");
+                });
               
                 $(".app-identity-data").on("click", function(){
                     refreshIdStatus();
