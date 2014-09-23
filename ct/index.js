@@ -29,15 +29,13 @@ io.on('connection', function(socket){
 		console.log(users);
 	});
 	socket.on("disconnect", function(){
-
-	  var who = users.indexOf(socket.id);
-
-		var id = users[socket.id].i;
-		io.emit('idDisconn', id, socket.id);
-		delete users[socket.id];
-		
-		console.log(users);
-	})
+		try {
+			var who = users.indexOf(socket.id);
+			var id = users[socket.id].i;
+			io.emit('idDisconn', id, socket.id);
+			delete users[socket.id];
+		} catch (e){}
+ 	});
 });
 
 https.listen(3000, function(){
