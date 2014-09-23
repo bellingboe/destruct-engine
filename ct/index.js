@@ -8,14 +8,12 @@ var app = require('express')()
     }, app)
   , io = require('socket.io')(https);
 
-io.set('log level', 1);
-
 io.set('transports', [
     'websocket'
-  , 'flashsocket'
-  , 'htmlfile'
-  , 'xhr-polling'
-  , 'jsonp-polling'
+//  , 'flashsocket'
+//  , 'htmlfile'
+//  , 'xhr-polling'
+//  , 'jsonp-polling'
 ]);
 
 app.get('/', function(req, res){
