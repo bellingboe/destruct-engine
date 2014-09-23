@@ -28,8 +28,11 @@ io.on('connection', function(socket){
 		
 		console.log(users);
 	});
-	socket.on("disconnect", function(socket){
-		var id = users[socket.id].i;
+	socket.on("disconnect", function(s){
+	  
+	  console.log(users[s]);
+	  
+		var id = users[s].i;
 		io.emit('idDisconn', id, socket.id);
 		delete users[socket.id];
 		
