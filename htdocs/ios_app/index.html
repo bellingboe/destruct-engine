@@ -121,7 +121,6 @@
 		<title>Ciphertext</title>
 	</head>
 	<body ontouchstart="">
-
 		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
 			<p class="id-name hiding normal-center"></p>
@@ -134,6 +133,7 @@
 
 		<section id="app_messages" class="hiding">
 			<p>Messages</p>
+			<ul class="app-message-list"></ul>
 			<input type="button" class="big-btn app-close-messages" value="Back">
 		</section>
         
@@ -236,7 +236,10 @@
 			</form>
 		</section>
 
-		<script>
+<script src="//destruct.co:3000/socket.io/socket.io.js"></script>
+<script>
+			var socket = io();
+
 			$(function(){
 
 				var pin_index = 0;
@@ -395,6 +398,14 @@
                         return true;
                     });
 				};
+              
+                var loadMessageList = function() {
+                    var messages = getLocalMessages();
+                    if (!messages || messages.length == 0) {
+                        $(".app-message-list").children().remove();
+						$(".app-message-list").append($("<li>").html("No messages."));
+                    }
+                };
 
 				var refreshIdStatus = function() {
 					myId = active_id_object();
@@ -460,6 +471,7 @@
 				});
 
 				$(".app-messages").on("click", function(){
+                    loadMessageList();
 					openPage("#app_messages", "left", "left");
 				});
 
