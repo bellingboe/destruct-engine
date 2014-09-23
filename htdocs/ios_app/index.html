@@ -300,6 +300,10 @@
 					}
 					var identity = unciph(get_master_pin(), enc_ident);
 					var id_parsed = JSON.parse(identity);
+              
+                    var privateKey = openpgp.key.readArmored(id_parsed.key.priv).keys[0];
+                    privateKey.decrypt(get_master_pin());
+                    id_parsed.unlocked_private_key = privateKey;
 
 					return id_parsed;
 				};
@@ -352,8 +356,6 @@
 
 				var refreshIdStatus = function() {
 					myId = active_id_object();
-              
-              console.log(myId);
 
 					if (!myId) {
 						$(".app-id-action").removeAttr("disabled").attr("data-has-id", "0").val("Create First Identity");
