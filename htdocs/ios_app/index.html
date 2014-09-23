@@ -113,6 +113,10 @@
 				font-family: Arial;
 				font-size: 16pt;
 			}
+            .red {
+                color: red;
+                font-weight: 700;
+            }
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -123,7 +127,7 @@
 			<p class="id-name hiding normal-center"></p>
 			<input type="button" class="big-btn app-id-action" value="Create Identity">
             <input type="button" class="big-btn app-identity-data hiding" value="Identity Data">
-			<input type="button" class="big-btn app-clear-pin" value="Clear All Data">
+			<input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
 			<input type="button" class="big-btn app-help" value="Help">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
 		</section>
@@ -132,6 +136,13 @@
 			<p>Messages</p>
 			<input type="button" class="big-btn app-close-messages" value="Back">
 		</section>
+        
+        <section id="app_confirm_erase" class="hiding">
+            <p class="red">CONFIRM</p>
+            <p>Are you sure you want to clear ALL Data? This cannot be undone.</p>
+            <input type="button" class="big-btn app-clear-pin" value="YES - Clear All Data">
+            <input type="button" class="big-btn app-close-erase" value="Nevermind, go back">
+        </section>
         
         <section id="app_id_data" class="hiding">
             <p>Your ID is <span class="id-display"></span></p>
@@ -250,6 +261,8 @@
 				};
 
 				var openPage = function(id, new_up_down, old_up_down) {
+                    window.scrollTo(0,0);
+              
 					var old = $(".page-open");
 					var page = $(id);
 
@@ -429,6 +442,10 @@
 						.css({display: "block"})
 						.animate({top: 0});
 				}
+              
+                $(".app-clear-pin-1").on("click", function(){
+                    openPage("#app_confirm_erase", "left", "left");
+                });
 
 				$(".app-clear-pin").on("click", function(){
 					logOut();
@@ -461,6 +478,10 @@
                 $(".app-identity-data").on("click", function(){
                     refreshIdStatus();
                     openPage("#app_id_data", "left", "left");
+                });
+              
+                $(".app-close-erase").on("click", function(){
+                   openPage("#app_page", "right", "right");
                 });
 
 				$("#login_masterpass_form input[type=button]")
