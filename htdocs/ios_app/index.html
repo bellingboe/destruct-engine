@@ -265,6 +265,16 @@
 									$(this).addClass("hiding").removeClass("page-open");
 								}});
 							break;
+                            case "left":
+                                old.animate({top:0, left: -parseInt($(window).width(), 10)}, {complete: function(){
+                                    $(this).addClass("hiding").removeClass("page-open");
+                                }});
+                            break;
+                            case "right":
+                                old.animate({top:0, left: parseInt($(window).width() * 2, 10)}, {complete: function(){
+                                    $(this).addClass("hiding").removeClass("page-open");
+                                }});
+                            break;
 						}
 					}
 
@@ -285,6 +295,22 @@
 								$(this).addClass("page-open");
 							}});
 						break;
+                          case "left":
+                              page
+                              .css({top:0, left: parseInt($(window).width() * 2, 10)})
+                              .removeClass("hiding")
+                              .animate({top: 0, left: 0}, {complete: function(){
+                                       $(this).addClass("page-open");
+                               }});
+                          break;
+                          case "right":
+                            page
+                            .css({top:0, left: -parseInt($(window).width(), 10)})
+                            .removeClass("hiding")
+                            .animate({top: 0, left: 0}, {complete: function(){
+                                     $(this).addClass("page-open");
+                            }});
+                          break;
 					}
 				};
 
@@ -413,28 +439,28 @@
 				});
 
 				$(".app-help").on("click", function(){
-					openPage("#app_help", "up", "up");
+					openPage("#app_help", "left", "left");
 				});
 
 				$(".app-messages").on("click", function(){
-					openPage("#app_messages", "up", "up");
+					openPage("#app_messages", "left", "left");
 				});
 
 				$(".app-close-help").on("click", function(){
-					openPage("#app_page", "down", "down");
+					openPage("#app_page", "right", "right");
 				});
 
 				$(".app-close-messages").on("click", function(){
-					openPage("#app_page", "down", "down");
+					openPage("#app_page", "right", "right");
 				});
               
                 $(".app-close-id-data").on("click", function(){
-                    openPage("#app_page", "down", "down");
+                    openPage("#app_page", "right", "right");
                 });
               
                 $(".app-identity-data").on("click", function(){
                     refreshIdStatus();
-                    openPage("#app_id_data", "up", "up");
+                    openPage("#app_id_data", "left", "left");
                 });
 
 				$("#login_masterpass_form input[type=button]")
