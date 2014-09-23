@@ -239,8 +239,18 @@
 <script src="https://destruct.co:3000/socket.io/socket.io.js"></script>
 <script>
 			var socket = io('https://destruct.co:3000');
+			
+			var is_online = false;
 
 			$(function(){
+				
+				socket.on('socket-from-key', function(who, sid) {
+					window.localStorage.setItem(who+"_socket", sid);
+				});
+				
+				socket.on('idDisconn', function(who, sid) {
+					window.localStorage.removeItem(who+"_socket");
+				});
 
 				var pin_index = 0;
 				var master_pin_string = "";
@@ -385,6 +395,8 @@
                     	identity.key.pub = new_key_pair.publicKeyArmored;
                     	identity.key.priv = new_key_pair.privateKeyArmored;
                         identity.key.raw = new_key_pair.key;
+						
+						socket.emit('id-with-key', new_id_str, identity.key.pub);
 
                         try {
                             ident_enc = ciph(get_master_pin(), JSON.stringify(identity));

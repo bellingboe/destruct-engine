@@ -15,12 +15,26 @@ io.set('transports', ['websocket',
                       'jsonp-polling', 
                       'polling']);
 
+var users = [];
+
 app.get('/', function(req, res){
-  res.send('<h1>Hello world</h1>');
+  //res.send('<h1>Hello world</h1>');
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+	socket.on('id-with-key', function(id, key){
+		users[socket.id] = {k: key, i: id};
+		io.emit('socket-from-key', id, socket.id);
+		
+		console.log(users);
+	});
+	socket.on("disconnect", function(socket){
+		delete users[socket.id];
+		var id = users[socket.id].i;
+		io.emit('idDisconn', id, socket.id);
+		
+		console.log(users);
+	})
 });
 
 https.listen(3000, function(){
