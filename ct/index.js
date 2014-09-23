@@ -30,7 +30,8 @@ io.on('connection', function(socket){
 	});
 	socket.on("disconnect", function(s){
 	  
-	  console.log(users[s]);
+	  console.log("disocnn arg")
+	  console.log(s);
 	  
 		var id = users[s].i;
 		io.emit('idDisconn', id, socket.id);
