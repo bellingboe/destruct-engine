@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Socket server for Ciphertext",
   "dependencies": {
-    "express": "~4.9.4"
+    "express": "~4.9.4",
+    "socket.io": "~1.1.0"
   }
 }
