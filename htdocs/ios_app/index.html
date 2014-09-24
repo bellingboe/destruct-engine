@@ -305,7 +305,7 @@
 					location.reload();
 				};
 
-				var openPage = function(id, new_up_down, old_up_down) {
+				var openPage = function(id, new_up_down, old_up_down, cb) {
                     window.scrollTo(0,0);
               
 					var old = $(".page-open");
@@ -343,6 +343,9 @@
 							.removeClass("hiding")
 							.animate({top: 0}, {complete: function(){
 								$(this).addClass("page-open");
+								if ("function" === typeof cb) {
+									cb();
+								}
 							}});
 						break;
 						case "down":
@@ -351,6 +354,9 @@
 							.removeClass("hiding")
 							.animate({top: 0}, {complete: function(){
 								$(this).addClass("page-open");
+								if ("function" === typeof cb) {
+									cb();
+								}
 							}});
 						break;
                           case "left":
@@ -358,7 +364,10 @@
                               .css({top:0, left: parseInt($(window).width() * 2, 10)})
                               .removeClass("hiding")
                               .animate({top: 0, left: 0}, {complete: function(){
-                                       $(this).addClass("page-open");
+									$(this).addClass("page-open");
+									 if ("function" === typeof cb) {
+										 cb();
+									 }
                                }});
                           break;
                           case "right":
@@ -366,7 +375,10 @@
                             .css({top:0, left: -parseInt($(window).width(), 10)})
                             .removeClass("hiding")
                             .animate({top: 0, left: 0}, {complete: function(){
-                                     $(this).addClass("page-open");
+								$(this).addClass("page-open");
+								if ("function" === typeof cb) {
+									cb();
+								}
                             }});
                           break;
 					}
@@ -508,8 +520,9 @@
                 });
 				
                 $(".app-add-contact").on("click", function(){
-                    openPage("#app_add_contact", "right", "right");
-					$(".add-contact-txt").focus();
+                    openPage("#app_add_contact", "right", "right", function(){
+						$(".add-contact-txt").focus();
+					});
                 });
 				
                 $(".app-close-add-contact").on("click", function(){
