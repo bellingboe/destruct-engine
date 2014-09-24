@@ -126,8 +126,6 @@
 			<p class="id-name hiding normal-center"></p>
 			<input type="button" class="big-btn app-id-action" value="Create Identity">
             <input type="button" class="big-btn app-identity-data hiding" value="Identity Data">
-			<input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
-			<input type="button" class="big-btn app-help" value="Help">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
 		</section>
 
@@ -147,6 +145,9 @@
         <section id="app_id_data" class="hiding">
             <p>Your ID is <span class="id-display"></span></p>
             <p>Created: <span class="id-created-date"></span></p>
+            
+            <input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
+            <input type="button" class="big-btn app-help" value="Help">
             <input type="button" class="big-btn app-close-id-data" value="Back">
         </section>
 
@@ -501,7 +502,7 @@
 				});
               
                 $(".app-close-id-data").on("click", function(){
-                    openPage("#app_page", "right", "right");
+                    openPage("#app_id_data", "right", "right");
                 });
               
                 $(".app-identity-data").on("click", function(){
@@ -510,7 +511,7 @@
                 });
               
                 $(".app-close-erase").on("click", function(){
-                   openPage("#app_page", "right", "right");
+                   openPage("#app_id_data", "right", "right");
                 });
 
 				$("#login_masterpass_form input[type=button]")
