@@ -494,15 +494,16 @@
 				});
 
 				$(".app-close-help").on("click", function(){
-					openPage("#app_page", "down", "down");
+					openPage("#app_id_data", "down", "down");
 				});
 
 				$(".app-close-messages").on("click", function(){
-					openPage("#app_page", "right", "right");
+                    refreshIdStatus();
+					openPage("#app_id_data", "right", "right");
 				});
               
                 $(".app-close-id-data").on("click", function(){
-                    openPage("#app_id_data", "right", "right");
+                    openPage("#app_page", "right", "right");
                 });
               
                 $(".app-identity-data").on("click", function(){
@@ -511,6 +512,7 @@
                 });
               
                 $(".app-close-erase").on("click", function(){
+                    refreshIdStatus();
                    openPage("#app_id_data", "right", "right");
                 });
 
