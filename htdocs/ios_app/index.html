@@ -117,11 +117,17 @@
                 color: red;
                 font-weight: 700;
             }
+			.arial {
+				font-family: Arial;
+			}
 			.go-left {
-				font-align: left;
+				text-align: left;
+			}
+			.mid-size {
+				font-size: 20pt;
 			}
 			.bolder {
-				font-weight: 700;
+				font-weight: bold;
 			}
 		</style>
 		<title>Ciphertext</title>
@@ -149,8 +155,8 @@
         </section>
         
         <section id="app_id_data" class="hiding">
-            <p class="go-left">Your ID is <span class="bolder id-display"></span></p>
-            <p class="go-left">Created: <span class="bolder id-created-date"></span></p>
+            <p class="mid-size go-left arial ">Your ID is <span class="bolder id-display"></span></p>
+            <p class="mid-size go-left arial">Created: <span class="bolder id-created-date"></span></p>
             
             <input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
             <input type="button" class="big-btn app-help" value="Help">
