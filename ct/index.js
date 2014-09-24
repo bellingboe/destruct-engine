@@ -28,7 +28,6 @@ io.on('connection', function(socket){
 	});
 	socket.on("disconnect", function(){
 		try {
-			var who = users.indexOf(socket.id);
 			var id = users[socket.id].i;
 			io.emit('idDisconn', id, socket.id);
 			delete users[socket.id];

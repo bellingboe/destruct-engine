@@ -279,6 +279,11 @@
 				socket.on('socket-from-key', function(who, sid) {
 					window.localStorage.setItem(who+"_socket", sid);
 				});
+
+				socket.on('disconnect', function() {
+					var id_obj = active_id_object();
+					window.localStorage.removeItem(id_obj.username+"_socket");
+				});
 				
 				socket.on('idDisconn', function(who, sid) {
 					window.localStorage.removeItem(who+"_socket");
