@@ -101,6 +101,13 @@
 				background: #000000;
 				color: #ffffff;
 			}
+			.big-btn[type="text"]:active {
+				background: #ffffff;
+				color: grey;
+			}
+			.big-btn[type="text"] {
+				border: 1px solid grey;
+			}
 			.big-btn[disabled] {
 				opacity:0.4;
 			}
@@ -148,6 +155,13 @@
 			<p>Messages</p>
 			<ul class="app-message-list"></ul>
 			<input type="button" class="big-btn app-close-messages" value="Back">
+		</section>
+		
+		<section id="app_add_contact" class="hiding">
+			<p>Add Contact</p>
+			<input type="text" class="big-btn app-close-add-contact" value="Back">
+			<input type="button" class="big-btn app-save-contact" value="Add Contact">
+			<input type="button" class="big-btn app-close-add-contact" value="Back">
 		</section>
         
         <section id="app_confirm_erase" class="hiding">
@@ -513,8 +527,7 @@
 				});
 
 				$(".app-close-messages").on("click", function(){
-                    refreshIdStatus();
-					openPage("#app_id_data", "right", "right");
+					openPage("#app_page", "right", "right");
 				});
               
                 $(".app-close-id-data").on("click", function(){
