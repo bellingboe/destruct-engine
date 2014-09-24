@@ -103,11 +103,11 @@
 			}
 			.big-btn[type="text"]:active {
 				background: #ffffff;
-				color: grey;
 			}
 			.big-btn[type="text"] {
 				border: 1px solid grey;
 				font-size: 16pt;
+				color: grey !important /* ewwwww, I know... just for now*/
 			}
 			.big-btn[disabled] {
 				opacity:0.4;
@@ -509,6 +509,7 @@
 				
                 $(".app-add-contact").on("click", function(){
                     openPage("#app_add_contact", "right", "right");
+					$(".add-contact-txt").focus();
                 });
 				
                 $(".app-close-add-contact").on("click", function(){
