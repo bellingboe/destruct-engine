@@ -15,16 +15,35 @@ io.set('transports', ['websocket',
                       'jsonp-polling', 
                       'polling']);
 
-var users = [];
-var pubs = []
-var users_socks = [];
+var user_socks 	= [] 	// [name] = socket.id;
+  , users 		= [] 	// [socket.id] = name;
+  , pubs 		= []; 	// [name] = key;
 
-function getUserBySocket = function(n) {
-  var id = users[socket.id];
+var getUserByName = function(n) {
+  var user_sock = user_socks[n] || null;
+  var user_name = users[user_sock] || null;
+  
+  if (n == user_name) {
+	var user_pub = pubs[user_name];
+  } else {
+	return false;
+  }
+  
+  return {sock: users_sock,
+		  name: user_name,
+		  pub: user_pub};
 };
 
 app.get('/', function(req, res){
 //res.send('<h1>Hello world</h1>');
+});
+
+app.get('/brenden', function(req, res){
+  res.send('<h1>Users: '+users.length+'/h1>');
+  for (var i=0; i<users.length; i++) {
+	var current = users[i];
+	res.send('- ' + current);
+  }
 });
 
 io.on('connection', function(socket){
@@ -32,7 +51,7 @@ io.on('connection', function(socket){
     socket.on('id-with-key', function(name, key){
         users[socket.id] = name;
         pubs[name] = key;
-        users_socks[name] = socket.id;
+        user_socks[name] = socket.id;
         //io.emit('socket-from-key', id, socket.id);
     });
 
@@ -43,6 +62,7 @@ io.on('connection', function(socket){
           var name = users[socket.id];
           delete pubs[name];
           delete users[socket.id];
+		  delete user_socks[name];
         } catch (e){}
         });
 
