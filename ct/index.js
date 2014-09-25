@@ -39,7 +39,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/brenden', function(req, res){
-  res.send('<h1>Users: '+users.length+'/h1>');
+  res.send('<h1>Users: '+users.length+'</h1>');
   for (var i=0; i<users.length; i++) {
 	var current = users[i];
 	res.send('- ' + current);
