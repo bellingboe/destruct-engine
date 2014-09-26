@@ -477,11 +477,12 @@
               
 			  var addMessage = function(n, m) {
 				 var messages = getLocalMessages();
-				 
+
 				 if (!messages) {
-					messages = {}
+					messages = new Array();
 				 }
 				 if (!messages[n]) {
+					messages.push(n);
 					messages[n] = new Array();
 				 }
 				 
