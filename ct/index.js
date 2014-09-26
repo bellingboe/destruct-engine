@@ -35,7 +35,7 @@ var getUserByName = function(n) {
 };
 
 app.get('/', function(req, res){
-
+  res.send('Hello World');
 });
 
 io.on('connection', function(socket){
