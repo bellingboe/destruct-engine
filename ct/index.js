@@ -38,14 +38,6 @@ app.get('/', function(req, res){
 //res.send('<h1>Hello world</h1>');
 });
 
-app.get('/brenden', function(req, res){
-  res.send('<h1>Users: '+users.length+'</h1>');
-  for (var i=0; i<users.length; i++) {
-	var current = users[i];
-	res.send('- ' + current);
-  }
-});
-
 io.on('connection', function(socket){
 
     socket.on('id-with-key', function(name, key){
@@ -54,6 +46,15 @@ io.on('connection', function(socket){
         user_socks[name] = socket.id;
         //io.emit('socket-from-key', id, socket.id);
     });
+	
+	socket.on('verify-name', function(name){
+	  if ("undefined" !== typeof user_socks[name]) {
+		var user_pub = pubs[name];
+		socket.emit("verify-true", {name: name, key: user_pub});
+	  } else {
+		socket.emit("verify-false", {name: name});
+	  }
+	});
 
     socket.on("disconnect", function(){
         try {

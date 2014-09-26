@@ -140,6 +140,10 @@
 			.header-p span {
 				color: grey;
 			}
+			.txt {
+				height: 50px;
+				border-radius: 0;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -161,7 +165,7 @@
 		
 		<section id="app_add_contact" class="hiding">
 			<p>Add Contact</p>
-			<input type="text" class="big-btn arial add-contact-txt">
+			<input type="text" class="big-btn txt arial add-contact-txt">
 			<input type="button" class="big-btn app-save-contact" value="Add Contact">
 			<input type="button" class="big-btn app-close-add-contact" value="Back">
 		</section>
@@ -276,8 +280,16 @@
 
 			$(function(){
 				
-				socket.on('socket-from-key', function(who, sid) {
-					//window.localStorage.setItem(who+"_socket", sid);
+				socket.on('verify-true', function(res) {
+					var obj = res;
+					var name = obj.name;
+					var key = obj.key;
+					window.localStorage.setItem(name+"_key", key);
+					addMessage(name);
+				});
+				
+				socket.on('verify-false', function(res) {
+					alert("User ID not online.");
 				});
 
 				socket.on('disconnect', function() {
@@ -417,7 +429,7 @@
 				};
 
 				var placeIdentityIntoStorage = function(id) {
-					window.localStorage.setItem("ct_id_obj", id);
+					window.localStorage.g("ct_id_obj", id);
 				};
 
 				var generateNewIdentity = function() {
@@ -461,12 +473,33 @@
                     });
 				};
               
+			  var addMessage = function(n, m) {
+				 var messages = getLocalMessages();
+				 if (!messages[n]) {
+					messages[n] = [];
+				 }
+				if (m && m.length > 0) {
+					myId = active_id_object();
+					var mo = {
+						ts: new Date().getTime(),
+						from: myId.username,
+						msg: m
+					};
+					messages[n].push(mo);
+				}
+				
+				window.localStorage.setItem("ct_msgs", messages);
+			  };
+			  
                 var loadMessageList = function() {
                     var messages = getLocalMessages();
                     if (!messages || messages.length == 0) {
                         $(".app-message-list").children().remove();
 						$(".app-message-list").append($("<li>").html("No messages."));
-                    }
+                    } else {
+						$(".app-message-list").children().remove();
+						console.log(messages);
+					}
                 };
 
 				var refreshIdStatus = function() {
@@ -520,6 +553,11 @@
 						.animate({top: 0});
 				}
 
+				$(".app-save-contact").on("click", function(){
+					var name_to_check = $(".add-contact-txt").val();
+					socket.emit("verify-name", name_to_check);
+				});
+				
                 $(".app-clear-pin-1").on("click", function(){
                     openPage("#app_confirm_erase", "left", "left");
                 });
