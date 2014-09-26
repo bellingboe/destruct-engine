@@ -286,6 +286,8 @@
 					var key = obj.key;
 					window.localStorage.setItem(name+"_key", key);
 					addMessage(name);
+					
+					openPage("#app_page", "left", "left");
 				});
 				
 				socket.on('verify-false', function(res) {
@@ -475,9 +477,12 @@
               
 			  var addMessage = function(n, m) {
 				 var messages = getLocalMessages();
-				 if (!messages[n]) {
+				 if ("undefined" !== typeof messages && !messages[n]) {
 					messages[n] = [];
+				 } else {
+					messages = Array();
 				 }
+				 
 				if (m && m.length > 0) {
 					myId = active_id_object();
 					var mo = {
