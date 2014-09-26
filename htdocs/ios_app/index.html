@@ -468,12 +468,12 @@
 						
 						socket.emit('id-with-key', new_id_str, identity.key.pub);
 
-                        try {
+                        //try {
                             ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
                             placeIdentityIntoStorage(ident_enc);
-                        } catch(_e) {
-                            console.log(_e);
-                        }
+                        //} catch(_e) {
+                        //    console.log(_e);
+                        //}
 
                         refreshIdStatus();
                         
