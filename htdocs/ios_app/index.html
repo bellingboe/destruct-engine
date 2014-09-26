@@ -571,7 +571,7 @@
 
 				$(".app-save-contact").on("click", function(){
 					var name_to_check = $(".add-contact-txt").val();
-					var id_obj = active_id_object().
+					var id_obj = active_id_object();
 					if (name_to_check == id_obj.username) {
 						alert("Cannot add yourself.");
 						return false;
