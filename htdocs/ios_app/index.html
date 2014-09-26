@@ -479,7 +479,7 @@
 				 var messages = getLocalMessages();
 				 
 				 if (!messages) {
-					messages = new Array();
+					messages = {}
 				 }
 				 if (!messages[n]) {
 					messages[n] = new Array();
@@ -494,6 +494,8 @@
 					};
 					messages[n].push(mo);
 				}
+				
+				console.log(messages);
 				
 				window.localStorage.setItem("ct_msgs", JSON.stringify(messages));
 			  };
