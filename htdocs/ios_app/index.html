@@ -281,18 +281,25 @@
 			$(function(){
 				
 				socket.on('verify-true', function(res) {
+					var id_obj = active_id_object();
 					var obj = res;
 					var name = obj.name;
 					var key = obj.key;
 					window.localStorage.setItem(name+"_key", key);
 					addMessage(name);
-					
+					io.emit("send-user-verify", id_obj.username, name);
 					openPage("#app_page", "left", "left");
 				});
 				
 				socket.on('verify-false', function(res) {
 					alert("User ID not online.");
 				});
+
+  				socket.on("added-by-user", function (who) {
+  					var name = who.name;
+  					addMessage(name);
+  					alert(name + "added you as a contact.");
+  				});
 
 				socket.on('disconnect', function() {
 					//var id_obj = active_id_object();
@@ -564,6 +571,11 @@
 
 				$(".app-save-contact").on("click", function(){
 					var name_to_check = $(".add-contact-txt").val();
+					var id_obj = active_id_object().
+					if (name_to_check == id_obj.username) {
+						alert("Cannot add yourself.");
+						return false;
+					}
 					socket.emit("verify-name", name_to_check);
 				});
 				
