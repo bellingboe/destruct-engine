@@ -477,10 +477,12 @@
               
 			  var addMessage = function(n, m) {
 				 var messages = getLocalMessages();
-				 if ("undefined" !== typeof messages && !messages[n]) {
+				 
+				 if (!messages) {
+					messages = [];
+				 }
+				 if (!messages[n]) {
 					messages[n] = [];
-				 } else {
-					messages = Array();
 				 }
 				 
 				if (m && m.length > 0) {
