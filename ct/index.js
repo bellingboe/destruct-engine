@@ -74,6 +74,6 @@ io.on('connection', function(socket){
 
 });
 
-https.listen(9980, function(){
-console.log('listening on *:8890');
+https.listen(8888, function(){
+console.log('listening on *:8888');
 });
