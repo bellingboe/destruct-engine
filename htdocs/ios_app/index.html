@@ -287,7 +287,7 @@
 					var key = obj.key;
 					window.localStorage.setItem(name+"_key", key);
 					addMessage(name);
-					io.emit("send-user-verify", id_obj.username, name);
+					socket.emit("send-user-verify", id_obj.username, name);
 					openPage("#app_page", "left", "left");
 				});
 				
