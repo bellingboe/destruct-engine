@@ -24,9 +24,9 @@ var getUserByName = function(n) {
   var user_name = users[user_sock] || null;
   
   if (n == user_name) {
-	var user_pub = pubs[user_name];
+	 var user_pub = pubs[user_name];
   } else {
-	return false;
+	 return false;
   }
   
   return {sock: users_sock,
@@ -77,6 +77,6 @@ io.on('connection', function(socket){
 
 });
 
-https.listen(9980, function(){
-  console.log('listening on *:8890');
+https.listen(8888, function(){
+  console.log('listening on *:8888');
 });
