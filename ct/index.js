@@ -8,16 +8,12 @@ var app = require('express')()
     }, app)
   , io = require('socket.io')(https);
 
-io.set('transports', ['websocket', 
+io.set('transports', ['xhr-polling',
+                      'websocket', 
                       'flashsocket', 
                       'htmlfile', 
-                      'xhr-polling', 
                       'jsonp-polling', 
                       'polling']);
-
-  io.configure('development', function(){ 
-      io.set('transports', ['xhr-polling']); 
-  });
 
 var user_socks 	= [] 	// [name] = socket.id;
   , users 		= [] 	// [socket.id] = name;
