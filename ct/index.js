@@ -15,6 +15,10 @@ io.set('transports', ['websocket',
                       'jsonp-polling', 
                       'polling']);
 
+  io.configure('development', function(){ 
+      io.set('transports', ['xhr-polling']); 
+  });
+
 var user_socks 	= [] 	// [name] = socket.id;
   , users 		= [] 	// [socket.id] = name;
   , pubs 		= []; 	// [name] = key;
