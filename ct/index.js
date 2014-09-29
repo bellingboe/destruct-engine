@@ -64,7 +64,7 @@ io.on('connection', function(socket){
     console.log("send-user-verify");
     console.log(c);
     try {
-      io.sockets.connected[user_socks[c.sock]].emit("added-by-user", {"name": user});
+      io.to(user_socks[c.sock]).emit("added-by-user", {"name": user});
     } catch (e) {
       console.log(e);
     }
