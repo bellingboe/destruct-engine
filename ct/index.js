@@ -40,7 +40,10 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
+  console.log("socket connected.");
+
   socket.on('id-with-key', function(name, key){
+      consol.elog("ID registered: " + name);
       users[socket.id] = name;
       pubs[name] = key;
       user_socks[name] = socket.id;
@@ -58,7 +61,7 @@ io.on('connection', function(socket){
 
   socket.on("send-user-verify", function (user, contact) {
     var c = getUserByName(contact);
-    io.sockets.socket(user_socks[c.sock]).emit("added-by-user", {"name": user});
+    io.sockets.connected[user_socks[c.sock]].emit("added-by-user", {"name": user});
   });
 
   socket.on("disconnect", function(){
@@ -75,5 +78,5 @@ io.on('connection', function(socket){
 });
 
 https.listen(9980, function(){
-console.log('listening on *:8890');
+  console.log('listening on *:8890');
 });
