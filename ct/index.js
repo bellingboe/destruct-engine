@@ -43,7 +43,7 @@ io.on('connection', function(socket){
   console.log("socket connected.");
 
   socket.on('id-with-key', function(name, key){
-      consol.elog("ID registered: " + name);
+      console.log("ID registered: " + name);
       users[socket.id] = name;
       pubs[name] = key;
       user_socks[name] = socket.id;
