@@ -29,7 +29,7 @@ var getUserByName = function(n) {
 	 return false;
   }
   
-  return {sock: users_sock,
+  return {sock: user_sock,
 		  name: user_name,
 		  pub: user_pub};
 };
