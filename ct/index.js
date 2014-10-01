@@ -8,8 +8,8 @@ var app = require('express')()
     }, app)
   , io = require('socket.io')(https);
 
-io.set('transports', ['xhr-polling',
-                      'websocket', 
+io.set('transports', ['websocket',
+                      'xhr-polling',
                       'flashsocket', 
                       'htmlfile', 
                       'jsonp-polling', 
