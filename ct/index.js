@@ -53,7 +53,7 @@ io.on('connection', function(socket){
   socket.on('socket-test', function(name){
     var c = getUserByName(name);
     try {
-      io.to(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!");
+      io.to(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!"});
     } catch (e) {
       console.log("err:");
       console.log(e);
