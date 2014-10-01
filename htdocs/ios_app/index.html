@@ -277,7 +277,7 @@
 
 <script src="https://destruct.co:8080/socket.io/socket.io.js"></script>
 <script>
-			var socket = io('https://destruct.co:8080');
+			var socket = io('https://destruct.co:8080', {'transports': ['websocket', 'polling']});
 			
 			var is_online = 0;
 
