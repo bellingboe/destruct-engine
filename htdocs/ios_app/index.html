@@ -178,12 +178,15 @@
         </section>
         
         <section id="app_id_data" class="hiding">
+        	<p>Identity Data</p>
             <p class="mid-size go-left arial header-p">Your ID is: <span class="bolder id-display"></span></p>
             <p class="mid-size go-left arial header-p">Created: <span class="bolder id-created-date"></span></p>
             
             <input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
             <input type="button" class="big-btn app-help" value="Help">
             <input type="button" class="big-btn app-close-id-data" value="Back">
+			<hr>
+            <input type="button" class="big-btn app-debug-selftest debug" value="SELF-MESSAGE SOCKET TEST [DEBUG]">
         </section>
 
 		<section id="app_help" class="hiding normal-font">
@@ -301,6 +304,11 @@
   					alert(name + "added you as a contact.");
   				});
 
+  				socket.on("socket-test-msg", function (res) {
+  					var msg = res.msg
+  					alsert(msg);
+  				});
+
 				socket.on('disconnect', function() {
 					//var id_obj = active_id_object();
 					//window.localStorage.removeItem(id_obj.username+"_socket");
@@ -323,6 +331,8 @@
 
 				$("#app_login")
 					.css({top: parseInt($(window).height() + 1, 10)});
+
+				refreshIdStatus();
 
 				var logOut = function() {
 					window.localStorage.removeItem("ct_masterpass");
@@ -502,8 +512,6 @@
 					messages[n].push(mo);
 				}
 
-				console.log(messages);
-				
 				window.localStorage.setItem("ct_msgs", JSON.stringify(messages));
 			  };
 			  
@@ -514,7 +522,6 @@
 						$(".app-message-list").append($("<li>").html("No messages."));
                     } else {
 						$(".app-message-list").children().remove();
-						console.log(messages);
 					}
                 };
 
@@ -539,7 +546,10 @@
 					}
 				};
 
-				refreshIdStatus();
+				$(".app-debug-selftest").on("click", function(){
+					var name = active_id_object().username;
+					socket.emit("socket-test", name);
+				})
 
 				$(".app-id-action").on("click", function(){
 					var has_id = $(this).attr("data-has-id") == "0" ? false : true;

@@ -49,7 +49,17 @@ io.on('connection', function(socket){
       user_socks[name] = socket.id;
       //io.emit('socket-from-key', id, socket.id);
   });
-	
+
+  socket.on('socket-test', function(name){
+    var c = getUserByName(name);
+    try {
+      io.to(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!");
+    } catch (e) {
+      console.log("err:");
+      console.log(e);
+    }
+  });
+
 	socket.on('verify-name', function(name){
 	  if ("undefined" !== typeof user_socks[name]) {
 		  var user_pub = pubs[name];
@@ -61,15 +71,12 @@ io.on('connection', function(socket){
 
   socket.on("send-user-verify", function (user, contact) {
     var c = getUserByName(contact);
-    console.log("send-user-verify");
-    console.log(c);
     try {
-      console.log(io.to(user_socks[c.sock]));
       io.to(user_socks[c.sock]).emit("added-by-user", {"name": user});
     } catch (e) {
+      console.log("err:");
       console.log(e);
     }
-
   });
 
   socket.on("disconnect", function(){
