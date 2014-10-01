@@ -332,8 +332,6 @@
 				$("#app_login")
 					.css({top: parseInt($(window).height() + 1, 10)});
 
-				refreshIdStatus();
-
 				var logOut = function() {
 					window.localStorage.removeItem("ct_masterpass");
                     window.localStorage.removeItem("ct_id_obj");
@@ -545,6 +543,8 @@
                         $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
 					}
 				};
+
+				refreshIdStatus();
 
 				$(".app-debug-selftest").on("click", function(){
 					var name = active_id_object().username;
