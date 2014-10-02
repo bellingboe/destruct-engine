@@ -278,11 +278,19 @@
 <script src="https://destruct.co:8080/socket.io/socket.io.js"></script>
 <script>
 				var
-					socket = io('https://destruct.co:8080', {secure: true, 'transports': ['websocket', 'xhr-polling']})
-				,	DEBUG_MODE = true
+					socket 			= io('https://destruct.co:8080', {secure: true, 'transports': ['websocket', 'xhr-polling']})
+					, is_online 	= 0
+					, DEBUG_MODE 	= true
 				;
 
 			$(function(){
+				
+				var
+					pin_index 				= 0
+				   , master_pin_string 		= ""
+				   , master_pin_string2 	= ""
+				   , master_pin_entry 		= ""
+				;
 				
 				if (DEBUG_MODE) {
 					$(".debug").show();
@@ -313,22 +321,13 @@
 
   				socket.on("socket-test-msg", function (res) {
   					var msg = res.msg
-  					alsert(msg);
+  					alset(msg);
   				});
 
 				socket.on('disconnect', function() {
 					//var id_obj = active_id_object();
 					//window.localStorage.removeItem(id_obj.username+"_socket");
 				});
-				
-				socket.on('idDisconn', function(who, sid) {
-					//window.localStorage.removeItem(who+"_socket");
-				});
-
-				var pin_index = 0;
-				var master_pin_string = "";
-				var master_pin_string2 = "";
-				var master_pin_entry = "";
 
 				$("#app_setup")
 					.css({top: parseInt($(window).height() + 1, 10)});
@@ -542,6 +541,7 @@
               
                         $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
 					}
+					is_online = 1;
 				};
 
 				refreshIdStatus();
