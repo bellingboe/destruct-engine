@@ -229,8 +229,9 @@
 
 		<section id="app_conversation_view" class="hiding">
 			<p></p>
+			<div class="app-messages-conversation-display"></div>
 			<input type="text" class="big-btn txt arial semd-msg-txt">
-			<input type="button" class="big-btn app-semd-msg" value="Send">
+			<input type="button" class="big-btn app-semn-msg" value="Send Message">
 			<input type="button" class="big-btn app-close-conversation" value="Back">
 		</section>
         
@@ -757,6 +758,10 @@
                 $(".app-close-erase").on("click", function(){
                     refreshIdStatus();
                    openPage("#app_id_data", "right", "right");
+                });
+
+                $(".app-open-conversation").on("click", function(){
+                	openPage("#app_conversation_view", "right", "right");
                 });
 
 				$("#login_masterpass_form input[type=button]")
