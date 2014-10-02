@@ -530,6 +530,9 @@
 						
 						for (var m in messages) {
 							var msg = messages[m];
+							
+							console.log(msg);
+							
 							var cur_user = users[i];
 							if (msg.hasOwnProperty("m")) {
 								if (msg["m"].length == 0) {
