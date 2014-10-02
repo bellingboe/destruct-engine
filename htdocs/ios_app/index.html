@@ -546,7 +546,11 @@
 								}
 							}
 							
-							$(".app-message-list").append($("<li>").html("<strong>"+cur_user + "</strong>&mdash;" + has_msg));
+							$(".app-message-list")
+								.append($("<li>")
+								.addClass("app-open-conversation")
+								.attr("data-user", cur_user)
+								.html("<strong>"+cur_user+"</strong> &mdash; " + has_msg));
 							
 							i++;
 						}
@@ -583,6 +587,10 @@
 					var name = active_id_object().username;
 					socket.emit("socket-test", name);
 				})
+				
+				$(".app-open-conversation").on("click", function(){
+					
+				});
 
 				$(".app-id-action").on("click", function(){
 					var has_id = $(this).attr("data-has-id") == "0" ? false : true;
