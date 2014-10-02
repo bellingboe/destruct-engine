@@ -186,7 +186,7 @@
             <input type="button" class="big-btn app-help" value="Help">
             <input type="button" class="big-btn app-close-id-data" value="Back">
 			<hr>
-            <input type="button" class="big-btn app-debug-selftest debug" value="SELF-MESSAGE SOCKET TEST [DEBUG]">
+            <input type="button" class="big-btn app-debug-selftest debug" value="SELF-MESSAGE TEST [DEBUG]">
         </section>
 
 		<section id="app_help" class="hiding normal-font">
@@ -277,11 +277,18 @@
 
 <script src="https://destruct.co:8080/socket.io/socket.io.js"></script>
 <script>
-			var socket = io('https://destruct.co:8080', {secure: true, 'transports': ['websocket', 'xhr-polling']});
-			
-			var is_online = 0;
+				var
+					socket = io('https://destruct.co:8080', {secure: true, 'transports': ['websocket', 'xhr-polling']})
+				,	DEBUG_MODE = true
+				;
 
 			$(function(){
+				
+				if (DEBUG_MODE) {
+					$(".debug").show();
+				} else {
+					$(".debug").remove();
+				}
 				
 				socket.on('verify-true', function(res) {
 					var id_obj = active_id_object();
@@ -475,17 +482,10 @@
                         identity.key.raw = new_key_pair.key;
 						
 						socket.emit('id-with-key', new_id_str, identity.key.pub);
-
-                        //try {
-                            ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
-                            placeIdentityIntoStorage(ident_enc);
-                        //} catch(_e) {
-                        //    console.log(_e);
-                        //}
-
+						ident_enc = ciph(get_master_pin(), JSON.stringify(identity));
+						placeIdentityIntoStorage(ident_enc);
                         refreshIdStatus();
                         
-						is_online = 1;
                         return true;
                     });
 				};
@@ -571,22 +571,27 @@
 					pin_index = 0;
 					$("#app_setup")
 						.css({display: "block"})
+						.delay(700)
 						.animate({top: 0});
 				} else {
 					pin_index = 0;
 					$("#app_login")
 						.css({display: "block"})
+						delay(700)
 						.animate({top: 0});
 				}
 
 				$(".app-save-contact").on("click", function(){
 					var name_to_check = $(".add-contact-txt").val();
 					var id_obj = active_id_object();
+					
 					if (name_to_check == id_obj.username) {
 						alert("Cannot add yourself.");
 						return false;
 					}
+					
 					socket.emit("verify-name", name_to_check);
+					return true;
 				});
 				
                 $(".app-clear-pin-1").on("click", function(){
