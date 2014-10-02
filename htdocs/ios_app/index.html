@@ -499,7 +499,8 @@
 				 }
 				 if (!messages[n]) {
 					messages[n] = {};
-					messages[n]["info"] = {"created": new Date().getTime()} 
+					messages[n]["info"] = {"created": new Date().getTime()}
+					messages[n]["m"] = []; 
 				 }
 				 
 				if (m && m.length > 0) {
@@ -509,9 +510,6 @@
 						from: myId.username,
 						msg: m
 					};
-					if (!messages[n]["m"] ) {
-						messages[n]["m"] = new Array();
-					}
 
 					messages[n]["m"].push(mo);
 				}
@@ -521,11 +519,29 @@
 			  
                 var loadMessageList = function() {
                     var messages = getLocalMessages();
+					$(".app-message-list").children().remove();
                     if (!messages || messages.length == 0) {
-                        $(".app-message-list").children().remove();
 						$(".app-message-list").append($("<li>").html("No messages."));
                     } else {
 						$(".app-message-list").children().remove();
+						
+						var users = Object.keys(messages);
+						var i = 0;
+						
+						for (var m in message) {
+							var msg = messages[m];
+							var cur_user = users[i];
+							if (msg.hasOwnProperty("m")) {
+								var has_msg = "No messages";
+							} else {
+								var has_msg = "Has messages";
+							}
+							
+							$(".app-message-list").append($("<li>").html(cur_user + "&mdash;" + has_msg));
+							
+							i++;
+						}
+						
 					}
                 };
 
