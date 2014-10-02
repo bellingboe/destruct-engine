@@ -498,7 +498,8 @@
 					messages = {};
 				 }
 				 if (!messages[n]) {
-					messages[n] = new Array();
+					messages[n] = {};
+					messages[n]["info"] = {"created": new Date().getTime()} 
 				 }
 				 
 				if (m && m.length > 0) {
@@ -508,7 +509,11 @@
 						from: myId.username,
 						msg: m
 					};
-					messages[n].push(mo);
+					if (!messages[n]["m"] ) {
+						messages[n]["m"] = new Array();
+					}
+
+					messages[n]["m"].push(mo);
 				}
 
 				window.localStorage.setItem("ct_msgs", JSON.stringify(messages));
