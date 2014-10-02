@@ -40,7 +40,8 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
-  console.log("socket connected.");
+  console.log(op);
+  console.log(" ---------------- socket connected ---------------- ");
 
   socket.on('id-with-key', function(name, key){
       console.log("ID registered: " + name);
@@ -53,7 +54,7 @@ io.on('connection', function(socket){
   socket.on('socket-test', function(name){
     var c = getUserByName(name);
     try {
-      io.sockets.socket(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!"});
+      io.to(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!"});
     } catch (e) {
       console.log("err:");
       console.log(e);
