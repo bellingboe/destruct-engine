@@ -48,13 +48,12 @@ io.on('connection', function(socket){
       users[socket.id] = name;
       pubs[name] = key;
       user_socks[name] = socket.id;
-      //io.emit('socket-from-key', id, socket.id);
   });
 
   socket.on('socket-test', function(name){
     var c = getUserByName(name);
     try {
-      io.to(user_socks[c.sock]).emit("socket-test-msg", {"msg": "self test success!"});
+      io.to(c.sock).emit("socket-test-msg", {"msg": "self test success!"});
     } catch (e) {
       console.log("err:");
       console.log(e);
@@ -73,7 +72,7 @@ io.on('connection', function(socket){
   socket.on("send-user-verify", function (user, contact) {
     var c = getUserByName(contact);
     try {
-      io.to(user_socks[c.sock]).emit("added-by-user", {"name": user});
+      io.to(c.sock).emit("added-by-user", {"name": user});
     } catch (e) {
       console.log("err:");
       console.log(e);
