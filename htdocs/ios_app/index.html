@@ -306,10 +306,12 @@
 					window.localStorage.setItem(name+"_key", key);
 					addMessage(name);
 					socket.emit("send-user-verify", id_obj.username, name);
+					$(".add-contact-txt").val("");
 					openPage("#app_page", "left", "left");
 				});
 				
 				socket.on('verify-false', function(res) {
+					$(".add-contact-txt").css({border: "1px solid red"}).val("");
 					alert("User ID not online.");
 				});
 
@@ -541,6 +543,7 @@
               
                         $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
 					}
+					
 					is_online = 1;
 				};
 
@@ -577,7 +580,7 @@
 					pin_index = 0;
 					$("#app_login")
 						.css({display: "block"})
-						delay(700)
+						.delay(700)
 						.animate({top: 0});
 				}
 
