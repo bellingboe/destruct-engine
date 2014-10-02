@@ -500,7 +500,7 @@
 				 if (!messages[n]) {
 					messages[n] = {};
 					messages[n]["info"] = {"created": new Date().getTime()}
-					messages[n]["m"] = []; 
+					messages[n]["m"] = new Array(); 
 				 }
 				 
 				if (m && m.length > 0) {
@@ -532,12 +532,14 @@
 							var msg = messages[m];
 							var cur_user = users[i];
 							if (msg.hasOwnProperty("m")) {
-								var has_msg = "No messages";
-							} else {
-								var has_msg = "Has messages";
+								if (msg["m"].length == 0) {
+									var has_msg = "Empty";
+								} else {
+									var has_msg = msg["m"].length + " messages";
+								}
 							}
 							
-							$(".app-message-list").append($("<li>").html(cur_user + "&mdash;" + has_msg));
+							$(".app-message-list").append($("<li>").html("<strong>"+cur_user + "</strong>&mdash;" + has_msg));
 							
 							i++;
 						}
