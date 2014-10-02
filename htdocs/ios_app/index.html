@@ -21,6 +21,7 @@
 			body, html {
 				padding: 0;
 				margin: 0;
+				overflow: hidden;
 			}
 			h1 {
 				padding: 0;
@@ -122,8 +123,8 @@
 				font-size: 16pt;
 			}
             .red {
-                color: red;
-                font-weight: 700;
+				color: red;
+				font-weight: 700;
             }
 			.arial {
 				font-family: Arial;
@@ -148,10 +149,62 @@
 				font-weight: 600;
 				font-size: 16pt;
 			}
+			.invert {
+				background: black;
+				color: white;
+			}
+			.full {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+			}
+			.absolute {
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom:0;
+				position: absolute;
+				z-index: 999;
+			}
+			.fullpage h1 {
+				width: 100%;
+				padding: 0;
+				text-align:center;
+				height: 20%;
+				margin-top: 40%;
+				position: absolute;
+				z-index: 999;
+				font-weight: 100;
+				font-size: 6em;
+			}
+			.fullpage h2 {
+				width: 100%;
+				padding: 0;
+				text-align:center;
+				height: 20%;
+				margin-top: 55%;
+				position: absolute;
+				z-index: 999;
+				font-weight: 400;
+				font-size: 2em;
+			}
+			.body {
+				overflow-x: hidden;
+				overflow-y: auto;
+				padding: 0;
+				margin: 0;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
 	<body ontouchstart="">
+		<div class="body">
+			
+		<div id="app_intro_load" class="fullpage invert full absolute">
+			<h1>Ciphertext</h1>
+			<h2>Establishing Secure Coonnection.</h2>
+		</div>
+		
 		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
 			<p class="id-name hiding normal-center"></p>
@@ -278,6 +331,8 @@
 				<input type="button" value="<<" class="pin-back">
 			</form>
 		</section>
+		
+</div>
 
 <script src="https://destruct.co:8080/socket.io/socket.io.js"></script>
 <script>
@@ -608,19 +663,23 @@
 					}
 				});
 
-				if ( !setup_app_password ) {
-					pin_index = 0;
-					$("#app_setup")
-						.css({display: "block"})
-						.delay(700)
-						.animate({top: 0});
-				} else {
-					pin_index = 0;
-					$("#app_login")
-						.css({display: "block"})
-						.delay(700)
-						.animate({top: 0});
-				}
+				setTimeout(function(){
+					$("#app_intro_load").fadeOut({duration:1000, queue:false});
+					
+					if (!setup_app_password) {
+						pin_index = 0;
+						$("#app_setup")
+							.css({display: "block"})
+							.delay(500)
+							.animate({top: 0});
+					} else {
+						pin_index = 0;
+						$("#app_login")
+							.css({display: "block"})
+							.delay(500)
+							.animate({top: 0});
+					}
+				}, 2000);
 
 				$(".app-save-contact").on("click", function(){
 					var name_to_check = $(".add-contact-txt").val();
