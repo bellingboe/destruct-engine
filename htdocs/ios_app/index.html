@@ -226,6 +226,13 @@
 			<input type="button" class="big-btn app-save-contact" value="Add Contact">
 			<input type="button" class="big-btn app-close-add-contact" value="Back">
 		</section>
+
+		<section id="app_conversation_view" class="hiding">
+			<p></p>
+			<input type="text" class="big-btn txt arial semd-msg-txt">
+			<input type="button" class="big-btn app-semd-msg" value="Send">
+			<input type="button" class="big-btn app-close-conversation" value="Back">
+		</section>
         
         <section id="app_confirm_erase" class="hiding">
             <p class="red">CONFIRM</p>
@@ -644,7 +651,8 @@
 				})
 				
 				$(".app-open-conversation").on("click", function(){
-					
+					var user = $(this).attr("data-user");
+					$("#app_conversation_view > p").html(user);
 				});
 
 				$(".app-id-action").on("click", function(){
@@ -696,6 +704,10 @@
 				
                 $(".app-clear-pin-1").on("click", function(){
                     openPage("#app_confirm_erase", "left", "left");
+                });
+
+                $(".app-close-conversation").on("click", function(){
+                    openPage("#app_page", "left", "left");
                 });
 				
                 $(".app-add-contact").on("click", function(){
