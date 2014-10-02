@@ -40,7 +40,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
-  console.log(op);
+  console.log(io);
   console.log(" ---------------- socket connected ---------------- ");
 
   socket.on('id-with-key', function(name, key){
