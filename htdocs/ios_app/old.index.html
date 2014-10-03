@@ -175,7 +175,7 @@
 				position: absolute;
 				z-index: 999;
 				font-weight: 100;
-				font-size: 4em;
+				font-size: 6em;
 			}
 			.fullpage h2 {
 				width: 100%;
@@ -208,7 +208,7 @@
 		<div class="body">
 			
 		<div id="app_intro_load" class="fullpage invert full absolute">
-			<h1>Ciphertext</h1>
+			<h1 class="hiding">Ciphertext</h1>
 			<h2>Establishing Secure Coonnection.</h2>
 		</div>
 		
@@ -240,14 +240,6 @@
             <input type="button" class="big-btn app-clear-pin" value="YES - Clear All Data">
             <input type="button" class="big-btn app-close-erase" value="Nevermind, go back">
         </section>
-		
-		<section id="app_conversation_view" class="hiding">
-			<p></p>
-			<div class="app-messages-conversation-display"></div>
-			<input type="text" class="big-btn txt arial semd-msg-txt">
-			<input type="button" class="big-btn app-semn-msg" value="Send Message">
-			<input type="button" class="big-btn app-close-conversation" value="Back">
-		</section>
         
         <section id="app_id_data" class="hiding">
         	<p>Identity Data</p>
@@ -657,6 +649,10 @@
 					var name = active_id_object().username;
 					socket.emit("socket-test", name);
 				})
+				
+				$(".app-message-list").on("click", ".app-open-conversation", function(){
+					var name = $(this).attr("data-name");
+				});
 
 				$(".app-id-action").on("click", function(){
 					var has_id = $(this).attr("data-has-id") == "0" ? false : true;
@@ -709,6 +705,10 @@
                     openPage("#app_confirm_erase", "left", "left");
                 });
 				
+                $(".app-close-conversation").on("click", function(){
+                    openPage("#app_messages", "right", "right");
+                });
+				
                 $(".app-add-contact").on("click", function(){
                     openPage("#app_add_contact", "right", "right", function(){
 						$(".add-contact-txt").focus();
@@ -756,17 +756,6 @@
                 $(".app-close-erase").on("click", function(){
                     refreshIdStatus();
                    openPage("#app_id_data", "right", "right");
-                });
-				
-                $(".app-close-conversation").on("click", function(){
-                    openPage("#app_messages", "right", "right");
-                });
-				
-                $(".app-message-list").on("click", ".app-open-conversation", function(){
-					var user = $(this).attr("data-user");
-                	openPage("#app_conversation_view", "left", "left", function(){
-						$("#app_conversation_view > p").html(user);
-					});
                 });
 
 				$("#login_masterpass_form input[type=button]")
@@ -873,25 +862,6 @@
 						}
 					}
 				});
-
-/*
-				$("#login_masterpass_form input[type=button]")
-					.on("mousedown", function(){
-					var which_pin = pin_index;
-					if ($(this).hasClass("pin-back")) {
-						$("#login_masterpass_form input[data-idx="+which_pin+"]").val('');
-						if (which_pin > 0) {
-							pin_index = which_pin - 1;
-						}
-					} else {
-						var btn_val = $(this).val();
-						$("#login_masterpass_form input[data-idx="+which_pin+"]").val(btn_val);
-						if (which_pin < 3) {
-							pin_index = which_pin + 1;
-						}
-					}
-				});
-*/
 
 				$("#new_masterpass_form")
 					.on("submit", function(){
