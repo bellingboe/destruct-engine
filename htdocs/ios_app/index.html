@@ -249,6 +249,7 @@
 		--->
 		<section id="app_messages" class="hiding">
 			<p>Messages</p>
+			<span class="normal-center">Tap a name to view conversation.</span>
 			<ul class="app-message-list"></ul>
 			<input type="button" class="big-btn app-close-messages" value="Back">
 		</section>
@@ -272,7 +273,7 @@
 		--->
         <section id="app_confirm_erase" class="hiding">
             <p class="red">CONFIRM</p>
-            <p>Are you sure you want to clear ALL Data? This cannot be undone.</p>
+            <p>Are you sure you want to clear ALL data? This cannot be undone.</p>
             <input type="button" class="big-btn app-clear-pin" value="YES - Clear All Data">
             <input type="button" class="big-btn app-close-erase" value="Nevermind, go back">
         </section>
@@ -806,8 +807,13 @@
                         enc_key = res;
                         enc_text = ciph(aesKey, txt);
 						
-						var msg_payload = {to: [me.username, window.ACTIVE_CHAT.user], ek:enc_key, et:enc_text, f:me.username, ts: new Date().getTime()};
-						
+						var msg_payload = 	{
+												to: [me.username, window.ACTIVE_CHAT.user],
+												ek:enc_key,
+												et:enc_text,
+												f:me.username,
+												ts: new Date().getTime()
+											};
 						socket.emit("send-encrypted-message", msg_payload);
 						
 						$(".send-msg-txt").val('').focus();
