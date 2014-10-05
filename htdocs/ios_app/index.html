@@ -205,6 +205,9 @@
 			.btn-link {
 				border: none;
 			}
+			.msg-item {
+				margin-top: 10px;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
@@ -514,6 +517,8 @@
 					var display = $(".app-messages-conversation-display").append(msg_item);
 					
 					addMessage(who, msg_text, p.f);
+					
+					$(".app-messages-conversation-display").scrollTop($(".app-messages-conversation-display").prop('scrollHeight') + 999);
 				});
 
 				$("#app_setup")
