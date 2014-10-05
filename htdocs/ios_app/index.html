@@ -68,6 +68,7 @@
 				width: 33%;
 				height: 100px;
 				border-radius: 50px;
+				font-weight:100; 
 				background: #000000;
 				color: #ffffff;
 				margin:0;
@@ -232,7 +233,9 @@
             <input type="button" class="big-btn app-identity-data hiding" value="Identity Data">
 			<input type="button" class="big-btn app-add-contact hiding" value="Add Contact">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
-			<p class="normal-center"><strong></strong></p>
+			<p class="normal-center tutorial-message"><strong>
+				Create your first Identity to start sending messages to other Identities.
+			</strong></p>
 		</section>
 
 		<!---
@@ -481,7 +484,7 @@
                     window.localStorage.removeItem("ct_id_obj");
                     window.localStorage.removeItem("ct_msgs");
 					location.reload();
-				};
+				}; /* /logOut() */
 
 				var openPage = function(id, new_up_down, old_up_down, cb) {
                     window.scrollTo(0,0);
@@ -560,13 +563,13 @@
                             }});
                           break;
 					}
-				};
+				}; /* /openPage() */
 
 				var setup_app_password = window.localStorage.getItem("ct_masterpass");
 
 				var get_master_pin = function() {
 					return window.localStorage.getItem("ct_masterpass");
-				};
+				}; /* /get_mesater_pin() */
 
 				var active_id_object = function() {
 					var enc_ident = window.localStorage.getItem("ct_id_obj");
@@ -581,13 +584,13 @@
                     id_parsed.unlocked_private_key = privateKey;
 
 					return id_parsed;
-				};
+				};/* /active_id_object */
               
                 window.active_id_object = active_id_object;
 
 				var getLocalMessages = function() {
 					return JSON.parse(window.localStorage.getItem("ct_msgs"));
-				};
+				}; /* /getLocalMessages() */
 
 				var placeIdentityIntoStorage = function(id) {
 					window.localStorage.setItem("ct_id_obj", id);
@@ -625,9 +628,9 @@
                         
                         return true;
                     });
-				};
+				}; /* /generateNewIdentity() */
               
-			  var addMessage = function(n, m) {
+			  var addMessage = function(n, m,f) {
 				 var messages = getLocalMessages();
 
 				 if (!messages) {
@@ -643,7 +646,7 @@
 					myId = active_id_object();
 					var mo = {
 						ts: new Date().getTime(),
-						from: myId.username,
+						from: f == myId.username ? myId.username : f,
 						msg: m
 					};
 
@@ -674,7 +677,7 @@
 								if (msg["m"].length == 0) {
 									var has_msg = "Empty";
 								} else {
-									var has_msg = msg["m"].length + " messages";
+									var has_msg = msg["m"].length + " msgs";
 								}
 							}
 							
@@ -706,6 +709,9 @@
                         $(".id-display").html(myId.username);
 						$(".app-messages").removeClass("hiding");
                         $(".app-identity-data").removeClass("hiding");
+						$(".app-add-contact").removeClass("hiding");
+						
+						$(".tutorial-message").addClass("hiding");
               
                         $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
 					}
