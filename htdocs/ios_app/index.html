@@ -439,6 +439,10 @@
 					$(".debug").remove();
 				}
 				
+                var htmlEncode = function(str){
+                  return $('<div/>').text(str).html();
+                }
+				
 				socket.on('verify-true', function(res) {
 					var id_obj = active_id_object();
 					var obj = res;
@@ -470,6 +474,45 @@
 				socket.on('disconnect', function() {
 					//var id_obj = active_id_object();
 					//window.localStorage.removeItem(id_obj.username+"_socket");
+				});
+				
+				socket.on('rec-encrypted-message', function(p) {
+					var who = p.to[1];
+					var aes_key = window.openpgp.message.readArmored(p.ek);
+
+					var me = active_id_object();
+					var chat = window.ACTIVE_CHAT;
+					
+					var
+                        pub_key_obj = window.openpgp.key.readArmored(chat.key),
+                        pub_key = pub_key_obj.keys[0],
+                        my_pub_key_obj = window.openpgp.key.readArmored(me.key.pub),
+                        my_pub_key = my_pub_key_obj.keys[0],
+						my_priv = me.unlocked_private_key;
+
+					var dec_msg_key = window.openpgp.decryptAndVerifyMessage(my_priv, [pub_key, my_pub_key], aes_key);
+					
+					if ("undefined" !== typeof dec_msg_key.signatures && "undefined" !== typeof dec_msg_key.signatures[0]) {
+						if (dec_msg_key.signatures[0].hasOwnProperty("keyid")) {
+							sig_key_hex = dec_msg_key.signatures[0].keyid.toHex();
+						}
+					}
+					
+					var dec_msg_text = unciph(dec_msg_key.text, p.et);
+					var msg_text = dec_msg_text;
+					
+					if (p.f == me.username) {
+						var from = "<strong>"+p.f+" (You)</strong>:<br>";
+					} else {
+						var from = p.f+":<br>"
+					}
+					
+                    dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
+					
+					var msg_item = $("li").attr("data-ts", p.ts).html(dec_msg_text);
+					var display = $("app-messages-conversation-display").append(msg_item);
+					
+					addMessage(who, msg_text, p.f)
 				});
 
 				$("#app_setup")
@@ -740,11 +783,7 @@
 						enc_key,
 						enc_text,
 						txt = $(".send-msg-txt").val();
-						
-						console.log(my_pub_key_obj);
-						console.log(my_pub_key);
-						console.log(pub_key_obj);
-						console.log(pub_key);
+
 						
 					window.openpgp.initWorker('openpgp.worker.js');
 					window.openpgp.signAndEncryptMessage([pub_key, my_pub_key], my_priv, aesKey, function(err, res){
@@ -757,7 +796,7 @@
                         enc_key = res;
                         enc_text = ciph(aesKey, txt);
 						
-						var msg_payload = {to: [me.username, window.ACTIVE_CHAT.user], ek:enc_key, et:enc_text, f:me.username};
+						var msg_payload = {to: [me.username, window.ACTIVE_CHAT.user], ek:enc_key, et:enc_text, f:me.username, ts: new Date().getTime()};
 						
 						socket.emit("send-encrypted-message", msg_payload);
 						

@@ -40,14 +40,29 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
-  console.log(io);
   console.log(" ---------------- socket connected ---------------- ");
 
   socket.on('id-with-key', function(name, key){
-      console.log("ID registered: " + name);
       users[socket.id] = name;
       pubs[name] = key;
       user_socks[name] = socket.id;
+  });
+  
+  socket.on('send-encrypted-message', function(p){
+	var to = p.to; // array
+	var pgp_msg = p.ek // PGP-encrypted AES key
+	var enc_text = p.et; // AES-encrypted text
+	var msg_from = p.f; // username message is from
+	
+	for (var i=0; i<p.to.length; i++) {
+	  var u = getUserByName(p.to[i]);
+	  try {
+		io.to(u.sock).emit("rec-encrypted-message", p);
+	  } catch (e) {
+		console.log("err:");
+		console.log(e);
+	  }
+	}
   });
 
   socket.on('socket-test', function(name){
