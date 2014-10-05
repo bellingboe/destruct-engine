@@ -691,22 +691,22 @@
 					messages = {};
 				 }
 				 
-				 if ("string" == typeof f) {
+				 if ("string" == typeof f && n !== myId.username) {
 					if (!messages[n]) {
 					   messages[n] = {};
 					   messages[n]["info"] = {"created": new Date().getTime()}
 					   messages[n]["m"] = new Array(); 
 					}
-				 }
-				 
-				if (m && m.length > 0) {
-					var mo = {
-						ts: new Date().getTime(),
-						from: f == myId.username ? myId.username : f,
-						msg: m
-					};
-
-					messages[n]["m"].push(mo);
+					 
+					if (m && m.length > 0) {
+						var mo = {
+							ts: new Date().getTime(),
+							from: f == myId.username ? myId.username : f,
+							msg: m
+						};
+	
+						messages[n]["m"].push(mo);
+					}
 				}
 
 				window.localStorage.setItem("ct_msgs", JSON.stringify(messages));
