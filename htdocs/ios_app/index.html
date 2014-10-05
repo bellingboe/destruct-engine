@@ -878,12 +878,8 @@
 					var user = $(this).attr("data-user");
                 	openPage("#app_conversation_view", "left", "left", function(){
 						$("#app_conversation_view > p").html(user);
-						var active_obj = {user:user, ukey:window.localStorage.getItem(user+"_key")};
+						var active_obj = {user:user, key:window.localStorage.getItem(user+"_key")};
 						window.ACTIVE_CHAT = active_obj;
-						
-						console.log(active_obj);
-						console.log(window.ACTIVE_CHAT);
-						
 					});
                 });
 
