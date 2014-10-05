@@ -443,7 +443,7 @@
 					var name = obj.name;
 					var key = obj.key;
 					window.localStorage.setItem(name+"_key", key);
-					addMessage(name);
+					addMessage(name, null, id_obj.username);
 					socket.emit("send-user-verify", id_obj.username, name);
 					$(".add-contact-txt").val("");
 					openPage("#app_page", "left", "left");
@@ -456,7 +456,7 @@
 
   				socket.on("added-by-user", function (who) {
   					var name = who.name;
-  					addMessage(name);
+  					addMessage(name, null, name);
   					alert(name + "added you as a contact.");
   				});
 
@@ -630,7 +630,7 @@
                     });
 				}; /* /generateNewIdentity() */
               
-			  var addMessage = function(n, m,f) {
+			  var addMessage = function(n, m, f) {
 				 var messages = getLocalMessages();
 
 				 if (!messages) {
@@ -732,9 +732,13 @@
 						var confirm_new = confirm("Are you sure? This will remove all data related to this identity and immediately create a new one.");
 						if (confirm_new) {
 							try {
-								window.localStorage.removeItem("ct_id_obj");
-								window.localStorage.removeItem("ct_msgs");
-							} catch (e) { }
+								var storage_items = window.localStorage.length;
+								for (var i=0; i<storage_items; i++) {
+									var storage_item_key = window.localStorage.key(storage_items[i]);
+									window.localStorage.removeItem(storage_item_key);
+								}
+								
+							} catch (e) { console.log(e); }
 							generateNewIdentity();
 						}
 					} else {
