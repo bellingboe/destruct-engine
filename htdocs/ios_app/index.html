@@ -300,6 +300,7 @@
 			<p>Identity Data</p>
 			<p class="mid-size go-left arial header-p">Your ID is: <span class="bolder id-display"></span></p>
 			<p class="mid-size go-left arial header-p">Created: <span class="bolder id-created-date"></span></p>
+			<p class="mid-size go-left arial header-p">Public Key: <pre class="id-public-key"></pre></p>
 			
 			<input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
 			<input type="button" class="big-btn app-close-id-data" value="Back">
@@ -476,8 +477,6 @@
   				});
 
 				socket.on('disconnect', function() {
-					//var id_obj = active_id_object();
-					//window.localStorage.removeItem(id_obj.username+"_socket");
 				});
 				
 				socket.on('rec-encrypted-message', function(p) {
@@ -768,6 +767,7 @@
 						$(".tutorial-message").addClass("hiding");
               
                         $(".id-created-date").html(myId.unlocked_private_key.primaryKey.created);
+						$(".id-public-key").html(myId.key.pub);
 					}
 					
 					is_online = 1;
