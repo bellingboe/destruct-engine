@@ -281,8 +281,8 @@
 		<section id="app_conversation_view" class="hiding">
 			<p></p>
 			<div class="app-messages-conversation-display"></div>
-			<input type="text" class="big-btn txt arial semd-msg-txt">
-			<input type="button" class="big-btn app-semn-msg" value="Send Message">
+			<input type="text" placeholder="Enter a message..." class="big-btn txt arial send-msg-txt">
+			<input type="button" class="big-btn app-send-msg" value="Send Message">
 			<input type="button" class="big-btn app-close-conversation btn-link" value="Back">
 		</section>
         
@@ -430,6 +430,8 @@
 				   , master_pin_string2 	= ""
 				   , master_pin_entry 		= ""
 				;
+				
+				window.ACTIVE_CHAT = false;
 				
 				if (DEBUG_MODE) {
 					$(".debug").show();
@@ -724,7 +726,41 @@
 				$(".app-debug-selftest").on("click", function(){
 					var name = active_id_object().username;
 					socket.emit("socket-test", name);
-				})
+				});
+
+				$(".app-send-msg").on("click", function(){
+					var me = active_id_object();
+					var chat = window.ACTIVE_CHAT;
+					
+					var
+						aesKey = random_string(32),
+                        pub_key_obj = window.openpgp.key.readArmored(chat.key),
+                        pub_key = pub_key_obj.keys[0],
+                        my_pub_key_obj = window.openpgp.key.readArmored(me.key.pub),
+                        my_pub_key = my_pub_key_obj.keys[0],
+						my_priv = me.unlocked_private_key,
+						enc_key,
+						enc_text,
+						txt = $(".send-msg-txt").val();
+						
+					window.openpgp.initWorker('openpgp.worker.js');
+					window.openpgp.signAndEncryptMessage([pub_key, my_pub_key], my_priv, aesKey, function(err, res){
+                        if (err) {
+                            alert("Encryption failed.");
+                            console.log(err);
+                            return false;
+                        }
+                        
+                        enc_key = res;
+                        enc_text = ciph(aesKey, txt);
+						
+						var msg_payload = {to: [me.username, window.ACTIVE_CHAT.user], ek:enc_key, et:enc_text, f:me.username};
+						
+						socket.emit("send-encrypted-message", msg_payload);
+						
+						return true;
+					});
+				});
 
 				$(".app-id-action").on("click", function(){
 					var has_id = $(this).attr("data-has-id") == "0" ? false : true;
@@ -826,18 +862,20 @@
                 });
               
                 $(".app-close-erase").on("click", function(){
-                    refreshIdStatus();
-                   openPage("#app_id_data", "right", "right");
+					refreshIdStatus();
+					openPage("#app_id_data", "right", "right");
                 });
 				
                 $(".app-close-conversation").on("click", function(){
-                    openPage("#app_messages", "right", "right");
+					openPage("#app_messages", "right", "right");
+					window.ACTIVE_CHAT = false;
                 });
 				
                 $(".app-message-list").on("click", ".app-open-conversation", function(){
 					var user = $(this).attr("data-user");
                 	openPage("#app_conversation_view", "left", "left", function(){
 						$("#app_conversation_view > p").html(user);
+						window.ACTIVE_CHAT = {user:user, key:window.localStorage.getItem(user+"_key")};
 					});
                 });
 
