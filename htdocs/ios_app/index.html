@@ -510,7 +510,7 @@
                     dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
 					
 					var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
-					var display = $("app-messages-conversation-display").append(msg_item);
+					var display = $(".app-messages-conversation-display").append(msg_item);
 					
 					addMessage(who, msg_text, p.f);
 				});
@@ -911,6 +911,7 @@
                 });
 				
                 $(".app-close-conversation").on("click", function(){
+					loadMessageList();
 					openPage("#app_messages", "right", "right");
 					window.ACTIVE_CHAT = false;
                 });
