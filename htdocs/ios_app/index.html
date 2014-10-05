@@ -201,32 +201,56 @@
 				overflow-y: auto;
 				border-top: 1px solid grey;
 			}
+			.btn-link {
+				border: none;
+			}
 		</style>
 		<title>Ciphertext</title>
 	</head>
 	<body ontouchstart="">
 		<div class="body">
 			
+		<!---
+		==========================================================
+		Intro animation container [ #app_intro_load ]
+		==========================================================
+		--->
 		<div id="app_intro_load" class="fullpage invert full absolute">
 			<h1>Ciphertext</h1>
 			<h2>Establishing Secure Coonnection.</h2>
 		</div>
 		
+		<!---
+		==========================================================
+		App Main Menu [ #app_page ]
+		==========================================================
+		--->
 		<section id="app_page" class="hiding">
 			<h1 class="appTitle">Ciphertext</h1>
 			<p class="id-name hiding normal-center"></p>
 			<input type="button" class="big-btn app-id-action" value="Create Identity">
             <input type="button" class="big-btn app-identity-data hiding" value="Identity Data">
-			<input type="button" class="big-btn app-add-contact" value="Add Contact">
+			<input type="button" class="big-btn app-add-contact hiding" value="Add Contact">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
+			<p class="normal-center"><strong></strong></p>
 		</section>
 
+		<!---
+		==========================================================
+		List of Messages / Conversations [ #app_messages ]
+		==========================================================
+		--->
 		<section id="app_messages" class="hiding">
 			<p>Messages</p>
 			<ul class="app-message-list"></ul>
 			<input type="button" class="big-btn app-close-messages" value="Back">
 		</section>
 		
+		<!---
+		==========================================================
+		Add Contact Page [ #app_add_contact ]
+		==========================================================
+		--->
 		<section id="app_add_contact" class="hiding">
 			<p>Add Contact</p>
 			<input type="text" class="big-btn txt arial add-contact-txt">
@@ -234,6 +258,11 @@
 			<input type="button" class="big-btn app-close-add-contact" value="Back">
 		</section>
         
+		<!---
+		==========================================================
+		Confirm Data Erase [ #app_confirm_erase ]
+		==========================================================
+		--->
         <section id="app_confirm_erase" class="hiding">
             <p class="red">CONFIRM</p>
             <p>Are you sure you want to clear ALL Data? This cannot be undone.</p>
@@ -241,26 +270,41 @@
             <input type="button" class="big-btn app-close-erase" value="Nevermind, go back">
         </section>
 		
+		<!---
+		==========================================================
+		Conversation View [ #app_conversation_view ]
+		==========================================================
+		--->
 		<section id="app_conversation_view" class="hiding">
 			<p></p>
 			<div class="app-messages-conversation-display"></div>
 			<input type="text" class="big-btn txt arial semd-msg-txt">
 			<input type="button" class="big-btn app-semn-msg" value="Send Message">
-			<input type="button" class="big-btn app-close-conversation" value="Back">
+			<input type="button" class="big-btn app-close-conversation btn-link" value="Back">
 		</section>
         
-        <section id="app_id_data" class="hiding">
-        	<p>Identity Data</p>
-            <p class="mid-size go-left arial header-p">Your ID is: <span class="bolder id-display"></span></p>
-            <p class="mid-size go-left arial header-p">Created: <span class="bolder id-created-date"></span></p>
-            
-            <input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
-            <input type="button" class="big-btn app-help" value="Help">
-            <input type="button" class="big-btn app-close-id-data" value="Back">
+		<!---
+		==========================================================
+		Identity Data View [ #app_id_data ]
+		==========================================================
+		--->
+		<section id="app_id_data" class="hiding">
+			<p>Identity Data</p>
+			<p class="mid-size go-left arial header-p">Your ID is: <span class="bolder id-display"></span></p>
+			<p class="mid-size go-left arial header-p">Created: <span class="bolder id-created-date"></span></p>
+			
+			<input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
+			<input type="button" class="big-btn app-help" value="Help">
+			<input type="button" class="big-btn app-close-id-data" value="Back">
 			<hr>
-            <input type="button" class="big-btn app-debug-selftest debug" value="SELF-MESSAGE TEST [DEBUG]">
-        </section>
+			<input type="button" class="big-btn app-debug-selftest debug" value="[SOCKET DEBUG]">
+		</section>
 
+		<!---
+		==========================================================
+		App Help View [ #app_help ]
+		==========================================================
+		--->
 		<section id="app_help" class="hiding normal-font">
 			<h1 class="appTitle">Ciphertext Help</h1>
 			<p>Ciphertext is a secure, anonymous chat and message service used for the sensitive andclassified transfer of information.</p>
@@ -272,6 +316,11 @@
 			<input type="button" class="big-btn app-close-help" value="Back">
 		</section>
 
+		<!---
+		==========================================================
+		App Setup - Step 1 View [ #app_setup ]
+		==========================================================
+		--->
 		<section id="app_setup" class="hiding">
 			<p>Choose a Master PIN.</p>
 
@@ -297,6 +346,11 @@
 			</form>
 		</section>
 
+		<!---
+		==========================================================
+		App Setup - Step 2 View [ #app_setup2 ]
+		==========================================================
+		--->
 		<section id="app_setup2" class="hiding">
 			<p>Confirm your Master PIN.</p>
 
@@ -322,6 +376,11 @@
 			</form>
 		</section>
 
+		<!---
+		==========================================================
+		App Login View [ #app_login]
+		==========================================================
+		--->
 		<section id="app_login" class="hiding">
 			<p>Enter Your Master PIN.</p>
 
@@ -349,6 +408,9 @@
 		
 </div>
 
+<!---
+[APP BUSINESS LOGIC]
+--->
 <script src="https://destruct.co:8080/socket.io/socket.io.js"></script>
 <script>
 				var
