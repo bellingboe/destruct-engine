@@ -929,6 +929,7 @@
 				
                 $(".app-message-list").on("click", ".app-open-conversation", function(){
 					var user = $(this).attr("data-user");
+					$(".app-messages-conversation-display").html("");
                 	openPage("#app_conversation_view", "left", "left", function(){
 						$("#app_conversation_view > p").html(user);
 						var active_obj = {user:user, key:window.localStorage.getItem(user+"_key")};
