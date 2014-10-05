@@ -509,10 +509,10 @@
 					
                     dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
 					
-					var msg_item = $("li").attr("data-ts", p.ts).html(dec_msg_text);
+					var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
 					var display = $("app-messages-conversation-display").append(msg_item);
 					
-					addMessage(who, msg_text, p.f)
+					addMessage(who, msg_text, p.f);
 				});
 
 				$("#app_setup")
@@ -799,6 +799,8 @@
 						var msg_payload = {to: [me.username, window.ACTIVE_CHAT.user], ek:enc_key, et:enc_text, f:me.username, ts: new Date().getTime()};
 						
 						socket.emit("send-encrypted-message", msg_payload);
+						
+						$(".send-msg-txt").val('').focus();
 						
 						return true;
 					});
