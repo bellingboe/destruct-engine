@@ -435,6 +435,13 @@
 
 			$(function(){
 				
+				$.event.special.tap.tapholdThreshold = 2000;
+				
+				$(".body").on("taphold", function(e){
+					var o = active_id_object();
+					alert("Your ID is: " + o.username);
+				});
+				
 				var
 					pin_index 				= 0
 				   , master_pin_string 		= ""
