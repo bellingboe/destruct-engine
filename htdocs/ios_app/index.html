@@ -526,9 +526,11 @@
 					.css({top: parseInt($(window).height() + 1, 10)});
 
 				var logOut = function() {
-					window.localStorage.removeItem("ct_masterpass");
-                    window.localStorage.removeItem("ct_id_obj");
-                    window.localStorage.removeItem("ct_msgs");
+					var storage_items = window.localStorage.length;
+					for (var i=0; i<storage_items; i++) {
+						var storage_item_key = window.localStorage.key(storage_items[i]);
+						window.localStorage.removeItem(storage_item_key);
+					}
 					location.reload();
 				}; /* /logOut() */
 
