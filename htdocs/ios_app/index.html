@@ -743,6 +743,11 @@
 						enc_text,
 						txt = $(".send-msg-txt").val();
 						
+						console.log(my_pub_key_obj);
+						console.log(my_pub_key);
+						console.log(pub_key_obj);
+						console.log(pub_key);
+						
 					window.openpgp.initWorker('openpgp.worker.js');
 					window.openpgp.signAndEncryptMessage([pub_key, my_pub_key], my_priv, aesKey, function(err, res){
                         if (err) {
