@@ -436,17 +436,19 @@
 
 			$(function(){
 				
-				$("body").swipe({
-					hold:function(event, target) {
+				$("body")
+				.swipe({
+					hold: function(event, target) {
 						var o = active_id_object();
 						alert("Your ID is: " + o.username);
 					},
 					threshold:2000
-				}).swipe({
-					swipeLeft:function(event, direction, distance, duration, fingerCount) {
-						alert("You swiped " + direction + " " + ++count + " times " );	
+				})
+				.swipe({
+					swipeLeft: function(event, direction, distance, duration, fingerCount) {
+						alert("You swiped " + direction + " " + ++count + " times " );
 					},
-					threshold: "75px"
+					threshold: 15
 				});
 				
 				var
