@@ -443,8 +443,7 @@
 						alert("Your ID is: " + o.username);
 					},
 					threshold:2000
-				})
-				.swipe({
+				},{
 					swipeLeft: function(event, direction, distance, duration, fingerCount) {
 						alert("You swiped " + direction + " " + ++count + " times " );
 					},
