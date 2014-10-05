@@ -236,6 +236,7 @@
             <input type="button" class="big-btn app-identity-data hiding" value="Identity Data">
 			<input type="button" class="big-btn app-add-contact hiding" value="Add Contact">
 			<input type="button" class="big-btn app-messages hiding" value="Messages">
+			<input type="button" class="big-btn app-help" value="Help">
 			<p class="normal-center tutorial-message"><strong>
 				Create your first Identity to start sending messages to other Identities.
 			</strong></p>
@@ -300,9 +301,7 @@
 			<p class="mid-size go-left arial header-p">Created: <span class="bolder id-created-date"></span></p>
 			
 			<input type="button" class="big-btn app-clear-pin-1" value="Clear All Data">
-			<input type="button" class="big-btn app-help" value="Help">
 			<input type="button" class="big-btn app-close-id-data" value="Back">
-			<hr>
 			<input type="button" class="big-btn app-debug-selftest debug" value="[SOCKET DEBUG]">
 		</section>
 
@@ -900,7 +899,7 @@
 				});
 
 				$(".app-close-help").on("click", function(){
-					openPage("#app_id_data", "down", "down");
+					openPage("#app_page", "down", "down");
 				});
 
 				$(".app-close-messages").on("click", function(){
