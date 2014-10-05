@@ -450,7 +450,7 @@
 					var key = obj.key;
 					window.localStorage.setItem(name+"_key", key);
 					addMessage(name, null, id_obj.username);
-					socket.emit("send-user-verify", id_obj.username, name);
+					socket.emit("send-user-verify", {me: id_obj.username, user: name});
 					$(".add-contact-txt").val("");
 					openPage("#app_page", "left", "left");
 				});

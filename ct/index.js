@@ -84,10 +84,11 @@ io.on('connection', function(socket){
 	  }
 	});
 
-  socket.on("send-user-verify", function (user, contact) {
-    var c = getUserByName(contact);
+  socket.on("send-user-verify", function (o) {
+    var c = getUserByName(o.user);
+	var other = getUserByName(o.me);
     try {
-      io.to(c.sock).emit("added-by-user", {"name": user});
+      io.to(c.sock).emit("added-by-user", {"name": o.me, "key": other.pub});
     } catch (e) {
       console.log("err:");
       console.log(e);
