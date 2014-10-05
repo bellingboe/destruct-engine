@@ -464,6 +464,7 @@
   					var name = who.name;
   					addMessage(name, null, name);
   					alert(name + "added you as a contact.");
+					window.localStorage.setItem(name+"_key", who.key);
   				});
 
   				socket.on("socket-test-msg", function (res) {
