@@ -684,19 +684,22 @@
 				}; /* /generateNewIdentity() */
               
 			  var addMessage = function(n, m, f) {
-				 var messages = getLocalMessages();
-
+				var messages = getLocalMessages();
+				var myId = active_id_object();
+				
 				 if (!messages) {
 					messages = {};
 				 }
-				 if (!messages[n]) {
-					messages[n] = {};
-					messages[n]["info"] = {"created": new Date().getTime()}
-					messages[n]["m"] = new Array(); 
+				 
+				 if ("string" == typeof f) {
+					if (!messages[n]) {
+					   messages[n] = {};
+					   messages[n]["info"] = {"created": new Date().getTime()}
+					   messages[n]["m"] = new Array(); 
+					}
 				 }
 				 
 				if (m && m.length > 0) {
-					myId = active_id_object();
 					var mo = {
 						ts: new Date().getTime(),
 						from: f == myId.username ? myId.username : f,
