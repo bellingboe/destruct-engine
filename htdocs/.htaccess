@@ -244,15 +244,18 @@ AddDefaultCharset utf-8
 
 	#RewriteCond %{HTTPS} off
 	#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
 
-RewriteCond %{HTTP_HOST} ^destruct.co [nc]
-RewriteCond %{HTTPS} !=on
-RewriteRule (.*) https://destruct.co/$1 [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^(.*)\.destruct\.co$  [NC]
-RewriteCond %1 !^dev$ [NC]
-RewriteCond %1 !^dev-engine$ [NC]
-RewriteRule (.*) https://destruct.co/$1 [R=301,L]
+    RewriteCond %{HTTP_HOST} ^destruct.co [nc]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule (.*) http://destruct.co/$1 [R=301,L]
+    
+    RewriteCond %{HTTP_HOST} ^(.*)\.destruct\.co$  [NC]
+    RewriteCond %1 !^dev$ [NC]
+    RewriteCond %1 !^dev-engine$ [NC]
+    RewriteRule (.*) https://destruct.co/$1 [R=301,L]
 
     RewriteRule ^n_([A-Za-z0-9]+)$ index.php?key=$1
     RewriteRule ^i$ index.php

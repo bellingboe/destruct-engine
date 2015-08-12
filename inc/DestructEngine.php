@@ -9,7 +9,7 @@ class DestructEngine {
     private static $LTC_ADDR            = 'LaXR9JPXeMJFoznpqsHPWJsTULPdeijyVx';
     private static $DOGE_ADDR           = 'DHCDSSgzWV4bzMzNr4ywhurHwPwYNwQ1Vk';
     
-    private static $url_protocol        = 'https';
+    private static $url_protocol        = 'http';
     private static $url_domain          = 'destruct.co';
     
     private static $unauth_agents       = array('facebookexternalhit');
