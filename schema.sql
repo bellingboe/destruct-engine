@@ -15,7 +15,7 @@ CREATE TABLE `crypt_data` (
   `n` char(16) COLLATE utf8_unicode_ci NOT NULL,
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=386 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
