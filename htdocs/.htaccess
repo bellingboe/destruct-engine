@@ -254,8 +254,8 @@ AddDefaultCharset utf-8
     RewriteCond %{HTTP_HOST} ^(.*)\.cipher\.tools$  [NC]
     RewriteRule (.*) https://cipher.tools/$1 [R=301,L]
 
-    RewriteRule ^n_([A-Za-z0-9]+)$ index.php?key=$1
-    RewriteRule ^i$ index.php
+    RewriteRule ^n_([A-Za-z0-9]+)$ index.php?key=$1 [L]
+    RewriteRule ^i$ index.php [L]
 </IfModule>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
