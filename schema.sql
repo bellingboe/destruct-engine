@@ -15,7 +15,10 @@ CREATE TABLE `crypt_data` (
   `n` char(16) COLLATE utf8_unicode_ci NOT NULL,
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -30,7 +33,10 @@ CREATE TABLE `contacts` (
   `approved_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `requested_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`contact_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -48,7 +54,10 @@ CREATE TABLE `messages` (
  `read_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
  `sent_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -62,7 +71,10 @@ CREATE TABLE `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `acct_pw` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -77,7 +89,10 @@ CREATE TABLE IF NOT EXISTS `pubkeys` (
   `key_data` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -93,7 +108,10 @@ CREATE TABLE `pairs` (
   `pub_string` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)
+ENGINE=InnoDB
+CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
