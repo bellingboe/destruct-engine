@@ -16,9 +16,7 @@ CREATE TABLE `crypt_data` (
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   PRIMARY KEY (`id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -34,9 +32,7 @@ CREATE TABLE `contacts` (
   `requested_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`contact_id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -55,9 +51,7 @@ CREATE TABLE `messages` (
  `sent_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -72,9 +66,7 @@ CREATE TABLE `users` (
   `acct_pw` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -90,9 +82,7 @@ CREATE TABLE IF NOT EXISTS `pubkeys` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -109,8 +99,6 @@ CREATE TABLE `pairs` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 )
-ENGINE=InnoDB
-CHARACTER SET=utf8
-COLLATE=utf8_unicode_ci;
+ENGINE=InnoDB;
 
 -- --------------------------------------------------------
