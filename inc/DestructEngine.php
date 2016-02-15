@@ -10,7 +10,7 @@ class DestructEngine {
     private static $DOGE_ADDR           = 'DHCDSSgzWV4bzMzNr4ywhurHwPwYNwQ1Vk';
     
     private static $url_protocol        = 'https';
-    private static $url_domain          = 'destruct.co';
+    private static $url_domain          = 'cipher.tools';
     
     private static $unauth_agents       = array('facebookexternalhit');
     private static $unauth_header       = 'HTTP/1.0 302 Found';

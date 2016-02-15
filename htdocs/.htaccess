@@ -238,21 +238,22 @@ AddDefaultCharset utf-8
 # Option 1: rewrite www.example.com → example.com
 
 <IfModule mod_rewrite.c>
-#    RewriteCond %{HTTPS} !=on
-#    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-#    RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
 
-	#RewriteCond %{HTTPS} off
-	#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
 
-RewriteCond %{HTTP_HOST} ^destruct.co [nc]
-RewriteCond %{HTTPS} !=on
-RewriteRule (.*) https://destruct.co/$1 [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^(.*)\.destruct\.co$  [NC]
-RewriteCond %1 !^dev$ [NC]
-RewriteCond %1 !^dev-engine$ [NC]
-RewriteRule (.*) https://destruct.co/$1 [R=301,L]
+    RewriteCond %{HTTP_HOST} ^cipher.tools [nc]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule (.*) http://cipher.tools/$1 [R=301,L]
+    
+    RewriteCond %{HTTP_HOST} ^(.*)\.cipher\.tools$  [NC]
+    RewriteRule (.*) https://cipher.tools/$1 [R=301,L]
 
     RewriteRule ^n_([A-Za-z0-9]+)$ index.php?key=$1
     RewriteRule ^i$ index.php
