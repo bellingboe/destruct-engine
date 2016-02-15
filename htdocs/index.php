@@ -99,6 +99,8 @@ if ($url !== null) {
             </div>
 		
             <?php
+	    var_dump($message);
+	    var_dump($_GET);
             if ($message !== null) {
                     echo sprintf($message_return_html, $message, $message);
                     echo "<hr><p><b>Message has been destroyed.</b> <a href='/'>Create New Message</a></p>";
