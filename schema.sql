@@ -17,7 +17,7 @@ CREATE TABLE `crypt_data` (
   PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -35,7 +35,7 @@ CREATE TABLE `contacts` (
   PRIMARY KEY (`contact_id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -56,7 +56,7 @@ CREATE TABLE `messages` (
  PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -73,7 +73,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `pubkeys` (
   KEY `user_id` (`user_id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -110,8 +110,7 @@ CREATE TABLE `pairs` (
   KEY `user_id` (`user_id`)
 )
 ENGINE=InnoDB
-CHARSET=utf8
+CHARACTER SET=utf8
 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
-
