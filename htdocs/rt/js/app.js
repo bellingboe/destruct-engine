@@ -1,6 +1,6 @@
 var
-    socket = io('http://cipher.tools:3232', {
-        secure: false,
+    socket = io('https://cipher.tools:3232', {
+        secure: true,
         'transports': ['websocket', 'xhr-polling']
     }),
     is_online = 0,
