@@ -363,30 +363,22 @@ var _Keys = (function($) {
                 
                 var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
                 console.log(real_msg);
-                console.log("------");
-                console.log(msg_obj.getText());
                 
-                /*
-                try {
-                    var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
-                } catch(e) {
+                if (!real_msg.hasOwnProperty("text")) {
                     alert("Could not decrypt message. Perhaps you picked the wrong private key to use?");
                     console.log("========== ERR ========");
                     console.log(e.message);
                     console.log(e.stack);
                     pub_arr = [];
                     return;
-                }
-                */
-                
-                if ("undefined" !== typeof real_msg.signatures && "undefined" !== typeof real_msg.signatures[0] && real_msg.signatures[0].valid == true) {
-                    $(".keys-pub-txt").val(real_msg.text);
                 } else {
-                    alert("The message signature does not match the public key you supplied. Pick the correct sender key.");
+                    if ("undefined" !== typeof real_msg.signatures && "undefined" !== typeof real_msg.signatures[0] && real_msg.signatures[0].valid == true) {
+                        $(".keys-pub-txt").val(real_msg.text);
+                    } else {
+                        alert("The message signature does not match the public key you supplied. Pick the correct sender key.");
+                    }
                 }
             });
-            
-            
         });
         
         user_page.on("click", ".enc-msg-btn", function() {
