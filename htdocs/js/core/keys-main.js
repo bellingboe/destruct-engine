@@ -352,15 +352,21 @@ var _Keys = (function($) {
                 var msg_text = $(".keys-pub-txt").val();
                 var msg_obj = window.openpgp.message.readArmored(msg_text);
                 
+                /*
                 console.log("==================");
-                
                 console.log(msg_obj);
                 console.log(msg_obj.decrypt(priv_key));
                 console.log(msg_obj.getLiteralData());
                 console.log(msg_obj.getText());
-                
                 console.log("==================");
+                */
                 
+                var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
+                console.log(real_msg);
+                console.log("------");
+                console.log(msg_obj.getText());
+                
+                /*
                 try {
                     var real_msg = window.openpgp.decryptAndVerifyMessage(priv_key, pub_arr, msg_obj);
                 } catch(e) {
@@ -371,6 +377,7 @@ var _Keys = (function($) {
                     pub_arr = [];
                     return;
                 }
+                */
                 
                 if ("undefined" !== typeof real_msg.signatures && "undefined" !== typeof real_msg.signatures[0] && real_msg.signatures[0].valid == true) {
                     $(".keys-pub-txt").val(real_msg.text);
