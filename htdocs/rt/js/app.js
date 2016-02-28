@@ -183,6 +183,9 @@ $(function() {
     }; /* /logOut() */
 
     var getUserPublicKey = function(u) {
+	$.get("https://cipher.tools:3232/pk/"+u, function(data) {
+	    console.log(data);
+	});
         return window.localStorage.getItem(u + "_key");
     };
 
