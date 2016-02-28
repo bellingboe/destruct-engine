@@ -134,7 +134,7 @@ $(function() {
         var msg_text = dec_msg_text;
 
         if (p.f == me.username) {
-            //var from = "<strong>You</strong>:<br>";
+            var from = "<strong>You</strong>:<br>";
 	    //chatEvent(p.to[1]);
         } else {
             var from = p.f + ":<br>";
@@ -676,7 +676,7 @@ $(function() {
 		    var m = msg[i];
     
 		    if (m.from == me.username) {
-			var from = "<strong>" + m.from + " (You)</strong>:<br>";
+			var from = "<strong>You</strong>:<br>";
 		    } else {
 			var from = m.from + ":<br>"
 		    }
