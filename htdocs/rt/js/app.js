@@ -80,9 +80,6 @@ $(function() {
 
     socket.on('rec-encrypted-message', function(p) {
 	
-	console.log("===== rec-encrypted-message =====");
-	console.log(p);
-	
 	old_chat = window.ACTIVE_CHAT;
 	
         var me = active_id_object();
@@ -111,10 +108,7 @@ $(function() {
 		    
 	    }
         }
-	
-	console.log("===== (chat) obj =====");
-	console.log(chat);
-	
+
 	var
 	    pub_key_obj = window.openpgp.key.readArmored(chat.key),
 	    pub_key = pub_key_obj.keys[0],
@@ -144,10 +138,6 @@ $(function() {
         addMessage(chat.user, msg_text, p.f);
 	
 	if (window.ACTIVE_CHAT) {
-	    
-	    console.log("===== indexOf =====");
-	    console.log(p.to.indexOf(window.ACTIVE_CHAT.user));
-	    
 	    if (p.to.indexOf(window.ACTIVE_CHAT.user) !== -1) {
 		dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
 		var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
@@ -516,9 +506,6 @@ $(function() {
                 f: me.username,
                 ts: new Date().getTime()
             };
-	    
-	    console.log("message paylod:")
-	    console.log(msg_payload);
 	    
             socket.emit("send-encrypted-message", msg_payload);
 
