@@ -134,10 +134,10 @@ $(function() {
         var msg_text = dec_msg_text;
 
         if (p.f == me.username) {
-            var from = "<strong>You</strong>:<br>";
+            var from = "You:<br>";
 	    //chatEvent(p.to[1]);
         } else {
-            var from = p.f + ":<br>";
+            var from = "<strong>" + p.f + "</strong>:<br>";
 	    //chatEvent(p.to[1]);
         }
 	
