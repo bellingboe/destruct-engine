@@ -80,15 +80,14 @@ $(function() {
 
     socket.on('rec-encrypted-message', function(p) {
 	
+	console.log("===== rec-encrypted-message =====");
+	console.log(p);
+	
 	old_chat = window.ACTIVE_CHAT;
 	
         var me = active_id_object();
         var aes_key = window.openpgp.message.readArmored(p.ek);
         var chat = null;
-	
-	if (p.f == me.username) {
-	    
-	}
 
         if (window.ACTIVE_CHAT) {
             chat = window.ACTIVE_CHAT;
@@ -113,6 +112,9 @@ $(function() {
 	    }
         }
 	
+	console.log("(chat) obj ===== ");
+	console.log(chat);
+	
 	var
 	    pub_key_obj = window.openpgp.key.readArmored(chat.key),
 	    pub_key = pub_key_obj.keys[0],
@@ -136,13 +138,12 @@ $(function() {
 	    //chatEvent(p.to[1]);
         } else {
             var from = p.f + ":<br>";
-	    chatEvent(p.to[1]);
+	    //chatEvent(p.to[1]);
+	    
+	    dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
+	    var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
+	    var display = $(".app-messages-conversation-display").append(msg_item);
         }
-
-        dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
-
-        var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
-        var display = $(".app-messages-conversation-display").append(msg_item);
 
         addMessage(chat.user, msg_text, p.f);
 
@@ -486,7 +487,6 @@ $(function() {
             enc_text,
             txt = $(".send-msg-txt").val();
 
-
         window.openpgp.initWorker('js/openpgp.worker.js');
         window.openpgp.signAndEncryptMessage([pub_key, my_pub_key], my_priv, aesKey, function(err, res) {
             if (err) {
@@ -505,6 +505,10 @@ $(function() {
                 f: me.username,
                 ts: new Date().getTime()
             };
+	    
+	    console.log("message paylod:")
+	    console.log(msg_payload);
+	    
             socket.emit("send-encrypted-message", msg_payload);
 
             $(".send-msg-txt").val('').focus();
