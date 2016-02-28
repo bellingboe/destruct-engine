@@ -112,7 +112,7 @@ $(function() {
 	    }
         }
 	
-	console.log("(chat) obj ===== ");
+	console.log("===== (chat) obj =====");
 	console.log(chat);
 	
 	var
@@ -134,20 +134,26 @@ $(function() {
         var msg_text = dec_msg_text;
 
         if (p.f == me.username) {
-            var from = "<strong>" + p.f + " (You)</strong>:<br>";
+            //var from = "<strong>You</strong>:<br>";
 	    //chatEvent(p.to[1]);
         } else {
             var from = p.f + ":<br>";
 	    //chatEvent(p.to[1]);
         }
+	
         addMessage(chat.user, msg_text, p.f);
 	
 	if (window.ACTIVE_CHAT) {
-	    dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
-	    var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
-	    var display = $(".app-messages-conversation-display").append(msg_item);
 	    
-	    $(".app-messages-conversation-display").scrollTop($(".app-messages-conversation-display").prop('scrollHeight') + 999);
+	    console.log("===== indexOf =====");
+	    console.log(p.to.indexOf(window.ACTIVE_CHAT.user));
+	    
+	    if (p.to.indexOf(window.ACTIVE_CHAT.user) !== -1) {
+		dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
+		var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
+		var display = $(".app-messages-conversation-display").append(msg_item);
+		$(".app-messages-conversation-display").scrollTop($(".app-messages-conversation-display").prop('scrollHeight') + 999);
+	    }
 	}
 	
     });
@@ -177,7 +183,7 @@ $(function() {
     }; /* /logOut() */
 
     var getUserPublicKey = function(u) {
-        window.localStorage.getItem(u + "_key");
+        return window.localStorage.getItem(u + "_key");
     };
 
     var openPage = function(id, new_up_down, old_up_down, cb) {
