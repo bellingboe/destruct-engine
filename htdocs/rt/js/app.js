@@ -139,15 +139,17 @@ $(function() {
         } else {
             var from = p.f + ":<br>";
 	    //chatEvent(p.to[1]);
-	    
+        }
+        addMessage(chat.user, msg_text, p.f);
+	
+	if (window.ACTIVE_CHAT) {
 	    dec_msg_text = "<div class='msg-item'>" + from + htmlEncode(dec_msg_text).replace("\n", "</div><div>") + "</div>";
 	    var msg_item = $("<div>").attr("data-ts", p.ts).html(dec_msg_text);
 	    var display = $(".app-messages-conversation-display").append(msg_item);
-        }
-
-        addMessage(chat.user, msg_text, p.f);
-
-        $(".app-messages-conversation-display").scrollTop($(".app-messages-conversation-display").prop('scrollHeight') + 999);
+	    
+	    $(".app-messages-conversation-display").scrollTop($(".app-messages-conversation-display").prop('scrollHeight') + 999);
+	}
+	
     });
 
     $("#app_setup")
