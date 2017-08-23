@@ -131,7 +131,7 @@ require_once '../../inc/Functions.php';
 	<input type="hidden" id="curr_chat_pub_key">
 	
 	<footer>
-	    <a class='btn' href='/'>A Chat.gd Experiment</a> made by <a class='btn btn-green' href='//twitter.com/_ellingboe'>@_ellingboe</a> <a class='btn btn-green btn-small' href=/keys/'>Key Management</a>
+	    <a class='btn' href='/'>A Chat.gd Experiment</a> made by <a class='btn btn-green' href='//twitter.com/_ellingboe'>@_ellingboe</a> <a class='btn btn-green btn-small' href="/keys/">Key Management</a>
 	</footer>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
