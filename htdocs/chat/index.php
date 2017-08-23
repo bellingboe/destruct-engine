@@ -14,12 +14,12 @@ require_once '../../inc/Functions.php';
 
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@NerdWhoCodes">
+    <meta name="twitter:site" content="@_ellingboe">
     <meta name="twitter:title" content="Chat with end-to-end AES encryption. No more prying eyes!">
     <meta name="twitter:description" content="Everything is encrypted in 256-bit AES in combintation with PGP keys">
-    <meta name="twitter:creator" content="@NerdWhoCodes">
+    <meta name="twitter:creator" content="@_ellingboe">
     <meta name="twitter:image:src" content="">
-    <meta name="twitter:domain" content="destruct.co">
+    <meta name="twitter:domain" content="chat.gd">
     <meta name="twitter:app:name:iphone" content="">
     <meta name="twitter:app:name:ipad" content="">
     <meta name="twitter:app:name:googleplay" content="">
@@ -44,9 +44,9 @@ require_once '../../inc/Functions.php';
 	      <h1 class="center-text header-callout landing-head">Chat</h1>
 	      
 	      <div style="text-align: center;">
-		<a href="https://twitter.com/NerdWhoCodes" class="twitter-follow-button" data-show-count="false">Follow @NerdWhoCodes</a>
+		<a href="https://twitter.com/NerdWhoCodes" class="twitter-follow-button" data-show-count="false">Follow @_ellingboe</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-via="NerdWhoCodes">Tweet</a>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="_ellingboe">Tweet</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	       </div>
 	  
@@ -137,7 +137,7 @@ require_once '../../inc/Functions.php';
 	<input type="hidden" id="curr_chat_pub_key">
 	
 	<footer>
-	    <a class='btn' href='/'>A Destruct.co Experiment</a> made by <a class='btn btn-green' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>
+	    <a class='btn' href='/'>A Chat.gd Experiment</a> made by <a class='btn btn-green' href='//twitter.com/_ellingboe'>@_ellingboe</a>
 	</footer>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

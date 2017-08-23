@@ -50,10 +50,10 @@ if ($url !== null) {
     -->
     <meta property="twitter:account_id" content="4503599627845130" />
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@NerdWhoCodes">
+    <meta name="twitter:site" content="@_ellingboe">
     <meta name="twitter:title" content="Secure PGP Encryption">
     <meta name="twitter:description" content="Everything is encrypted in 256-bit AES">
-    <meta name="twitter:creator" content="@NerdWhoCodes">
+    <meta name="twitter:creator" content="@_ellingboe">
     <meta name="twitter:image:src" content="">
     <meta name="twitter:domain" content="destruct.co">
     <meta name="twitter:app:name:iphone" content="">
@@ -72,7 +72,7 @@ if ($url !== null) {
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     
-      ga('create', 'UA-27412705-2', 'destruct.co');
+      ga('create', 'UA-27412705-2', 'chat.gd');
       ga('send', 'pageview');
     
     </script>
@@ -94,7 +94,7 @@ if ($url !== null) {
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com/">upgrade your browser</a> or <a href="//www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-	    <h1 class="site-head">Destruct.co</h1>
+	    <h1 class="site-head">Secure Messaging</h1>
             
             <a href="#" id="show_intro_msg" class="info-toggle">What is this?</a> <a class="gh-link" href="https://github.com/bellingboe/destruct-engine" title=""><span>View Source</span><img src="/img/gh.png" alt="View on GitHub"></a>
             <div class="intro-msg">
@@ -128,13 +128,13 @@ if ($url !== null) {
                      New! <a href="/chat/">Chat with end-to-end encryption</a> - meaning nobody (not even I) can read your messages except you and your recipient.
 	    </p>
             <p class="authorline hotline">
-		<a href="https://twitter.com/NerdWhoCodes" class="twitter-follow-button" data-show-count="false">Follow @NerdWhoCodes</a>
+		<a href="https://twitter.com/_ellingboe" class="twitter-follow-button" data-show-count="false">Follow @_ellingboe</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-via="NerdWhoCodes">Tweet</a>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="_ellingboe">Tweet</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	    </p>
             <p class="authorline">
-                    Created by <a href="//twitter.com/NerdWhoCodes">@NerdWhoCodes</a>.
+                    Created by <a href="//twitter.com/NerdWhoCodes">@_ellingboe</a>.
 	    </p>
             <p class="authorline">
                     Donate DOGE: <strong><?php echo DestructEngine::doge();?></strong>
