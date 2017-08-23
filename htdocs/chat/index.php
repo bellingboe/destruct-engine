@@ -12,7 +12,7 @@ require_once '../../inc/Functions.php';
      
     <meta name="description" content="Secure end-to-end AES+PGP chat sessions.">
 
-    <meta property="twitter:account_id" content="4503599627845130" />
+    <meta property="twitter:account_id" content="17138864" />
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@_ellingboe">
     <meta name="twitter:title" content="Chat with end-to-end AES encryption. No more prying eyes!">
@@ -42,13 +42,7 @@ require_once '../../inc/Functions.php';
      
 	  <div class="main-landing" id="login_signup">
 	      <h1 class="center-text header-callout landing-head">Chat</h1>
-	      
-	      <div style="text-align: center;">
-		<a href="https://twitter.com/NerdWhoCodes" class="twitter-follow-button" data-show-count="false">Follow @_ellingboe</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-via="_ellingboe">Tweet</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-	       </div>
+	     
 	  
 	      <form action="" method="POST" id="user_form" class="box-form">
 		<label>
@@ -78,7 +72,7 @@ require_once '../../inc/Functions.php';
 			  The server salts, and hashes your password, and never stores the actual password itself.
 		      </li>
 		      <li>
-			  Every chat message is encrypted with your public key, and your recipients. Not even I (<a class='btn btn-green btn-small' href='//twitter.com/NerdWhoCodes'>@NerdWhoCodes</a>) can read a single message.
+			  Every chat message is encrypted with your public key, and your recipients. Not even I (<a class='btn btn-green btn-small' href='//twitter.com/_ellingboe'>_ellingboes</a>) can read a single message.
 		      </li>
 		  </ul>
 	      </section>
