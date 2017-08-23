@@ -6,11 +6,11 @@ class DestructEngine {
      * ========== PRIVATE VARS========== 
      **/
     
-    private static $LTC_ADDR            = 'LaXR9JPXeMJFoznpqsHPWJsTULPdeijyVx';
-    private static $DOGE_ADDR           = 'DHCDSSgzWV4bzMzNr4ywhurHwPwYNwQ1Vk';
+    private static $LTC_ADDR            = 'LfxKqfq2T1dApGZZ66KHcYBQ4CBop5JERr';
+    private static $DOGE_ADDR           = 'Please consider donating LTC.';
     
     private static $url_protocol        = 'https';
-    private static $url_domain          = 'cipher.tools';
+    private static $url_domain          = 'chat.gd';
     
     private static $unauth_agents       = array('facebookexternalhit');
     private static $unauth_header       = 'HTTP/1.0 302 Found';
