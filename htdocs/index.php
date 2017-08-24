@@ -95,7 +95,7 @@ if ($url !== null) {
             
             <a href="#" id="show_intro_msg" class="info-toggle">What is this?</a> <a class="gh-link" href="https://github.com/bellingboe/destruct-engine" title=""><span>View Source</span><img src="/img/gh.png" alt="View on GitHub"></a>
             <div class="intro-msg">
-		Destruct.co is an <a href="https://github.com/bellingboe/destruct-engine">open-source web project</a> for sending/receiving encrypted, secure messages.
+		Chat.gd is an <a href="https://github.com/bellingboe/destruct-engine">open-source web project</a> for sending/receiving encrypted, secure messages.
             </div>
 		
             <?php
