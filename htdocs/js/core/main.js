@@ -32,7 +32,7 @@ var _Main = (function($) {
 
             if ($("#errmsg").html()) {
                 try {
-                    window.history.pushState('decrypted', 'Destruct.co', '/');
+                    window.history.pushState('decrypted', 'Chat.gd', '/');
                 } catch(err) { }
             }
             
@@ -73,7 +73,7 @@ var _Main = (function($) {
                     var p = random_string(null);
                     var mt = $("#msgContent").val();
                     var em = ciph(p, mt);
-                    $.post("/index.php", {m: em}, function(R) {
+                    $.post("/msg/index.php", {m: em}, function(R) {
                             $("#msgForm").hide();
                             $("#msgResp").show().html(R);
                             var link_href = $("#shareAnchor").attr("value");
