@@ -48,7 +48,7 @@
 		
 		<div class="content">
 			<h1>Choose A Service</h1>
-			<a href="/msg/">Single Messages</a><a href="/chat/">Encrypted Chat</a>
+			<a href="/msg/">Single Messages</a><a href="/chat/">Encrypted Chat</a><a href="/keys/">PGP Keys</a>
 		</div>
     </body>
 </html>
