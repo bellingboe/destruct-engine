@@ -14,6 +14,8 @@ DestructEngine is the source code that powers the website [Chat.gd](https://chat
 2. Import the SQL file to create the required tables. The schema is in `schema.sql`.
 3. Inside the `/inc` directory, rename `Constants-EXAMPLE.php` to `Constants.php`.
 
+## Donation
+If you find this useful (as a user or dev) I' apperciate some Litecoin: `LfxKqfq2T1dApGZZ66KHcYBQ4CBop5JERr`
 
 # [Links](https://chat.gd/)
 
