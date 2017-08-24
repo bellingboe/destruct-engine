@@ -1,7 +1,4 @@
 <?php
-header("Location: /chat/");
-exit;
-
 require_once '../inc/Functions.php';
 
 // ================== MAIN ================== //
