@@ -95,33 +95,21 @@ require_once '../../inc/Functions.php';
             </form>
 	    
             <p class="authorline">
-                    Donate DOGE: <strong><?php echo DestructEngine::doge();?></strong>
-            </p>
-            <p class="authorline">
                     Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>
             </p>
 	    <p class="authorline hotline">Keys is a <a href='/'>Destruct.co</a> experiment.</p>
 	</div>
-
-	<!--
-        <script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
-        <script src="/js/core/plugins.js"></script>
-	<script src="/js/vendor/openpgp/openpgp.js"></script>
-	<script src="/js/vendor/avgrund/avgrund.js"></script>
-	<script src="/js/core/aes.js"></script>
-        <script src="/js/core/keys-main.js"></script>
-	-->
 	
-        <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                
-                ga('create', 'UA-27412705-2', 'destruct.co');
-		ga('require', 'linkid', 'linkid.js');
-                ga('send', 'pageview');
-        </script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-105320948-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/combined.js"></script>
