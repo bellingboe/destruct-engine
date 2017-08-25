@@ -108,6 +108,10 @@ require_once '../../inc/Functions.php';
 	
 	  ga('create', 'UA-105320948-1', 'auto');
 	  ga('send', 'pageview');
+	  
+		ga('send', 'page', 'land', 'keys-homepage', {
+			'time': time()
+		});
 	
 	</script>
 	
