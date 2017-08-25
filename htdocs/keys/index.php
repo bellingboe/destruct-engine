@@ -97,7 +97,7 @@ require_once '../../inc/Functions.php';
             <p class="authorline">
                     Donate LTC: <strong><?php echo DestructEngine::ltc();?></strong>
             </p>
-	    <p class="authorline hotline">Keys is a <a href='/'>Destruct.co</a> experiment.</p>
+	    <p class="authorline hotline">Keys is a <a href='/'>Chat.gd</a> experiment.</p>
 	</div>
 	
 	<script>
