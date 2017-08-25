@@ -59,7 +59,7 @@ var _Main = (function($) {
                     ga('send', 'event', 'message', 'decrypt', 'links');
                     
                     try {
-                        window.history.pushState('decrypted', 'Destruct.co', '/');
+                        window.history.pushState('decrypted', 'Chat.gd', '/');
                     } catch(err) { }
             }
             

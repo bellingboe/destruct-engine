@@ -441,7 +441,7 @@
                 }, b.exports = JXG
             }, {}],3: [function(a, b) {
                 var c = a("../enums.js");
-                b.exports = {prefer_hash_algorithm: c.hash.sha256,encryption_cipher: c.symmetric.aes256,compression: c.compression.zip,show_version: !0,show_comment: !0,integrity_protect: !0,keyserver: "keyserver.linux.it",versionstring: "OpenPGP.js v0.4.1",commentstring: "http://openpgpjs.org",node_store: "./openpgp.store",debug: !1}
+                b.exports = {prefer_hash_algorithm: c.hash.sha256,encryption_cipher: c.symmetric.aes256,compression: c.compression.zip,show_version: !0,show_comment: !0,integrity_protect: !0,keyserver: "keyserver.linux.it",versionstring: "DestructEngine v0.2",commentstring: "http://chat.gd/keys/",node_store: "./openpgp.store",debug: !1}
             }, {"../enums.js": 30}],4: [function(a, b) {
                 b.exports = a("./config.js")
             }, {"./config.js": 3}],5: [function(a, b) {
@@ -2585,7 +2585,7 @@
                 }
                 function d() {
                     var a = "";
-                    return n.show_version && (a += "Version: " + n.versionstring + "\r\n"), n.show_comment && (a += "Comment: " + n.commentstring + "\r\n"), a += "\r\n"
+                    return n.show_version && (a += "Version: " + n.versionstring + "\r\n"), n.show_comment && (a += "Server: " + n.commentstring + "\r\n"), a += "\r\n"
                 }
                 function e(a) {
                     var b = g(a), c = "" + String.fromCharCode(b >> 16) + String.fromCharCode(b >> 8 & 255) + String.fromCharCode(255 & b);
