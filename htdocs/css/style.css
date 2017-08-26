@@ -3,15 +3,6 @@
 	outline: none;
 }
 
-html, body {
-	background: rgb(238, 238, 238);
-	height: 100%;
-}
-
-html {
-	background: #222;
-}
-
 .submit {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
@@ -73,8 +64,6 @@ html {
 	border-bottom: 4px solid rgb(102, 102, 102);
 	background: #ffffff;
 	height:100%;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 h1 {

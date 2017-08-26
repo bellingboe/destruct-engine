@@ -13,8 +13,9 @@
         
         body {
             font-family: 'Baloo Bhaijaan', cursive;
-            background-color: #577088;
-            background: #577088;
+            text-transform: uppercase;
+            background-color: #292E30;
+            background: #292E30;
         }
         
         .dropzone {
